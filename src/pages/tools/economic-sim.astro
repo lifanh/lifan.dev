@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EconomicSim from '../../tools/economic-sim/EconomicSim';
+---
+
+<Layout title="Economic Visualizer - Lifan Dev">
+	<div class="mb-8">
+		<a href="/" class="text-blue-400 hover:text-blue-300 text-sm mb-4 inline-block">&larr; Back to Home</a>
+		<h1 class="text-3xl font-bold">Economic Concept Visualizer</h1>
+		<p class="text-slate-400 mt-2">A simple interactive demonstration of Supply & Demand.</p>
+	</div>
+
+	<EconomicSim client:load />
+
+	<div class="mt-12 prose prose-invert max-w-none">
+		<h3>How it works</h3>
+		<p>
+			This interactive component is a <strong>React Island</strong> running within an Astro page.
+			It demonstrates how you can embed complex interactive logic (Client-Side Rendering)
+			seamlessly inside a static or server-rendered Astro page.
+		</p>
+	</div>
+</Layout>

@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Lifan Dev - Personal Tools">
+	<div class="max-w-4xl mx-auto text-center py-12">
+		<h1 class="text-5xl font-extrabold mb-6">
+			Welcome to <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400">Lifan Dev</span>
+		</h1>
+		<p class="text-xl text-slate-300 mb-10">
+			My personal playground for technology experiments, developer tools, and management functions.
+		</p>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+			<a href="/tools/economic-sim" class="block p-6 bg-slate-800 rounded-xl border border-slate-700 hover:border-blue-400 transition-all hover:shadow-lg group">
+				<h2 class="text-2xl font-bold mb-2 group-hover:text-blue-400">Economic Concept Visualizer &rarr;</h2>
+				<p class="text-slate-400">Interactive simulation of basic economic principles using React Islands.</p>
+			</a>
+
+			<div class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 border-dashed flex items-center justify-center">
+				<p class="text-slate-500">More tools coming soon...</p>
+			</div>
+		</div>
+	</div>
+</Layout>
