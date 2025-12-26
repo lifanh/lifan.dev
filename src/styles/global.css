@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
 
+/* Custom variant for dark mode matching the 'selector' strategy */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*
   Tailwind v4 uses CSS variables for theme configuration by default,
   but we are using @config to point to the existing TypeScript config
