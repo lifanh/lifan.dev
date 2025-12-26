@@ -10,20 +10,35 @@ export default function EconomicSim() {
   // Revenue calculation
   const revenue = Math.min(demand, supply) * price;
 
+  const handleReset = () => {
+    setPrice(10);
+    setSupply(100);
+  };
+
   return (
     <div className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xl max-w-2xl mx-auto transition-colors duration-200">
-      <div className="mb-6">
-        <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">Market Simulator</h3>
-        <p className="text-slate-600 dark:text-slate-400 text-sm">Adjust price to see how it affects demand and total revenue.</p>
+      <div className="mb-6 flex justify-between items-start">
+        <div>
+          <h3 className="text-xl font-bold mb-2 text-slate-900 dark:text-white">Market Simulator</h3>
+          <p className="text-slate-600 dark:text-slate-400 text-sm">Adjust price to see how it affects demand and total revenue.</p>
+        </div>
+        <button
+          onClick={handleReset}
+          className="text-xs px-3 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 rounded transition-colors"
+          aria-label="Reset simulation to default values"
+        >
+          Reset
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="price-input" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Unit Price: <span className="text-emerald-600 dark:text-emerald-400">${price}</span>
             </label>
             <input
+              id="price-input"
               type="range"
               min="1"
               max="40"
@@ -33,10 +48,11 @@ export default function EconomicSim() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+            <label htmlFor="supply-input" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
               Supply Available: <span className="text-blue-600 dark:text-blue-400">{supply} units</span>
             </label>
             <input
+              id="supply-input"
               type="range"
               min="0"
               max="200"
@@ -63,16 +79,20 @@ export default function EconomicSim() {
         </div>
       </div>
 
-      {demand > supply && (
-        <div className="text-amber-700 dark:text-amber-400 text-sm bg-amber-50 dark:bg-amber-900/20 p-2 rounded border border-amber-200 dark:border-amber-900/50">
-          ⚠️ Shortage! Demand exceeds supply. You are missing out on sales.
-        </div>
-      )}
-      {demand < supply && (
-        <div className="text-blue-700 dark:text-blue-400 text-sm bg-blue-50 dark:bg-blue-900/20 p-2 rounded border border-blue-200 dark:border-blue-900/50">
-          ℹ️ Surplus! Supply exceeds demand. You have excess inventory.
-        </div>
-      )}
+      <div role="status" aria-live="polite">
+        {demand > supply && (
+          <div className="text-amber-700 dark:text-amber-400 text-sm bg-amber-50 dark:bg-amber-900/20 p-2 rounded border border-amber-200 dark:border-amber-900/50 flex items-center gap-2">
+            <span role="img" aria-hidden="true">⚠️</span>
+            <span>Shortage! Demand exceeds supply. You are missing out on sales.</span>
+          </div>
+        )}
+        {demand < supply && (
+          <div className="text-blue-700 dark:text-blue-400 text-sm bg-blue-50 dark:bg-blue-900/20 p-2 rounded border border-blue-200 dark:border-blue-900/50 flex items-center gap-2">
+            <span role="img" aria-hidden="true">ℹ️</span>
+            <span>Surplus! Supply exceeds demand. You have excess inventory.</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
