@@ -6,8 +6,8 @@ export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('system');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light' || savedTheme === 'dark') {
       setTheme(savedTheme);
     }
   }, []);
