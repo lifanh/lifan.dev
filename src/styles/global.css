@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+/*
+  Tailwind v4 uses CSS variables for theme configuration by default,
+  but we are using @config to point to the existing TypeScript config
+  as requested.
+*/
