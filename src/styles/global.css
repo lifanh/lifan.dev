@@ -5,7 +5,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
-  Tailwind v4 uses CSS variables for theme configuration by default,
-  but we are using @config to point to the existing TypeScript config
-  as requested.
+  Tailwind v4 uses CSS-first configuration for dark mode.
+  The @custom-variant directive below enables dark mode when the .dark class
+  is present on any parent element (typically <html>).
 */
+@custom-variant dark (&:where(.dark, .dark *));
