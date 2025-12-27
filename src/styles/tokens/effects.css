@@ -1,0 +1,78 @@
+/**
+ * Effects System Tokens
+ * 
+ * Defines shadows, transitions, border-radius, and borders.
+ * Soft, diffused shadows and smooth transitions for elegant interactions.
+ * 
+ * Requirements: 4.1, 4.2, 4.3, 4.4, 5.2
+ */
+
+:root {
+  /* ============================================
+     SHADOW SCALE
+     Requirements: 4.3
+     Soft, diffused shadows for elegant elevation
+     ============================================ */
+  
+  --shadow-none: none;
+  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  --shadow-default: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0 8px 24px -8px rgba(0, 0, 0, 0.12);
+
+  /* ============================================
+     TRANSITION TOKENS
+     Requirements: 4.4, 5.2
+     Smooth transitions between 150-300ms
+     ============================================ */
+  
+  --transition-fast: 150ms ease;
+  --transition-default: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Duration-only tokens for flexibility */
+  --duration-fast: 150ms;
+  --duration-default: 200ms;
+  --duration-slow: 300ms;
+
+  /* Easing functions */
+  --ease-default: ease;
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+
+  /* ============================================
+     BORDER-RADIUS SCALE
+     Requirements: 4.1
+     Subtle rounded corners for elegance
+     ============================================ */
+  
+  --radius-none: 0;
+  --radius-sm: 6px;
+  --radius-default: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* ============================================
+     BORDER TOKENS
+     Requirements: 4.2
+     Subtle 1px borders with muted colors
+     ============================================ */
+  
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+  
+  /* Border styles using color tokens */
+  --border-subtle: var(--border-width-default) solid var(--color-border-subtle);
+  --border-default: var(--border-width-default) solid var(--color-border-default);
+}
+
+/* ============================================
+   DARK MODE SHADOW ADJUSTMENTS
+   Slightly more pronounced shadows for dark mode
+   ============================================ */
+
+.dark {
+  --shadow-soft: 0 2px 8px -2px rgba(0, 0, 0, 0.25);
+  --shadow-default: 0 4px 12px -4px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 8px 24px -8px rgba(0, 0, 0, 0.35);
+}
