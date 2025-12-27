@@ -1,43 +1,99 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
+
+/** Storage key for theme persistence */
+export const THEME_STORAGE_KEY = 'theme';
+
+/** Valid theme values for localStorage */
+export const VALID_THEMES: readonly Theme[] = ['light', 'dark', 'system'] as const;
+
+/**
+ * Reads the saved theme from localStorage.
+ * Returns null if no valid theme is saved or localStorage is unavailable.
+ */
+export function getStoredTheme(): Theme | null {
+  try {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      return savedTheme;
+    }
+    return null;
+  } catch {
+    // localStorage unavailable (e.g., SSR, private browsing)
+    return null;
+  }
+}
+
+/**
+ * Saves the theme to localStorage.
+ * For 'system' theme, removes the stored preference.
+ */
+export function setStoredTheme(theme: Theme): void {
+  try {
+    if (theme === 'system') {
+      localStorage.removeItem(THEME_STORAGE_KEY);
+    } else {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }
+  } catch {
+    // localStorage unavailable - fail silently
+  }
+}
+
+/**
+ * Applies the theme to the document by toggling the 'dark' class.
+ * Also enables smooth color transitions during theme switch.
+ */
+function applyTheme(theme: Theme): void {
+  const root = document.documentElement;
+  
+  // Enable smooth transitions for theme switching (uses --transition-default: 200ms)
+  root.style.setProperty('transition', 'background-color var(--transition-default), color var(--transition-default)');
+  
+  if (theme === 'dark') {
+    root.classList.add('dark');
+  } else if (theme === 'light') {
+    root.classList.remove('dark');
+  } else {
+    // System preference
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  }
+}
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('system');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light' || savedTheme === 'dark') {
+    const savedTheme = getStoredTheme();
+    if (savedTheme) {
       setTheme(savedTheme);
+      applyTheme(savedTheme);
     }
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
-    const root = document.documentElement;
-    if (newTheme === 'dark') {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else if (newTheme === 'light') {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      localStorage.removeItem('theme');
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        root.classList.add('dark');
-      } else {
-        root.classList.remove('dark');
-      }
-    }
+    applyTheme(newTheme);
+    setStoredTheme(newTheme);
     setTheme(newTheme);
   };
 
+  // Transition classes using design tokens (--transition-default: 200ms ease)
+  const transitionClasses = 'transition-all duration-[var(--duration-default)] ease-[var(--ease-default)]';
+
   return (
-    <div className="flex items-center space-x-2 bg-slate-200 dark:bg-slate-700 rounded-full p-1">
+    <div 
+      className={`flex items-center space-x-2 bg-slate-200 dark:bg-slate-700 rounded-full p-1 ${transitionClasses}`}
+    >
       <button
         onClick={() => updateTheme('light')}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full ${transitionClasses} ${
           theme === 'light'
-            ? 'bg-white text-yellow-500 shadow-sm'
+            ? 'bg-white text-yellow-500 shadow-[var(--shadow-soft)]'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
         }`}
         aria-label="Light Mode"
@@ -57,9 +113,9 @@ export default function ThemeToggle() {
       </button>
       <button
         onClick={() => updateTheme('system')}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full ${transitionClasses} ${
           theme === 'system'
-            ? 'bg-white dark:bg-slate-600 text-blue-500 dark:text-blue-300 shadow-sm'
+            ? 'bg-white dark:bg-slate-600 text-blue-500 dark:text-blue-300 shadow-[var(--shadow-soft)]'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
         }`}
         aria-label="System Mode"
@@ -73,9 +129,9 @@ export default function ThemeToggle() {
       </button>
       <button
         onClick={() => updateTheme('dark')}
-        className={`p-1.5 rounded-full transition-colors ${
+        className={`p-1.5 rounded-full ${transitionClasses} ${
           theme === 'dark'
-            ? 'bg-slate-600 text-slate-100 shadow-sm'
+            ? 'bg-slate-600 text-slate-100 shadow-[var(--shadow-soft)]'
             : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'
         }`}
         aria-label="Dark Mode"

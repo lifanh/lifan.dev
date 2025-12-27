@@ -1,0 +1,72 @@
+/**
+ * Typography System Tokens
+ * 
+ * Defines font families, sizes, weights, line-heights, and letter-spacing.
+ * Limited to 4 heading levels and 3 font weights for minimalist elegance.
+ * 
+ * Requirements: 2.1, 2.2, 2.3, 2.4, 2.5
+ */
+
+:root {
+  /* ============================================
+     FONT FAMILY
+     Requirements: 2.2
+     Single sans-serif system font stack for consistency
+     ============================================ */
+  --font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* ============================================
+     FONT SIZE SCALE
+     Requirements: 2.1
+     4 heading levels (h1-h4) mapped to sizes
+     ============================================ */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+
+  /* Heading mappings (4 levels only for simplicity) */
+  --font-size-h1: var(--font-size-4xl);  /* 36px */
+  --font-size-h2: var(--font-size-3xl);  /* 30px */
+  --font-size-h3: var(--font-size-2xl);  /* 24px */
+  --font-size-h4: var(--font-size-xl);   /* 20px */
+
+  /* ============================================
+     FONT WEIGHTS
+     Requirements: 2.3
+     Limited to regular (400), medium (500), and bold (700)
+     ============================================ */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* ============================================
+     LINE HEIGHT
+     Requirements: 2.4
+     Body text minimum 1.5 for readability
+     ============================================ */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Semantic line-height mappings */
+  --line-height-heading: var(--line-height-tight);
+  --line-height-body: var(--line-height-normal);
+
+  /* ============================================
+     LETTER SPACING
+     Requirements: 2.5
+     Elegant letter-spacing for headings
+     ============================================ */
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+
+  /* Semantic letter-spacing mappings */
+  --letter-spacing-heading: var(--letter-spacing-tight);
+  --letter-spacing-body: var(--letter-spacing-normal);
+}

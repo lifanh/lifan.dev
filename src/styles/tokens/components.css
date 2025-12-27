@@ -1,0 +1,430 @@
+/**
+ * Component Utility Classes
+ * 
+ * Defines reusable component styles using design tokens.
+ * Includes cards, buttons, form inputs, and icon utilities.
+ * 
+ * Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 5.1, 5.3, 5.5, 7.2, 8.2, 8.3
+ */
+
+/* ============================================
+   CARD COMPONENT STYLES
+   Requirements: 4.1, 4.2, 4.3, 4.4, 7.2
+   Background differentiation, subtle borders, soft shadows
+   ============================================ */
+
+.card {
+  background-color: var(--color-bg-secondary);
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: var(--card-padding);
+  transition: box-shadow var(--transition-default), 
+              border-color var(--transition-default),
+              transform var(--transition-default);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-default);
+  border-color: var(--color-border-default);
+}
+
+/* Card variants */
+.card-elevated {
+  background-color: var(--color-bg-secondary);
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-default);
+  padding: var(--card-padding);
+  transition: box-shadow var(--transition-default), 
+              transform var(--transition-default);
+}
+
+.card-elevated:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-2px);
+}
+
+/* Card with no elevation (flat) */
+.card-flat {
+  background-color: var(--color-bg-secondary);
+  border: var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--card-padding);
+  transition: background-color var(--transition-default),
+              border-color var(--transition-default);
+}
+
+.card-flat:hover {
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-border-default);
+}
+
+/* Card padding variants */
+.card-sm {
+  padding: var(--card-padding-sm);
+}
+
+.card-lg {
+  padding: var(--card-padding-lg);
+}
+
+.card-xl {
+  padding: var(--card-padding-xl);
+}
+
+
+/* ============================================
+   BUTTON COMPONENT STYLES
+   Requirements: 5.1, 5.3, 4.5
+   Default, hover, active, disabled states with focus ring
+   ============================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-sm, 14px);
+  line-height: 1.5;
+  border-radius: var(--radius-default);
+  border: var(--border-width-default) solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* Focus ring for accessibility */
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-bg-primary),
+              0 0 0 4px var(--color-accent);
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}
+
+.btn-primary:active {
+  background-color: var(--color-accent-dark);
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-neutral-300);
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-500);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Secondary button (outline) */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-border-default);
+}
+
+.btn-secondary:active {
+  background-color: var(--color-bg-tertiary);
+  transform: scale(0.98);
+}
+
+.btn-secondary:disabled {
+  background-color: transparent;
+  border-color: var(--color-neutral-200);
+  color: var(--color-neutral-400);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Ghost button (minimal) */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.btn-ghost:active {
+  background-color: var(--color-bg-tertiary);
+  transform: scale(0.98);
+}
+
+.btn-ghost:disabled {
+  color: var(--color-neutral-400);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button sizes */
+.btn-sm {
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs, 12px);
+}
+
+.btn-lg {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-base, 16px);
+}
+
+/* Dark mode adjustments for disabled states */
+.dark .btn-primary:disabled {
+  background-color: var(--color-neutral-700);
+  border-color: var(--color-neutral-700);
+  color: var(--color-neutral-500);
+}
+
+.dark .btn-secondary:disabled {
+  border-color: var(--color-neutral-700);
+  color: var(--color-neutral-600);
+}
+
+
+/* ============================================
+   FORM INPUT STYLES
+   Requirements: 5.5
+   Focus states with elegant focus rings
+   ============================================ */
+
+.input {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-base, 16px);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-default);
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              background-color var(--transition-fast);
+}
+
+.input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input:hover {
+  border-color: var(--color-neutral-400);
+}
+
+/* Elegant focus ring */
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.input:disabled {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+/* Input error state */
+.input-error {
+  border-color: var(--color-error);
+}
+
+.input-error:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* Input success state */
+.input-success {
+  border-color: var(--color-success);
+}
+
+.input-success:focus {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+}
+
+/* Textarea */
+.textarea {
+  display: block;
+  width: 100%;
+  min-height: 100px;
+  padding: var(--spacing-3);
+  font-size: var(--font-size-base, 16px);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-default);
+  resize: vertical;
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Select input */
+.select {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  padding-right: var(--spacing-8);
+  font-size: var(--font-size-base, 16px);
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right var(--spacing-2) center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  border: var(--border-width-default) solid var(--color-border-default);
+  border-radius: var(--radius-default);
+  appearance: none;
+  cursor: pointer;
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Label */
+.label {
+  display: block;
+  margin-bottom: var(--spacing-1);
+  font-size: var(--font-size-sm, 14px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--color-text-primary);
+}
+
+/* Helper text */
+.helper-text {
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-xs, 12px);
+  color: var(--color-text-muted);
+}
+
+.helper-text-error {
+  color: var(--color-error);
+}
+
+/* Dark mode focus ring adjustments */
+.dark .input:focus,
+.dark .textarea:focus,
+.dark .select:focus {
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+}
+
+.dark .input-error:focus {
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.25);
+}
+
+.dark .input-success:focus {
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.25);
+}
+
+
+/* ============================================
+   ICON SIZING UTILITIES
+   Requirements: 8.2, 8.3
+   Standard sizes: 16px, 20px, 24px
+   ============================================ */
+
+:root {
+  /* Icon size tokens */
+  --icon-size-sm: 16px;
+  --icon-size-default: 20px;
+  --icon-size-lg: 24px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-sm {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+.icon-sm svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+.icon-default {
+  width: var(--icon-size-default);
+  height: var(--icon-size-default);
+}
+
+.icon-default svg {
+  width: var(--icon-size-default);
+  height: var(--icon-size-default);
+}
+
+.icon-lg {
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+}
+
+.icon-lg svg {
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+}
+
+/* Icon color utilities */
+.icon-primary {
+  color: var(--color-text-primary);
+}
+
+.icon-secondary {
+  color: var(--color-text-secondary);
+}
+
+.icon-muted {
+  color: var(--color-text-muted);
+}
+
+.icon-accent {
+  color: var(--color-accent);
+}
+
+/* Icon with text alignment helper */
+.icon-inline {
+  vertical-align: middle;
+  margin-right: var(--spacing-1);
+}
