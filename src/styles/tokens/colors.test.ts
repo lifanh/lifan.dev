@@ -1,6 +1,6 @@
 /**
  * Property-Based Tests for Color Palette Tokens
- * 
+ *
  * Feature: design-guideline
  * Tests validate correctness properties from the design document.
  */
@@ -10,32 +10,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
 import { parseColorToRGB } from '../../test-utils/color-helpers';
+import { extractCSSVariables } from '../../test-utils/css-helpers';
 
 // Read and parse the colors.css file
 const colorsPath = path.join(__dirname, 'colors.css');
 const colorsCSS = fs.readFileSync(colorsPath, 'utf-8');
-
-/**
- * Extract CSS custom property values from the CSS content
- */
-function extractCSSVariables(css: string, selector: string = ':root'): Map<string, string> {
-  const variables = new Map<string, string>();
-  
-  // Find the selector block
-  const selectorRegex = new RegExp(`${selector.replace('.', '\\.')}\\s*\\{([^}]+)\\}`, 'g');
-  const matches = css.matchAll(selectorRegex);
-  
-  for (const match of matches) {
-    const block = match[1];
-    const varRegex = /--([\w-]+):\s*([^;]+);/g;
-    let varMatch;
-    while ((varMatch = varRegex.exec(block)) !== null) {
-      variables.set(`--${varMatch[1]}`, varMatch[2].trim());
-    }
-  }
-  
-  return variables;
-}
 
 /**
  * Check if a color is pure black
@@ -68,10 +47,10 @@ const resolvedDarkBgColors = [darkBgPrimary, darkBgSecondary, darkBgTertiary].fi
 describe('Color Palette Properties', () => {
   /**
    * Feature: design-guideline, Property 3: Dark Mode Background Non-Black
-   * 
-   * *For any* background color defined for dark mode, that color SHALL NOT 
+   *
+   * *For any* background color defined for dark mode, that color SHALL NOT
    * be pure black (#000000 or rgb(0,0,0)).
-   * 
+   *
    * **Validates: Requirements 6.1**
    */
   describe('Property 3: Dark Mode Background Non-Black', () => {
@@ -108,10 +87,10 @@ describe('Color Palette Properties', () => {
 
   /**
    * Feature: design-guideline, Property 4: Color Palette Mode Completeness
-   * 
-   * *For any* semantic color token (bg, text, border, accent), both light mode 
+   *
+   * *For any* semantic color token (bg, text, border, accent), both light mode
    * and dark mode variants SHALL be defined.
-   * 
+   *
    * **Validates: Requirements 1.3, 6.3**
    */
   describe('Property 4: Color Palette Mode Completeness', () => {

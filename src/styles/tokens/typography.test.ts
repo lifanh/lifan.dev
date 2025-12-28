@@ -1,6 +1,6 @@
 /**
  * Property-Based Tests for Typography System Tokens
- * 
+ *
  * Feature: design-guideline
  * Tests validate correctness properties from the design document.
  */
@@ -10,31 +10,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
 import { getContrastRatio } from '../../test-utils/color-helpers';
+import { extractCSSVariables } from '../../test-utils/css-helpers';
 
 // Read and parse the colors.css file for contrast testing
 const colorsPath = path.join(__dirname, 'colors.css');
 const colorsCSS = fs.readFileSync(colorsPath, 'utf-8');
-
-/**
- * Extract CSS custom property values from the CSS content
- */
-function extractCSSVariables(css: string, selector: string = ':root'): Map<string, string> {
-  const variables = new Map<string, string>();
-  
-  const selectorRegex = new RegExp(`${selector.replace('.', '\\.')}\\s*\\{([^}]+)\\}`, 'g');
-  const matches = css.matchAll(selectorRegex);
-  
-  for (const match of matches) {
-    const block = match[1];
-    const varRegex = /--([\w-]+):\s*([^;]+);/g;
-    let varMatch;
-    while ((varMatch = varRegex.exec(block)) !== null) {
-      variables.set(`--${varMatch[1]}`, varMatch[2].trim());
-    }
-  }
-  
-  return variables;
-}
 
 // Extract variables from both :root and .dark selectors
 const rootVariables = extractCSSVariables(colorsCSS, ':root');
@@ -98,10 +78,10 @@ const WCAG_AA_CONTRAST_RATIO = 4.5;
 describe('Typography Properties', () => {
   /**
    * Feature: design-guideline, Property 5: WCAG Contrast Compliance
-   * 
+   *
    * *For any* text color and background color combination in the design system,
    * the contrast ratio SHALL be at least 4.5:1 for normal text.
-   * 
+   *
    * **Validates: Requirements 2.6**
    */
   describe('Property 5: WCAG Contrast Compliance', () => {
@@ -143,7 +123,7 @@ describe('Typography Properties', () => {
 
     it('should verify specific contrast ratios for all defined color pairs', () => {
       const allPairs = [...resolvedLightPairs, ...resolvedDarkPairs];
-      
+
       for (const pair of allPairs) {
         const ratio = getContrastRatio(pair.textColor, pair.bgColor);
         expect(ratio).not.toBeNull();
