@@ -44,9 +44,11 @@ export default function EconomicSim() {
               max="40"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              aria-valuetext={`$${price}`}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
             />
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              Price: ${price}
+            </div>
           </div>
           <div>
             <label htmlFor="supply-input" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -59,9 +61,11 @@ export default function EconomicSim() {
               max="200"
               value={supply}
               onChange={(e) => setSupply(Number(e.target.value))}
-              aria-valuetext={`${supply} units`}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
             />
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+              Supply: {supply} units
+            </div>
           </div>
         </div>
 
