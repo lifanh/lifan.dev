@@ -9,6 +9,7 @@ import * as fc from 'fast-check';
 import * as fs from 'fs';
 import * as path from 'path';
 import { describe, expect, it } from 'vitest';
+import { parseColorToRGB } from '../../test-utils/color-helpers';
 
 // Read and parse the colors.css file
 const colorsPath = path.join(__dirname, 'colors.css');
@@ -34,32 +35,6 @@ function extractCSSVariables(css: string, selector: string = ':root'): Map<strin
   }
   
   return variables;
-}
-
-/**
- * Parse a color value to RGB components
- * Supports hex colors (#RGB, #RRGGBB)
- */
-function parseColorToRGB(color: string): { r: number; g: number; b: number } | null {
-  // Handle hex colors
-  const hexMatch = color.match(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/);
-  if (hexMatch) {
-    const hex = hexMatch[1];
-    if (hex.length === 3) {
-      return {
-        r: parseInt(hex[0] + hex[0], 16),
-        g: parseInt(hex[1] + hex[1], 16),
-        b: parseInt(hex[2] + hex[2], 16),
-      };
-    } else {
-      return {
-        r: parseInt(hex.slice(0, 2), 16),
-        g: parseInt(hex.slice(2, 4), 16),
-        b: parseInt(hex.slice(4, 6), 16),
-      };
-    }
-  }
-  return null;
 }
 
 /**

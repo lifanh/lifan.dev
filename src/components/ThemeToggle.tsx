@@ -15,8 +15,8 @@ export const VALID_THEMES: readonly Theme[] = ['light', 'dark', 'system'] as con
 export function getStoredTheme(): Theme | null {
   try {
     const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      return savedTheme;
+    if (VALID_THEMES.includes(savedTheme as Theme)) {
+      return savedTheme as Theme;
     }
     return null;
   } catch {
@@ -50,6 +50,11 @@ function applyTheme(theme: Theme): void {
   
   // Enable smooth transitions for theme switching (uses --transition-default: 200ms)
   root.style.setProperty('transition', 'background-color var(--transition-default), color var(--transition-default)');
+  
+  // Remove transition after it completes to avoid affecting other style changes
+  setTimeout(() => {
+    root.style.removeProperty('transition');
+  }, 250);
   
   if (theme === 'dark') {
     root.classList.add('dark');
