@@ -15,6 +15,8 @@ export default function EconomicSim() {
     setSupply(100);
   };
 
+  const isResetDisabled = price === 10 && supply === 100;
+
   return (
     <div className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xl max-w-2xl mx-auto transition-colors duration-200">
       <div className="mb-6 flex justify-between items-start">
@@ -24,7 +26,8 @@ export default function EconomicSim() {
         </div>
         <button
           onClick={handleReset}
-          className="text-xs px-3 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 rounded transition-colors"
+          disabled={isResetDisabled}
+          className="text-xs px-3 py-1 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-600 dark:text-slate-300 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
           aria-label="Reset simulation to default values"
         >
           Reset
@@ -44,7 +47,8 @@ export default function EconomicSim() {
               max="40"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              aria-valuetext={`$${price}`}
+              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             />
           </div>
           <div>
@@ -58,7 +62,8 @@ export default function EconomicSim() {
               max="200"
               value={supply}
               onChange={(e) => setSupply(Number(e.target.value))}
-              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              aria-valuetext={`${supply} units`}
+              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
             />
           </div>
         </div>
