@@ -43,8 +43,9 @@ export default function EconomicSim() {
               min="1"
               max="40"
               value={price}
+              aria-valuetext={`$${price}`}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-800"
             />
           </div>
           <div>
@@ -57,8 +58,9 @@ export default function EconomicSim() {
               min="0"
               max="200"
               value={supply}
+              aria-valuetext={`${supply} units`}
               onChange={(e) => setSupply(Number(e.target.value))}
-              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+              className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-800"
             />
           </div>
         </div>
