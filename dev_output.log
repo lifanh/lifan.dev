@@ -1,0 +1,25 @@
+
+> lifan-dev@0.0.1 dev
+> astro dev
+
+▶ Astro collects anonymous usage data.
+  This information helps us improve Astro.
+  Run "astro telemetry disable" to opt-out.
+  https://astro.build/telemetry
+
+08:03:19 [@astrojs/cloudflare] Enabling sessions with Cloudflare KV with the "SESSION" KV binding.
+08:03:19 [@astrojs/cloudflare] If you see the error "Invalid binding `SESSION`" in your build output, you need to add the binding to your wrangler config file.
+08:03:20 [types] Generated 1ms
+08:03:20 [content] Syncing content
+08:03:20 [content] Synced content
+
+ astro  v5.16.6 ready in 2109 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+08:03:20 watching for file changes...
+08:03:29 [200] /tools/economic-sim 522ms
+08:04:02 [watch] /src/tools/economic-sim/EconomicSim.tsx, /src/styles/global.css
+08:04:02 [watch] src/tools/economic-sim/EconomicSim.tsx
+08:04:08 [200] /tools/economic-sim 51ms
