@@ -43,6 +43,7 @@ export default function EconomicSim() {
               min="1"
               max="40"
               value={price}
+              aria-valuetext={`$${price}`}
               onChange={(e) => setPrice(Number(e.target.value))}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
             />
@@ -57,6 +58,7 @@ export default function EconomicSim() {
               min="0"
               max="200"
               value={supply}
+              aria-valuetext={`${supply} units`}
               onChange={(e) => setSupply(Number(e.target.value))}
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500"
             />
