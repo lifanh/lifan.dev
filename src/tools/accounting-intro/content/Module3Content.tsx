@@ -1,6 +1,7 @@
 import { DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { BookkeepingSimulator } from '../components/interactive/simulators/BookkeepingSimulator';
+import { TransactionDecoder } from '../components/interactive/simulators/TransactionDecoder';
 import { module03Quiz } from './quizzes';
 
 export function Module3Content() {
@@ -345,6 +346,23 @@ Cash                        $5,000
 
         <div className="my-6">
           <BookkeepingSimulator />
+        </div>
+      </section>
+
+      <section id="section-3-decoder" className="pt-8 border-t border-slate-200 dark:border-slate-700">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+          Interactive Tool: Transaction Decoder
+        </h2>
+
+        <TryItYourself>
+          <p>
+            Read the scenario and decide which accounts are affected, then enter the correct debit,
+            credit, and amount.
+          </p>
+        </TryItYourself>
+
+        <div className="my-6">
+          <TransactionDecoder />
         </div>
       </section>
 

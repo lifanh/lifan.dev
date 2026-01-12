@@ -13,7 +13,7 @@
 | Phase 1: Foundation (Weeks 1-3) | 🟡 In Progress | 90% |
 | Phase 2: Core Accounting (Weeks 4-6) | 🟡 In Progress | 75% |
 | Phase 3: Financial Statements (Weeks 7-9) | 🟡 In Progress | 60% |
-| Phase 4: Practical Skills (Weeks 10-12) | 🔲 Not Started | 0% |
+| Phase 4: Practical Skills (Weeks 10-12) | � In Progress | 10% |
 | Phase 5: Applied Accounting (Weeks 13-14) | 🔲 Not Started | 0% |
 | Phase 6: Polish & Launch (Weeks 15-16) | 🔲 Not Started | 0% |
 
@@ -49,10 +49,10 @@
 |------|----------|--------|--------|-------|
 | Module 3 content: Double-Entry Bookkeeping | P0 | 3d | ✅ | Module 3 content implemented |
 | Bookkeeping Simulator (journal entries, T-accounts) | P0 | 5d | ✅ | Interactive simulator implemented |
-| Transaction Decoder quiz component | P0 | 3d | 🔲 | |
+| Transaction Decoder quiz component | P0 | 3d | ✅ | MVP transaction decoder + tests |
 | Module 4 content: Income Statement | P0 | 3d | ✅ | Module 4 content implemented |
 | Income Statement Builder | P0 | 4d | ✅ | MVP core tool (basic builder + persistence) |
-| Profit Margin Analyzer | P1 | 2d | 🔲 | |
+| Profit Margin Analyzer | P1 | 2d | ✅ | MVP analyzer + tests |
 | Knowledge Check quiz component | P0 | 3d | ✅ | KnowledgeCheck component implemented |
 | Quiz data persistence | P0 | 1d | ✅ | Quiz completion stored in progress store |
 
@@ -85,7 +85,7 @@
 | Task | Priority | Effort | Status | Notes |
 |------|----------|--------|--------|-------|
 | Module 7 content: Budgeting Mastery | P0 | 3d | 🔲 | |
-| Comprehensive Budget Builder | P0 | 5d | 🔲 | MVP core tool |
+| Comprehensive Budget Builder | P0 | 5d | ✅ | MVP budget builder + persistence + tests |
 | Variance Analysis tool | P1 | 2d | 🔲 | |
 | Module 8 content: Recording & Organizing | P0 | 2d | 🔲 | |
 | Bank Reconciliation Simulator | P0 | 3d | 🔲 | Post-MVP |
@@ -153,7 +153,7 @@ Core deliverables for initial release (Phases 1-3):
 - [x] Net Worth Calculator
 - [x] Income Statement Builder
 - [x] Balance Sheet Builder
-- [ ] Budget Builder
+- [x] Budget Builder
 
 ### Platform Features
 - [x] Progress tracking (localStorage)
@@ -224,3 +224,6 @@ npm install @react-pdf/renderer
 | 2026-01-11 | Session 3: Income Statement Builder, quiz progress integration, interactive component tests |
 | 2026-01-11 | Session 3 (cont): Balance Sheet Builder (with tests) + Module 5 integration |
 | 2026-01-11 | Session 3 (cont): Cash Flow Forecaster (with tests) + Module 6 integration |
+| 2026-01-12 | Session 4: Budget Builder (with tests) |
+| 2026-01-12 | Session 4 (cont): Transaction Decoder (with tests) + Module 3 integration |
+| 2026-01-12 | Session 4 (cont): Profit Margin Analyzer (with tests) + Module 4 integration |

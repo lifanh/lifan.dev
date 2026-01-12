@@ -1,6 +1,7 @@
 import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { IncomeStatementBuilder } from '../components/interactive/calculators/IncomeStatementBuilder';
+import { ProfitMarginAnalyzer } from '../components/interactive/calculators/ProfitMarginAnalyzer';
 import { module04Quiz } from './quizzes';
 
 export function Module4Content() {
@@ -311,6 +312,23 @@ Savings Rate: 38.6%`}
 
         <div className="my-6">
           <IncomeStatementBuilder />
+        </div>
+      </section>
+
+      <section id="section-4-8" className="pt-8 border-t border-slate-200 dark:border-slate-700">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+          Interactive Tool: Profit Margin Analyzer
+        </h2>
+
+        <TryItYourself>
+          <p>
+            Adjust revenue, COGS, and expenses to see how gross margin and net margin change.
+            Use the goal seek to estimate the revenue needed for a target profit.
+          </p>
+        </TryItYourself>
+
+        <div className="my-6">
+          <ProfitMarginAnalyzer />
         </div>
       </section>
 
