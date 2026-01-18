@@ -1,6 +1,6 @@
 import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
-import { BalanceSheetBuilder } from '../components/interactive/calculators/BalanceSheetBuilder';
+import { BalanceSheetBuilder, FinancialHealthDashboard } from '../components/interactive/calculators';
 import { module05Quiz } from './quizzes';
 
 export function Module5Content() {
@@ -291,6 +291,24 @@ TOTAL LIABILITIES & EQUITY         $435,000
 
         <div className="my-6">
           <BalanceSheetBuilder />
+        </div>
+      </section>
+
+      <section id="section-5-dashboard" className="pt-8 border-t border-slate-200 dark:border-slate-700">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+          Interactive Tool: Financial Health Dashboard
+        </h2>
+
+        <TryItYourself>
+          <p>
+            Monitor your personal financial health with key ratios and metrics. This dashboard connects
+            data from your Net Worth Calculator, Income Statement, and Budget Builder to provide
+            insights and recommendations.
+          </p>
+        </TryItYourself>
+
+        <div className="my-6">
+          <FinancialHealthDashboard />
         </div>
       </section>
 
