@@ -2,6 +2,7 @@ import { RotateCcw, Save, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useCalculatorStore } from '../../../store';
 import type { AssetCategory, LiabilityCategory } from '../../../types';
+import { PDFExport } from '../../export/index';
 
 interface AssetInput {
   id: string;
@@ -163,9 +164,19 @@ export function BalanceSheetBuilder() {
 
   return (
     <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-      <div className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex items-center justify-between">
+      <div className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h3 className="font-semibold text-slate-900 dark:text-white">Balance Sheet Builder</h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <PDFExport
+            data={{
+              assets: assets.map((a) => ({ name: a.name || 'Asset', value: parseFloat(a.value) || 0 })),
+              liabilities: liabilities.map((l) => ({ name: l.name || 'Liability', value: parseFloat(l.value) || 0 })),
+              totals,
+              asOfDate,
+            }}
+            type="balance-sheet"
+            title={`Balance Sheet - ${asOfDate}`}
+          />
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"

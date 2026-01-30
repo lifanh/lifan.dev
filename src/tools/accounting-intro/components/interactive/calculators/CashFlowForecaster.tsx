@@ -2,6 +2,7 @@ import { Plus, RotateCcw, Save, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useCalculatorStore } from '../../../store';
 import type { CashFlowData, CashFlowItem } from '../../../types';
+import { PDFExport } from '../../export/index';
 
 type CashFlowCategory = CashFlowItem['category'];
 
@@ -202,9 +203,28 @@ export function CashFlowForecaster() {
 
   return (
     <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-      <div className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex items-center justify-between">
+      <div className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <h3 className="font-semibold text-slate-900 dark:text-white">Cash Flow Forecaster</h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+          <PDFExport
+            data={{
+              year,
+              startingBalance: parseFloat(startingBalance) || 0,
+              items: items.map((i) => ({
+                name: i.name || 'Cash Flow',
+                amount: parseFloat(i.amount) || 0,
+                type: i.type,
+                category: i.category,
+                month: i.month,
+              })),
+              totals: {
+                netCashFlow: forecast.reduce((sum, f) => sum + f.net, 0),
+                endingBalance: forecast[forecast.length - 1]?.ending || 0,
+              },
+            }}
+            type="cash-flow"
+            title={`Cash Flow Forecast - ${year}`}
+          />
           <button
             onClick={handleReset}
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"

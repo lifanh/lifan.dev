@@ -10,8 +10,8 @@
 
 | Phase | Status | Progress |
 |-------|--------|----------|
-| Phase 1: Foundation (Weeks 1-3) | 🟡 In Progress | 90% |
-| Phase 2: Core Accounting (Weeks 4-6) | 🟡 In Progress | 75% |
+| Phase 1: Foundation (Weeks 1-3) | ✅ Complete | 100% |
+| Phase 2: Core Accounting (Weeks 4-6) | ✅ Complete | 100% |
 | Phase 3: Financial Statements (Weeks 7-9) | ✅ Complete | 100% |
 | Phase 4: Practical Skills (Weeks 10-12) | � In Progress | 10% |
 | Phase 5: Applied Accounting (Weeks 13-14) | 🔲 Not Started | 0% |
@@ -158,7 +158,7 @@ Core deliverables for initial release (Phases 1-3):
 ### Platform Features
 - [x] Progress tracking (localStorage)
 - [x] Knowledge Check quizzes
-- [ ] PDF export
+- [x] PDF export
 - [ ] Responsive design (desktop/tablet/mobile)
 
 ### Templates (8 core)
@@ -231,3 +231,5 @@ npm install @react-pdf/renderer
 | 2026-01-12 | Session 5 (cont): Lazy-loaded chart components with Recharts (Pie, Bar, Line, Area) |
 | 2026-01-12 | Session 5 (cont): PDF export functionality with @react-pdf/renderer |
 | 2026-01-12 | Session 5 (cont): Fixed all TypeScript errors and updated data structure handling |
+| 2026-01-30 | Session 6: Added PDF export to Balance Sheet Builder, Cash Flow Forecaster, Budget Builder |
+| 2026-01-30 | Session 6 (cont): Improved responsive design for calculator headers (mobile-friendly stacking) |

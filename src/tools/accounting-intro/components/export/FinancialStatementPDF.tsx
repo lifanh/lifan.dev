@@ -201,7 +201,121 @@ export function FinancialStatementPDF({ data, type, title }: FinancialStatementP
       <View style={styles.section}>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Equity</Text>
-          <Text style={styles.totalValue}>{formatCurrency(data.totals?.equity || 0)}</Text>
+          <Text style={[
+            styles.totalValue,
+            (data.totals?.equity || 0) >= 0 ? styles.positive : styles.negative
+          ]}>
+            {formatCurrency(data.totals?.equity || 0)}
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderCashFlow = () => (
+    <View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Cash Flow Forecast - {data.year}</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Starting Balance</Text>
+          <Text style={styles.value}>{formatCurrency(data.startingBalance || 0)}</Text>
+        </View>
+      </View>
+
+      {['operating', 'investing', 'financing'].map((category) => {
+        const categoryItems = data.items?.filter((item: any) => item.category === category) || [];
+        if (categoryItems.length === 0) return null;
+
+        const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1) + ' Activities';
+
+        return (
+          <View style={styles.section} key={category}>
+            <Text style={styles.sectionTitle}>{categoryLabel}</Text>
+            {categoryItems.map((item: any, index: number) => (
+              <View style={styles.row} key={index}>
+                <Text style={styles.label}>
+                  {item.name || 'Unnamed'} ({item.type === 'inflow' ? '+' : '-'})
+                </Text>
+                <Text style={[
+                  styles.value,
+                  item.type === 'inflow' ? styles.positive : styles.negative
+                ]}>
+                  {formatCurrency(item.amount || 0)}
+                </Text>
+              </View>
+            ))}
+          </View>
+        );
+      })}
+
+      <View style={styles.section}>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Net Cash Flow</Text>
+          <Text style={[
+            styles.totalValue,
+            (data.totals?.netCashFlow || 0) >= 0 ? styles.positive : styles.negative
+          ]}>
+            {formatCurrency(data.totals?.netCashFlow || 0)}
+          </Text>
+        </View>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Ending Balance</Text>
+          <Text style={styles.totalValue}>{formatCurrency(data.totals?.endingBalance || 0)}</Text>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderBudget = () => (
+    <View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Budget - {data.month}</Text>
+        <View style={styles.row}>
+          <Text style={styles.label}>Monthly Income</Text>
+          <Text style={styles.value}>{formatCurrency(data.income || 0)}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.label}>Methodology</Text>
+          <Text style={styles.value}>{data.methodology || 'Traditional'}</Text>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Budget Items</Text>
+        <View style={[styles.row, { backgroundColor: '#f1f5f9' }]}>
+          <Text style={[styles.label, { width: '40%', fontWeight: 'bold' }]}>Category</Text>
+          <Text style={[styles.value, { width: '30%', fontWeight: 'bold' }]}>Planned</Text>
+          <Text style={[styles.value, { width: '30%', fontWeight: 'bold' }]}>Actual</Text>
+        </View>
+        {data.items?.map((item: any, index: number) => (
+          <View style={styles.row} key={index}>
+            <Text style={[styles.label, { width: '40%' }]}>
+              {item.category?.replace('-', ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) || 'Other'}
+            </Text>
+            <Text style={[styles.value, { width: '30%' }]}>{formatCurrency(item.planned || 0)}</Text>
+            <Text style={[styles.value, { width: '30%' }]}>{formatCurrency(item.actual || 0)}</Text>
+          </View>
+        ))}
+      </View>
+
+      <View style={styles.section}>
+        <View style={styles.totalRow}>
+          <Text style={[styles.totalLabel, { width: '40%' }]}>Totals</Text>
+          <Text style={[styles.totalValue, { width: '30%' }]}>
+            {formatCurrency(data.totals?.planned || 0)}
+          </Text>
+          <Text style={[styles.totalValue, { width: '30%' }]}>
+            {formatCurrency(data.totals?.actual || 0)}
+          </Text>
+        </View>
+        <View style={styles.totalRow}>
+          <Text style={styles.totalLabel}>Remaining (Income - Actual)</Text>
+          <Text style={[
+            styles.totalValue,
+            (data.totals?.actualRemaining || 0) >= 0 ? styles.positive : styles.negative
+          ]}>
+            {formatCurrency(data.totals?.actualRemaining || 0)}
+          </Text>
         </View>
       </View>
     </View>
@@ -217,6 +331,8 @@ export function FinancialStatementPDF({ data, type, title }: FinancialStatementP
 
         {type === 'income-statement' && renderIncomeStatement()}
         {type === 'balance-sheet' && renderBalanceSheet()}
+        {type === 'cash-flow' && renderCashFlow()}
+        {type === 'budget' && renderBudget()}
 
         <Text style={styles.footer}>
           Generated by Accounting Intro Platform - Educational purposes only
