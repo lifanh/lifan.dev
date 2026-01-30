@@ -4,4 +4,5 @@ export { module03Quiz } from './module-03-quiz';
 export { module04Quiz } from './module-04-quiz';
 export { module05Quiz } from './module-05-quiz';
 export { module06Quiz } from './module-06-quiz';
+export { module07Quiz } from './module-07-quiz';
 

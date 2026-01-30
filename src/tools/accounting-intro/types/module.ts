@@ -177,9 +177,36 @@ export const MODULES: Module[] = [
       { id: '6.6', title: 'Resources', type: 'resources' },
     ],
   },
+  {
+    id: 7,
+    title: 'Budgeting Mastery',
+    shortTitle: 'Budgeting',
+    part: 3,
+    partTitle: 'Practical Accounting Skills',
+    description: 'Master budgeting methodologies and variance analysis to take control of your finances.',
+    estimatedTime: 50,
+    objectives: [
+      'Create effective budgets using multiple methodologies',
+      'Implement variance analysis to track performance',
+      'Adjust budgets based on actual results',
+      'Apply zero-based budgeting principles',
+      'Use budgets as decision-making tools',
+    ],
+    sections: [
+      { id: '7.1', title: 'What is Budgeting?', type: 'content' },
+      { id: '7.2', title: 'Budgeting Methodologies', type: 'content' },
+      { id: '7.3', title: 'Creating Your Budget', type: 'content' },
+      { id: '7.4', title: 'Budget Builder', type: 'interactive' },
+      { id: '7.5', title: 'Variance Analysis', type: 'content' },
+      { id: '7.6', title: 'The Emergency Fund Journey', type: 'content' },
+      { id: '7.7', title: 'Knowledge Check', type: 'quiz' },
+      { id: '7.8', title: 'Resources', type: 'resources' },
+    ],
+  },
 ];
 
 export const PARTS = [
   { id: 1, title: 'Foundations of Accounting', modules: [1, 2, 3] },
   { id: 2, title: 'Financial Statements', modules: [4, 5, 6] },
+  { id: 3, title: 'Practical Accounting Skills', modules: [7] },
 ];

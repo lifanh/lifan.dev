@@ -6,6 +6,7 @@ import { Module3Content } from '../content/Module3Content';
 import { Module4Content } from '../content/Module4Content';
 import { Module5Content } from '../content/Module5Content';
 import { Module6Content } from '../content/Module6Content';
+import { Module7Content } from '../content/Module7Content';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
 import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
@@ -35,6 +36,8 @@ export function AccountingPlatform() {
         return <Module5Content />;
       case 6:
         return <Module6Content />;
+      case 7:
+        return <Module7Content />;
       default:
         return (
           <div className="text-center py-12 text-slate-500 dark:text-slate-400">
