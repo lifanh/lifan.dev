@@ -37,6 +37,6 @@
     "fast-check": "^4.5.2",
     "happy-dom": "^20.0.11",
     "vitest": "^4.0.16",
-    "wrangler": "^4.54.0"
+    "wrangler": "^4.59.1"
   }
 }
