@@ -1,6 +1,5 @@
-import { pdf } from '@react-pdf/renderer';
-import { Download } from 'lucide-react';
-import { FinancialStatementPDF } from './index';
+import { Download, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
 interface PDFExportProps {
   data: any;
@@ -9,8 +8,17 @@ interface PDFExportProps {
 }
 
 export function PDFExport({ data, type, title }: PDFExportProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleExport = async () => {
+    setIsLoading(true);
     try {
+      // Dynamically import PDF libraries only when user clicks export
+      const [{ pdf }, { FinancialStatementPDF }] = await Promise.all([
+        import('@react-pdf/renderer'),
+        import('./FinancialStatementPDF'),
+      ]);
+
       const doc = <FinancialStatementPDF data={data} type={type} title={title} />;
       const blob = await pdf(doc).toBlob();
 
@@ -25,17 +33,29 @@ export function PDFExport({ data, type, title }: PDFExportProps) {
       URL.revokeObjectURL(url);
     } catch (error) {
       console.error('Error generating PDF:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <button
       onClick={handleExport}
-      className="flex items-center gap-2 px-3 py-2 text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+      disabled={isLoading}
+      className="flex items-center gap-2 px-3 py-2 text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       type="button"
     >
-      <Download className="w-4 h-4" />
-      Export PDF
+      {isLoading ? (
+        <>
+          <Loader2 className="w-4 h-4 animate-spin" />
+          Generating...
+        </>
+      ) : (
+        <>
+          <Download className="w-4 h-4" />
+          Export PDF
+        </>
+      )}
     </button>
   );
 }

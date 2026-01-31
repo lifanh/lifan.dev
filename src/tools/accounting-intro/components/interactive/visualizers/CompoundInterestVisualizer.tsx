@@ -119,10 +119,11 @@ export function CompoundInterestVisualizer() {
         {/* Input Controls */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <div>
-            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label htmlFor="ci-principal" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Initial Investment
             </label>
             <input
+              id="ci-principal"
               type="number"
               value={principal}
               onChange={(e) => setPrincipal(Math.max(0, parseInt(e.target.value) || 0))}
@@ -133,10 +134,11 @@ export function CompoundInterestVisualizer() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label htmlFor="ci-monthly" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Monthly Addition
             </label>
             <input
+              id="ci-monthly"
               type="number"
               value={monthlyContribution}
               onChange={(e) => setMonthlyContribution(Math.max(0, parseInt(e.target.value) || 0))}
@@ -147,10 +149,11 @@ export function CompoundInterestVisualizer() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label htmlFor="ci-rate" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Annual Rate (%)
             </label>
             <input
+              id="ci-rate"
               type="number"
               value={rate}
               onChange={(e) => setRate(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
@@ -162,10 +165,11 @@ export function CompoundInterestVisualizer() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label htmlFor="ci-years" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Years
             </label>
             <input
+              id="ci-years"
               type="number"
               value={years}
               onChange={(e) => setYears(Math.max(1, Math.min(50, parseInt(e.target.value) || 1)))}
@@ -176,7 +180,7 @@ export function CompoundInterestVisualizer() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+            <label htmlFor="ci-compounding" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
               Compounding
             </label>
             <select

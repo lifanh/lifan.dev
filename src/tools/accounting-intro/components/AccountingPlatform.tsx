@@ -1,20 +1,31 @@
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
-import { Module10Content } from '../content/Module10Content';
-import { Module11Content } from '../content/Module11Content';
-import { Module12Content } from '../content/Module12Content';
-import { Module1Content } from '../content/Module1Content';
-import { Module2Content } from '../content/Module2Content';
-import { Module3Content } from '../content/Module3Content';
-import { Module4Content } from '../content/Module4Content';
-import { Module5Content } from '../content/Module5Content';
-import { Module6Content } from '../content/Module6Content';
-import { Module7Content } from '../content/Module7Content';
-import { Module8Content } from '../content/Module8Content';
-import { Module9Content } from '../content/Module9Content';
+import { Loader2, Menu, X } from 'lucide-react';
+import { lazy, Suspense, useState } from 'react';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
 import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
+
+// Lazy load all module content for better code splitting
+const Module1Content = lazy(() => import('../content/Module1Content').then(m => ({ default: m.Module1Content })));
+const Module2Content = lazy(() => import('../content/Module2Content').then(m => ({ default: m.Module2Content })));
+const Module3Content = lazy(() => import('../content/Module3Content').then(m => ({ default: m.Module3Content })));
+const Module4Content = lazy(() => import('../content/Module4Content').then(m => ({ default: m.Module4Content })));
+const Module5Content = lazy(() => import('../content/Module5Content').then(m => ({ default: m.Module5Content })));
+const Module6Content = lazy(() => import('../content/Module6Content').then(m => ({ default: m.Module6Content })));
+const Module7Content = lazy(() => import('../content/Module7Content').then(m => ({ default: m.Module7Content })));
+const Module8Content = lazy(() => import('../content/Module8Content').then(m => ({ default: m.Module8Content })));
+const Module9Content = lazy(() => import('../content/Module9Content').then(m => ({ default: m.Module9Content })));
+const Module10Content = lazy(() => import('../content/Module10Content').then(m => ({ default: m.Module10Content })));
+const Module11Content = lazy(() => import('../content/Module11Content').then(m => ({ default: m.Module11Content })));
+const Module12Content = lazy(() => import('../content/Module12Content').then(m => ({ default: m.Module12Content })));
+
+function ModuleLoadingFallback() {
+  return (
+    <div className="flex items-center justify-center py-20">
+      <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+      <span className="ml-3 text-slate-600 dark:text-slate-400">Loading module...</span>
+    </div>
+  );
+}
 
 export function AccountingPlatform() {
   const { progress, setCurrentModule } = useProgressStore();
@@ -70,7 +81,7 @@ export function AccountingPlatform() {
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+            className="lg:hidden p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
             aria-label="Toggle navigation"
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -102,9 +113,12 @@ export function AccountingPlatform() {
 
           {/* Backdrop for mobile */}
           {sidebarOpen && (
-            <div
-              className="fixed inset-0 z-20 bg-black/50 lg:hidden"
+            <button
+              type="button"
+              className="fixed inset-0 z-20 bg-black/50 lg:hidden cursor-default"
               onClick={() => setSidebarOpen(false)}
+              onKeyDown={(e) => e.key === 'Escape' && setSidebarOpen(false)}
+              aria-label="Close navigation"
             />
           )}
 
@@ -112,8 +126,10 @@ export function AccountingPlatform() {
           <main className="min-w-0">
             {currentModule && <ModuleHeader module={currentModule} />}
 
-            <div className="prose prose-slate dark:prose-invert max-w-none">
-              {renderModuleContent()}
+            <div key={progress.currentModule} className="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
+              <Suspense fallback={<ModuleLoadingFallback />}>
+                {renderModuleContent()}
+              </Suspense>
             </div>
 
             {/* Navigation Buttons */}
@@ -121,14 +137,14 @@ export function AccountingPlatform() {
               <button
                 onClick={() => handleModuleSelect(Math.max(1, progress.currentModule - 1))}
                 disabled={progress.currentModule === 1}
-                className="px-4 py-2 text-sm font-medium rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-3 min-h-[44px] text-sm font-medium rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 ← Previous Module
               </button>
               <button
                 onClick={() => handleModuleSelect(Math.min(MODULES.length, progress.currentModule + 1))}
                 disabled={progress.currentModule === MODULES.length}
-                className="px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-3 min-h-[44px] text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Next Module →
               </button>

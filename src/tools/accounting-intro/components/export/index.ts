@@ -1,4 +1,5 @@
-export { FinancialStatementPDF } from './FinancialStatementPDF';
+// Note: FinancialStatementPDF is intentionally not exported here to enable code splitting
+// It's dynamically imported in PDFExport.tsx when the user clicks export
 export { PDFExport } from './PDFExport';
 export { TemplateDownloads } from './TemplateDownloads';
 export {

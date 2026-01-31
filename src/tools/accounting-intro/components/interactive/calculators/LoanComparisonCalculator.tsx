@@ -219,10 +219,12 @@ export function LoanComparisonCalculator() {
               <div className="flex justify-between items-center mb-4">
                 <input
                   type="text"
+                  id={`loan-name-${loan.id}`}
                   value={loan.name}
                   onChange={(e) => updateLoan(loan.id, 'name', e.target.value)}
                   className="text-lg font-semibold bg-transparent border-none focus:outline-none focus:ring-2 focus:ring-green-500 rounded px-2 py-1 text-slate-800 dark:text-slate-200"
                   placeholder="Loan Name"
+                  aria-label={`Loan ${index + 1} name`}
                 />
                 {loans.length > 1 && (
                   <button
@@ -235,13 +237,14 @@ export function LoanComparisonCalculator() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                  <label htmlFor={`loan-principal-${loan.id}`} className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                     <DollarSign className="w-4 h-4 inline mr-1" />
                     Principal
                   </label>
                   <input
+                    id={`loan-principal-${loan.id}`}
                     type="number"
                     value={loan.principal}
                     onChange={(e) => updateLoan(loan.id, 'principal', e.target.value)}
@@ -252,11 +255,12 @@ export function LoanComparisonCalculator() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                  <label htmlFor={`loan-rate-${loan.id}`} className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                     <Percent className="w-4 h-4 inline mr-1" />
                     Interest Rate
                   </label>
                   <input
+                    id={`loan-rate-${loan.id}`}
                     type="number"
                     value={loan.interestRate}
                     onChange={(e) => updateLoan(loan.id, 'interestRate', e.target.value)}
@@ -268,10 +272,11 @@ export function LoanComparisonCalculator() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                  <label htmlFor={`loan-term-${loan.id}`} className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                     Term
                   </label>
                   <select
+                    id={`loan-term-${loan.id}`}
                     value={loan.termMonths}
                     onChange={(e) => updateLoan(loan.id, 'termMonths', e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-green-500 focus:border-transparent"

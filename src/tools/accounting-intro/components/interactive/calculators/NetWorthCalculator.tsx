@@ -120,12 +120,13 @@ export function NetWorthCalculator() {
               Assets (What You Own)
             </h4>
             <div className="space-y-3">
-              {assets.map((asset) => (
-                <div key={asset.id} className="flex gap-2">
+              {assets.map((asset, index) => (
+                <div key={asset.id} className="flex flex-col sm:flex-row gap-2">
                   <select
                     value={asset.category}
                     onChange={(e) => updateAsset(asset.id, 'category', e.target.value)}
-                    className="w-1/3 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full sm:w-1/3 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    aria-label={`Asset ${index + 1} category`}
                   >
                     {ASSET_CATEGORIES.map((cat) => (
                       <option key={cat.value} value={cat.value}>
@@ -133,28 +134,32 @@ export function NetWorthCalculator() {
                       </option>
                     ))}
                   </select>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={asset.name}
-                    onChange={(e) => updateAsset(asset.id, 'name', e.target.value)}
-                    className="flex-1 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <input
-                    type="number"
-                    placeholder="$0"
-                    value={asset.value}
-                    onChange={(e) => updateAsset(asset.id, 'value', e.target.value)}
-                    className="w-28 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <button
-                    onClick={() => removeAsset(asset.id)}
-                    disabled={assets.length === 1}
-                    className="p-2 text-slate-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                    aria-label="Remove asset"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <div className="flex gap-2 flex-1">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={asset.name}
+                      onChange={(e) => updateAsset(asset.id, 'name', e.target.value)}
+                      className="flex-1 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      aria-label={`Asset ${index + 1} name`}
+                    />
+                    <input
+                      type="number"
+                      placeholder="$0"
+                      value={asset.value}
+                      onChange={(e) => updateAsset(asset.id, 'value', e.target.value)}
+                      className="w-24 sm:w-28 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      aria-label={`Asset ${index + 1} value`}
+                    />
+                    <button
+                      onClick={() => removeAsset(asset.id)}
+                      disabled={assets.length === 1}
+                      className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-slate-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                      aria-label="Remove asset"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
               <button
@@ -180,12 +185,13 @@ export function NetWorthCalculator() {
               Liabilities (What You Owe)
             </h4>
             <div className="space-y-3">
-              {liabilities.map((liability) => (
-                <div key={liability.id} className="flex gap-2">
+              {liabilities.map((liability, index) => (
+                <div key={liability.id} className="flex flex-col sm:flex-row gap-2">
                   <select
                     value={liability.category}
                     onChange={(e) => updateLiability(liability.id, 'category', e.target.value)}
-                    className="w-1/3 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full sm:w-1/3 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    aria-label={`Liability ${index + 1} category`}
                   >
                     {LIABILITY_CATEGORIES.map((cat) => (
                       <option key={cat.value} value={cat.value}>
@@ -193,28 +199,32 @@ export function NetWorthCalculator() {
                       </option>
                     ))}
                   </select>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={liability.name}
-                    onChange={(e) => updateLiability(liability.id, 'name', e.target.value)}
-                    className="flex-1 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <input
-                    type="number"
-                    placeholder="$0"
-                    value={liability.value}
-                    onChange={(e) => updateLiability(liability.id, 'value', e.target.value)}
-                    className="w-28 px-3 py-2 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <button
-                    onClick={() => removeLiability(liability.id)}
-                    disabled={liabilities.length === 1}
-                    className="p-2 text-slate-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed"
-                    aria-label="Remove liability"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <div className="flex gap-2 flex-1">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={liability.name}
+                      onChange={(e) => updateLiability(liability.id, 'name', e.target.value)}
+                      className="flex-1 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      aria-label={`Liability ${index + 1} name`}
+                    />
+                    <input
+                      type="number"
+                      placeholder="$0"
+                      value={liability.value}
+                      onChange={(e) => updateLiability(liability.id, 'value', e.target.value)}
+                      className="w-24 sm:w-28 px-3 py-2.5 text-sm bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      aria-label={`Liability ${index + 1} value`}
+                    />
+                    <button
+                      onClick={() => removeLiability(liability.id)}
+                      disabled={liabilities.length === 1}
+                      className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center text-slate-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed"
+                      aria-label="Remove liability"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               ))}
               <button

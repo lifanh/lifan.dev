@@ -38,7 +38,7 @@ export function ModuleNavigation({ currentModule, onModuleSelect }: ModuleNaviga
                   <button
                     onClick={() => onModuleSelect(moduleId)}
                     className={`
-                      w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm
+                      w-full flex items-center gap-3 px-3 py-2.5 min-h-[44px] rounded-lg text-left text-sm
                       transition-colors duration-150
                       ${isActive
                         ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium'

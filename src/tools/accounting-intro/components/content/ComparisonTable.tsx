@@ -1,12 +1,13 @@
 interface ComparisonTableProps {
   headers: string[];
   rows: string[][];
+  caption?: string;
 }
 
-export function ComparisonTable({ headers, rows }: ComparisonTableProps) {
+export function ComparisonTable({ headers, rows, caption }: ComparisonTableProps) {
   return (
     <div className="my-6 overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+      <table className="w-full border-collapse text-sm" aria-label={caption || `Comparison table with ${headers.length} columns`}>
         <thead>
           <tr className="bg-slate-100 dark:bg-slate-800">
             {headers.map((header, index) => (

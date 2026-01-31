@@ -11,10 +11,10 @@ export function ModuleHeader({ module }: ModuleHeaderProps) {
       <div className="text-sm text-slate-500 dark:text-slate-400 mb-2">
         Part {module.part}: {module.partTitle}
       </div>
-      <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">
+      <h1 className="text-xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
         Module {module.id}: {module.title}
       </h1>
-      <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
+      <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 mb-6">
         {module.description}
       </p>
 
@@ -25,7 +25,7 @@ export function ModuleHeader({ module }: ModuleHeaderProps) {
         </div>
       </div>
 
-      <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
+      <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
         <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900 dark:text-white mb-4">
           <Target className="w-4 h-4 text-blue-500" />
           Learning Objectives

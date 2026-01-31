@@ -73,7 +73,7 @@ export function KnowledgeCheck({ moduleId, title, questions, onComplete }: Knowl
 
   if (isComplete) {
     return (
-      <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden" role="status" aria-live="polite">
         <div className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 px-6 py-4">
           <h3 className="font-semibold text-slate-900 dark:text-white">{title} - Results</h3>
         </div>
@@ -122,6 +122,11 @@ export function KnowledgeCheck({ moduleId, title, questions, onComplete }: Knowl
         <div
           className="h-full bg-blue-500 transition-all duration-300"
           style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+          role="progressbar"
+          aria-valuenow={currentIndex + 1}
+          aria-valuemin={1}
+          aria-valuemax={questions.length}
+          aria-label={`Question ${currentIndex + 1} of ${questions.length}`}
         />
       </div>
 
@@ -167,11 +172,15 @@ export function KnowledgeCheck({ moduleId, title, questions, onComplete }: Knowl
 
         {/* Explanation */}
         {showExplanation && (
-          <div className={`p-4 rounded-lg mb-6 ${
-            selectedAnswer === currentQuestion.correctAnswer
-              ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-              : 'bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800'
-          }`}>
+          <div
+            role="status"
+            aria-live="polite"
+            className={`p-4 rounded-lg mb-6 ${
+              selectedAnswer === currentQuestion.correctAnswer
+                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                : 'bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800'
+            }`}
+          >
             <p className={`text-sm font-medium mb-1 ${
               selectedAnswer === currentQuestion.correctAnswer
                 ? 'text-green-700 dark:text-green-300'

@@ -194,60 +194,68 @@ export function BookkeepingSimulator() {
         <div className="space-y-4 mb-6">
           <div className="font-mono text-sm">
             {/* Debit Entry */}
-            <div className="flex items-center gap-3 mb-3">
-              <span className="w-16 text-slate-500 dark:text-slate-400">Debit:</span>
-              <select
-                value={debitAccount}
-                onChange={(e) => setDebitAccount(e.target.value)}
-                disabled={showResult}
-                className="flex-1 px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
-              >
-                <option value="">Select account...</option>
-                {ACCOUNTS.map((acc) => (
-                  <option key={acc.id} value={acc.id}>
-                    {acc.number} - {acc.name}
-                  </option>
-                ))}
-              </select>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
-                <input
-                  type="number"
-                  placeholder="0"
-                  value={debitAmount}
-                  onChange={(e) => setDebitAmount(e.target.value)}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
+              <label htmlFor="debit-account" className="w-16 text-slate-500 dark:text-slate-400 shrink-0">Debit:</label>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 flex-1">
+                <select
+                  id="debit-account"
+                  value={debitAccount}
+                  onChange={(e) => setDebitAccount(e.target.value)}
                   disabled={showResult}
-                  className="w-28 pl-7 pr-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
-                />
+                  className="flex-1 px-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
+                >
+                  <option value="">Select account...</option>
+                  {ACCOUNTS.map((acc) => (
+                    <option key={acc.id} value={acc.id}>
+                      {acc.number} - {acc.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={debitAmount}
+                    onChange={(e) => setDebitAmount(e.target.value)}
+                    disabled={showResult}
+                    aria-label="Debit amount"
+                    className="w-full sm:w-28 pl-7 pr-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
+                  />
+                </div>
               </div>
             </div>
 
             {/* Credit Entry */}
-            <div className="flex items-center gap-3 pl-8">
-              <span className="w-16 text-slate-500 dark:text-slate-400">Credit:</span>
-              <select
-                value={creditAccount}
-                onChange={(e) => setCreditAccount(e.target.value)}
-                disabled={showResult}
-                className="flex-1 px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
-              >
-                <option value="">Select account...</option>
-                {ACCOUNTS.map((acc) => (
-                  <option key={acc.id} value={acc.id}>
-                    {acc.number} - {acc.name}
-                  </option>
-                ))}
-              </select>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
-                <input
-                  type="number"
-                  placeholder="0"
-                  value={creditAmount}
-                  onChange={(e) => setCreditAmount(e.target.value)}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 pl-0 sm:pl-8">
+              <label htmlFor="credit-account" className="w-16 text-slate-500 dark:text-slate-400 shrink-0">Credit:</label>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 flex-1">
+                <select
+                  id="credit-account"
+                  value={creditAccount}
+                  onChange={(e) => setCreditAccount(e.target.value)}
                   disabled={showResult}
-                  className="w-28 pl-7 pr-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
-                />
+                  className="flex-1 px-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
+                >
+                  <option value="">Select account...</option>
+                  {ACCOUNTS.map((acc) => (
+                    <option key={acc.id} value={acc.id}>
+                      {acc.number} - {acc.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+                  <input
+                    type="number"
+                    placeholder="0"
+                    value={creditAmount}
+                    onChange={(e) => setCreditAmount(e.target.value)}
+                    disabled={showResult}
+                    aria-label="Credit amount"
+                    className="w-full sm:w-28 pl-7 pr-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -255,11 +263,15 @@ export function BookkeepingSimulator() {
 
         {/* Result Feedback */}
         {showResult && (
-          <div className={`p-4 rounded-lg mb-6 ${
-            isCorrect
-              ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
-              : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
-          }`}>
+          <div
+            role="status"
+            aria-live="polite"
+            className={`p-4 rounded-lg mb-6 ${
+              isCorrect
+                ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800'
+                : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+            }`}
+          >
             <div className="flex items-start gap-3">
               {isCorrect ? (
                 <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
