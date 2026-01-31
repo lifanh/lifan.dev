@@ -1,5 +1,8 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { Module10Content } from '../content/Module10Content';
+import { Module11Content } from '../content/Module11Content';
+import { Module12Content } from '../content/Module12Content';
 import { Module1Content } from '../content/Module1Content';
 import { Module2Content } from '../content/Module2Content';
 import { Module3Content } from '../content/Module3Content';
@@ -7,6 +10,8 @@ import { Module4Content } from '../content/Module4Content';
 import { Module5Content } from '../content/Module5Content';
 import { Module6Content } from '../content/Module6Content';
 import { Module7Content } from '../content/Module7Content';
+import { Module8Content } from '../content/Module8Content';
+import { Module9Content } from '../content/Module9Content';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
 import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
@@ -38,6 +43,16 @@ export function AccountingPlatform() {
         return <Module6Content />;
       case 7:
         return <Module7Content />;
+      case 8:
+        return <Module8Content />;
+      case 9:
+        return <Module9Content />;
+      case 10:
+        return <Module10Content />;
+      case 11:
+        return <Module11Content />;
+      case 12:
+        return <Module12Content />;
       default:
         return (
           <div className="text-center py-12 text-slate-500 dark:text-slate-400">
