@@ -2,6 +2,7 @@ import { Loader2, Menu, X } from 'lucide-react';
 import { lazy, Suspense, useState } from 'react';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
+import { TemplateDownloads } from './export';
 import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
 
 // Lazy load all module content for better code splitting
@@ -40,6 +41,20 @@ export function AccountingPlatform() {
 
   const renderModuleContent = () => {
     switch (progress.currentModule) {
+      case 0:
+        return (
+          <div className="space-y-6">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+                Resources & Templates
+              </h1>
+              <p className="text-slate-600 dark:text-slate-400">
+                Download ready-to-use templates to apply what you've learned.
+              </p>
+            </div>
+            <TemplateDownloads />
+          </div>
+        );
       case 1:
         return <Module1Content />;
       case 2:
