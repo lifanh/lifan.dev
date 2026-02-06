@@ -1,0 +1,1 @@
+export { KnowledgeCheck } from './KnowledgeCheck';
