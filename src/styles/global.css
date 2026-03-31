@@ -7,6 +7,7 @@
 @import "./tokens/spacing.css";
 @import "./tokens/effects.css";
 @import "./tokens/components.css";
+@import "./tokens/chart-colors.css";
 
 /* Custom variant for dark mode matching the 'selector' strategy */
 @custom-variant dark (&:where(.dark, .dark *));

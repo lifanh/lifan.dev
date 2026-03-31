@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { BudgetBuilder } from '../components/interactive/calculators/BudgetBuilder';
 import { module07Quiz } from './quizzes';
@@ -23,13 +23,13 @@ export function Module7Content() {
           definition="A financial plan that allocates expected income to planned expenses and savings goals over a specific time period (usually monthly or annually)."
         />
 
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 my-6">
-          <p className="text-emerald-800 dark:text-emerald-200">
-            <strong>The Real Purpose:</strong> A budget isn't about saying "no" to everything—it's
-            about saying "yes" to what matters most. When you budget, you're making conscious
-            decisions about your money before emotions or impulses take over.
+        <ContentCard variant="success" title="The Real Purpose" className="my-6">
+          <p>
+            A budget isn't about saying "no" to everything—it's about saying "yes" to what
+            matters most. When you budget, you're making conscious decisions about your money
+            before emotions or impulses take over.
           </p>
-        </div>
+        </ContentCard>
 
         <KeyTakeaway>
           <p>
@@ -52,71 +52,62 @@ export function Module7Content() {
 
         <div className="space-y-4 my-6">
           {/* Traditional Budgeting */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              1. Traditional (Line-Item) Budgeting
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+          <ContentCard variant="info" title="1. Traditional (Line-Item) Budgeting" className="p-5">
+            <p className="mb-3">
               The classic approach: list all income, list all expenses by category, and ensure
               expenses don't exceed income.
             </p>
-            <div className="grid md:grid-cols-2 gap-3 text-sm">
+            <div className="grid md:grid-cols-2 gap-3">
               <div>
-                <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">✓ Pros:</p>
-                <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300 space-y-1">
+                <p className="font-medium mb-1">✓ Pros:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Simple and straightforward</li>
                   <li>Easy to understand</li>
                   <li>Works well for stable income</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-blue-800 dark:text-blue-200 mb-1">✗ Cons:</p>
-                <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300 space-y-1">
+                <p className="font-medium mb-1">✗ Cons:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Can encourage "use it or lose it" mentality</li>
                   <li>May not question if spending is necessary</li>
                   <li>Less flexible for variable income</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
           {/* Zero-Based Budgeting */}
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">
-              2. Zero-Based Budgeting
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-3">
+          <ContentCard variant="info" title="2. Zero-Based Budgeting" className="p-5">
+            <p className="mb-3">
               Every dollar has a job. Income minus all allocations (including savings) equals zero.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-3 mb-3 font-mono text-sm text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-3 mb-3 font-mono">
               Income - Expenses - Savings - Investments = $0
             </div>
-            <div className="grid md:grid-cols-2 gap-3 text-sm">
+            <div className="grid md:grid-cols-2 gap-3">
               <div>
-                <p className="font-medium text-purple-800 dark:text-purple-200 mb-1">✓ Pros:</p>
-                <ul className="list-disc pl-5 text-purple-700 dark:text-purple-300 space-y-1">
+                <p className="font-medium mb-1">✓ Pros:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Forces intentionality with every dollar</li>
                   <li>Prevents "leftover" money from disappearing</li>
                   <li>Great for debt payoff or aggressive saving</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-purple-800 dark:text-purple-200 mb-1">✗ Cons:</p>
-                <ul className="list-disc pl-5 text-purple-700 dark:text-purple-300 space-y-1">
+                <p className="font-medium mb-1">✗ Cons:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Requires more time and effort</li>
                   <li>Can feel restrictive to some</li>
                   <li>Needs frequent adjustments</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
           {/* 50/30/20 Rule */}
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              3. The 50/30/20 Rule
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="3. The 50/30/20 Rule" className="p-5">
+            <p className="mb-3">
               A simple framework: 50% to needs, 30% to wants, 20% to savings and debt repayment.
             </p>
             <div className="flex gap-2 mb-3">
@@ -133,54 +124,51 @@ export function Module7Content() {
                 <p className="text-xs text-green-700 dark:text-green-200">Savings</p>
               </div>
             </div>
-            <div className="grid md:grid-cols-2 gap-3 text-sm">
+            <div className="grid md:grid-cols-2 gap-3">
               <div>
-                <p className="font-medium text-green-800 dark:text-green-200 mb-1">✓ Pros:</p>
-                <ul className="list-disc pl-5 text-green-700 dark:text-green-300 space-y-1">
+                <p className="font-medium mb-1">✓ Pros:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Easy to remember and implement</li>
                   <li>Provides flexibility within categories</li>
                   <li>Good starting point for beginners</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-green-800 dark:text-green-200 mb-1">✗ Cons:</p>
-                <ul className="list-disc pl-5 text-green-700 dark:text-green-300 space-y-1">
+                <p className="font-medium mb-1">✗ Cons:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>May not work in high cost-of-living areas</li>
                   <li>Needs vs wants can be subjective</li>
                   <li>Less detailed tracking</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
           {/* Envelope System */}
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-5">
-            <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">
-              4. Envelope System
-            </h4>
-            <p className="text-amber-700 dark:text-amber-300 text-sm mb-3">
+          <ContentCard variant="warning" title="4. Envelope System" className="p-5">
+            <p className="mb-3">
               Allocate cash to physical (or virtual) envelopes for each spending category.
               When the envelope is empty, you stop spending in that category.
             </p>
-            <div className="grid md:grid-cols-2 gap-3 text-sm">
+            <div className="grid md:grid-cols-2 gap-3">
               <div>
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">✓ Pros:</p>
-                <ul className="list-disc pl-5 text-amber-700 dark:text-amber-300 space-y-1">
+                <p className="font-medium mb-1">✓ Pros:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Visual and tangible limits</li>
                   <li>Prevents overspending</li>
                   <li>Great for discretionary categories</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-amber-800 dark:text-amber-200 mb-1">✗ Cons:</p>
-                <ul className="list-disc pl-5 text-amber-700 dark:text-amber-300 space-y-1">
+                <p className="font-medium mb-1">✗ Cons:</p>
+                <ul className="list-disc pl-5 space-y-1">
                   <li>Less practical in digital payment world</li>
                   <li>Carrying cash can be inconvenient</li>
                   <li>Doesn't work well for online purchases</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
         </div>
 
         <ComparisonTable
@@ -310,33 +298,27 @@ export function Module7Content() {
         />
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              Favorable Variance ✓
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-2">
+          <ContentCard variant="success" title="Favorable Variance ✓">
+            <p className="mb-2">
               When actual results are better than planned:
             </p>
-            <ul className="list-disc pl-5 text-green-700 dark:text-green-300 text-sm space-y-1">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Spending less than budgeted</li>
               <li>Earning more than expected</li>
               <li>Saving more than planned</li>
             </ul>
-          </div>
+          </ContentCard>
 
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <h4 className="font-semibold text-red-800 dark:text-red-200 mb-2">
-              Unfavorable Variance ✗
-            </h4>
-            <p className="text-red-700 dark:text-red-300 text-sm mb-2">
+          <ContentCard variant="error" title="Unfavorable Variance ✗">
+            <p className="mb-2">
               When actual results are worse than planned:
             </p>
-            <ul className="list-disc pl-5 text-red-700 dark:text-red-300 text-sm space-y-1">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Overspending in a category</li>
               <li>Earning less than expected</li>
               <li>Missing savings goals</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
 
         <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3">
@@ -366,7 +348,7 @@ export function Module7Content() {
         </h3>
 
         <div className="overflow-x-auto my-4">
-          <table className="w-full text-sm">
+          <table className="min-w-full w-full text-sm">
             <thead>
               <tr className="border-b border-slate-300 dark:border-slate-600">
                 <th className="text-left py-2 px-3 text-slate-900 dark:text-white">Category</th>
@@ -457,7 +439,7 @@ export function Module7Content() {
         </h3>
 
         <div className="overflow-x-auto my-4">
-          <table className="w-full text-sm">
+          <table className="min-w-full w-full text-sm">
             <thead>
               <tr className="border-b border-slate-300 dark:border-slate-600">
                 <th className="text-left py-2 px-3 text-slate-900 dark:text-white">Category</th>
@@ -525,17 +507,14 @@ export function Module7Content() {
           </table>
         </div>
 
-        <div className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 my-6">
-          <h4 className="font-semibold text-emerald-800 dark:text-emerald-200 mb-2">
-            The Result:
-          </h4>
-          <ul className="list-disc pl-5 text-emerald-700 dark:text-emerald-300 space-y-1">
+        <ContentCard variant="success" title="The Result" className="my-6">
+          <ul className="list-disc pl-5 space-y-1">
             <li>Credit card paid off in 6 months (was: 30+ months)</li>
             <li>After debt payoff: $1,050/month to emergency fund</li>
             <li>Emergency fund complete in ~13 months total (was: 43 months)</li>
             <li><strong>Time saved: 30 months!</strong></li>
           </ul>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 7.7 - Knowledge Check */}

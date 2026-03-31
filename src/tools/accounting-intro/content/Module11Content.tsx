@@ -1,4 +1,4 @@
-import { DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { module11Quiz } from './quizzes';
 
@@ -27,34 +27,30 @@ export function Module11Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">📈 For Investors</h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
+          <ContentCard variant="info" title="For Investors" icon="📈">
+            <p>
               Evaluate if a company is a good investment. Compare potential investments.
               Assess risk and expected returns.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">🏢 For Managers</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="success" title="For Managers" icon="🏢">
+            <p>
               Monitor performance against goals. Identify areas for improvement.
               Make informed operational decisions.
             </p>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">🏦 For Lenders</h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="info" title="For Lenders" icon="🏦">
+            <p>
               Assess creditworthiness. Determine if the borrower can repay.
               Set appropriate loan terms.
             </p>
-          </div>
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-            <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">👤 For You</h4>
-            <p className="text-amber-700 dark:text-amber-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="warning" title="For You" icon="👤">
+            <p>
               Understand your personal financial health. Make better money decisions.
               Communicate with financial professionals.
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>
@@ -123,14 +119,14 @@ export function Module11Content() {
           How to Calculate
         </h3>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5 my-6">
-          <div className="font-mono text-center text-blue-800 dark:text-blue-200 mb-3">
+        <ContentCard variant="info" className="p-5 my-6">
+          <div className="font-mono text-center mb-3">
             % Change = (Current Year - Base Year) / Base Year × 100
           </div>
-          <p className="text-blue-700 dark:text-blue-300 text-sm text-center">
+          <p className="text-center">
             Example: ($650,000 - $500,000) / $500,000 × 100 = 30% increase
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 11.3 */}
@@ -227,19 +223,16 @@ export function Module11Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-blue-800 dark:text-blue-200">
-                Current Ratio
-              </h4>
-              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono text-sm text-blue-800 dark:text-blue-200">
+          <ContentCard variant="info" title="Current Ratio" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Current Assets / Current Liabilities
               </div>
             </div>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+            <p className="mb-3">
               Measures ability to pay current obligations with current assets.
             </p>
-            <div className="grid grid-cols-3 gap-2 text-center text-sm">
+            <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-red-100 dark:bg-red-900/30 rounded p-2">
                 <span className="font-bold text-red-700 dark:text-red-300">&lt; 1.0</span>
                 <p className="text-red-600 dark:text-red-400 text-xs">Risky</p>
@@ -253,21 +246,18 @@ export function Module11Content() {
                 <p className="text-amber-600 dark:text-amber-400 text-xs">Maybe too high</p>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-purple-800 dark:text-purple-200">
-                Quick Ratio (Acid-Test)
-              </h4>
-              <div className="bg-purple-100 dark:bg-purple-800/30 rounded px-3 py-1 font-mono text-sm text-purple-800 dark:text-purple-200">
+          <ContentCard variant="info" title="Quick Ratio (Acid-Test)" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 (Current Assets - Inventory) / Current Liabilities
               </div>
             </div>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-3">
+            <p className="mb-3">
               More conservative than current ratio—excludes inventory which may be hard to sell quickly.
             </p>
-            <div className="grid grid-cols-2 gap-2 text-center text-sm">
+            <div className="grid grid-cols-2 gap-2 text-center">
               <div className="bg-red-100 dark:bg-red-900/30 rounded p-2">
                 <span className="font-bold text-red-700 dark:text-red-300">&lt; 1.0</span>
                 <p className="text-red-600 dark:text-red-400 text-xs">May struggle to pay bills</p>
@@ -277,22 +267,19 @@ export function Module11Content() {
                 <p className="text-green-600 dark:text-green-400 text-xs">Can cover immediate needs</p>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-green-800 dark:text-green-200">
-                Cash Ratio
-              </h4>
-              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono text-sm text-green-800 dark:text-green-200">
+          <ContentCard variant="success" title="Cash Ratio" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono">
                 Cash & Equivalents / Current Liabilities
               </div>
             </div>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+            <p>
               Most conservative—only counts cash and cash equivalents. Useful for assessing
               worst-case scenarios.
             </p>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -308,51 +295,42 @@ export function Module11Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-blue-800 dark:text-blue-200">
-                Debt-to-Equity Ratio
-              </h4>
-              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono text-sm text-blue-800 dark:text-blue-200">
+          <ContentCard variant="info" title="Debt-to-Equity Ratio" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Total Debt / Total Equity
               </div>
             </div>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+            <p className="mb-3">
               Shows how much the company relies on debt versus shareholder investment.
             </p>
-            <div className="text-blue-700 dark:text-blue-300 text-sm">
+            <p>
               <strong>Lower is generally safer.</strong> A ratio of 1.0 means equal debt and equity.
               Above 2.0 may indicate high leverage (riskier but can boost returns).
-            </div>
-          </div>
+            </p>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-purple-800 dark:text-purple-200">
-                Debt Ratio
-              </h4>
-              <div className="bg-purple-100 dark:bg-purple-800/30 rounded px-3 py-1 font-mono text-sm text-purple-800 dark:text-purple-200">
+          <ContentCard variant="info" title="Debt Ratio" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Total Liabilities / Total Assets
               </div>
             </div>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+            <p>
               What percentage of assets is financed by debt? Below 50% is typically considered conservative.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-green-800 dark:text-green-200">
-                Interest Coverage Ratio
-              </h4>
-              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono text-sm text-green-800 dark:text-green-200">
+          <ContentCard variant="success" title="Interest Coverage Ratio" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono">
                 EBIT / Interest Expense
               </div>
             </div>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+            <p>
               Can you pay your interest obligations? Higher is better. Below 1.5 is a warning sign.
             </p>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -368,76 +346,61 @@ export function Module11Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-green-800 dark:text-green-200">
-                Gross Profit Margin
-              </h4>
-              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono text-sm text-green-800 dark:text-green-200">
+          <ContentCard variant="success" title="Gross Profit Margin" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono">
                 (Revenue - COGS) / Revenue × 100
               </div>
             </div>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+            <p>
               How much is left after direct costs? Varies widely by industry. Software: 70-90%. Grocery: 20-30%.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-blue-800 dark:text-blue-200">
-                Operating Profit Margin
-              </h4>
-              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono text-sm text-blue-800 dark:text-blue-200">
+          <ContentCard variant="info" title="Operating Profit Margin" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Operating Income / Revenue × 100
               </div>
             </div>
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
+            <p>
               Profit from core operations before interest and taxes. Shows operational efficiency.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-purple-800 dark:text-purple-200">
-                Net Profit Margin
-              </h4>
-              <div className="bg-purple-100 dark:bg-purple-800/30 rounded px-3 py-1 font-mono text-sm text-purple-800 dark:text-purple-200">
+          <ContentCard variant="info" title="Net Profit Margin" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Net Income / Revenue × 100
               </div>
             </div>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+            <p>
               The "bottom line"—what percentage of revenue becomes profit after ALL expenses.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-amber-800 dark:text-amber-200">
-                Return on Assets (ROA)
-              </h4>
-              <div className="bg-amber-100 dark:bg-amber-800/30 rounded px-3 py-1 font-mono text-sm text-amber-800 dark:text-amber-200">
+          <ContentCard variant="warning" title="Return on Assets (ROA)" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-amber-100 dark:bg-amber-800/30 rounded px-3 py-1 font-mono">
                 Net Income / Average Total Assets × 100
               </div>
             </div>
-            <p className="text-amber-700 dark:text-amber-300 text-sm">
+            <p>
               How effectively does the company use its assets to generate profit?
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-red-800 dark:text-red-200">
-                Return on Equity (ROE)
-              </h4>
-              <div className="bg-red-100 dark:bg-red-800/30 rounded px-3 py-1 font-mono text-sm text-red-800 dark:text-red-200">
+          <ContentCard variant="error" title="Return on Equity (ROE)" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-red-100 dark:bg-red-800/30 rounded px-3 py-1 font-mono">
                 Net Income / Average Shareholders' Equity × 100
               </div>
             </div>
-            <p className="text-red-700 dark:text-red-300 text-sm">
+            <p>
               How effectively does the company generate profit from shareholders' investment?
               Often considered the most important profitability metric.
             </p>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -453,49 +416,40 @@ export function Module11Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-blue-800 dark:text-blue-200">
-                Inventory Turnover
-              </h4>
-              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono text-sm text-blue-800 dark:text-blue-200">
+          <ContentCard variant="info" title="Inventory Turnover" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 COGS / Average Inventory
               </div>
             </div>
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
+            <p>
               How many times inventory is sold and replaced per year. Higher = more efficient.
               Grocery stores: 12-15. Jewelry stores: 1-2.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-purple-800 dark:text-purple-200">
-                Accounts Receivable Turnover
-              </h4>
-              <div className="bg-purple-100 dark:bg-purple-800/30 rounded px-3 py-1 font-mono text-sm text-purple-800 dark:text-purple-200">
+          <ContentCard variant="info" title="Accounts Receivable Turnover" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-blue-100 dark:bg-blue-800/30 rounded px-3 py-1 font-mono">
                 Net Credit Sales / Average A/R
               </div>
             </div>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+            <p>
               How quickly you collect from customers. Higher = collecting faster. Can also express
               as Days Sales Outstanding (365 / turnover).
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
-              <h4 className="font-semibold text-green-800 dark:text-green-200">
-                Total Asset Turnover
-              </h4>
-              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono text-sm text-green-800 dark:text-green-200">
+          <ContentCard variant="success" title="Total Asset Turnover" className="p-5">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-3 mb-3">
+              <div className="bg-green-100 dark:bg-green-800/30 rounded px-3 py-1 font-mono">
                 Revenue / Average Total Assets
               </div>
             </div>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+            <p>
               How efficiently all assets generate revenue. Retail: 2.0+. Utilities: 0.3-0.5.
             </p>
-          </div>
+          </ContentCard>
         </div>
       </section>
 

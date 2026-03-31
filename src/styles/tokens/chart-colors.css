@@ -1,0 +1,14 @@
+/* Chart color palette - maps to design tokens where possible */
+:root {
+  --chart-color-1: var(--color-accent);
+  --chart-color-2: var(--color-success);
+  --chart-color-3: var(--color-warning);
+  --chart-color-4: var(--color-error);
+  --chart-color-5: #8b5cf6;
+  --chart-color-6: #ec4899;
+}
+
+:where(.dark, .dark *) {
+  --chart-color-5: #a78bfa;
+  --chart-color-6: #f472b6;
+}

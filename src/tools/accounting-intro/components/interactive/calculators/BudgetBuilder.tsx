@@ -176,7 +176,7 @@ export function BudgetBuilder() {
           </button>
           <button
             onClick={handleSave}
-            className="flex items-center gap-2 px-3 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors"
             type="button"
           >
             <Save className="w-4 h-4" />
@@ -256,7 +256,7 @@ export function BudgetBuilder() {
             {items.map((item, index) => (
               <div
                 key={item.id}
-                className="grid grid-cols-1 md:grid-cols-[180px_150px_150px_auto] gap-2 items-start"
+                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[180px_150px_150px_auto] gap-2 items-start"
               >
                 <select
                   value={item.category}

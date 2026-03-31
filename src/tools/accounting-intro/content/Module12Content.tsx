@@ -1,4 +1,4 @@
-import { DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { module12Quiz } from './quizzes';
 
@@ -28,26 +28,24 @@ export function Module12Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✅ Benefits</h4>
-            <ul className="text-green-700 dark:text-green-300 text-sm space-y-1">
+          <ContentCard variant="success" title="Benefits" icon="✅">
+            <ul className="space-y-1">
               <li>• Avoid fines and legal penalties</li>
               <li>• Build trust with stakeholders</li>
               <li>• Qualify for loans and investment</li>
               <li>• Make better decisions with accurate data</li>
               <li>• Sleep well at night!</li>
             </ul>
-          </div>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">❌ Risks of Non-Compliance</h4>
-            <ul className="text-red-700 dark:text-red-300 text-sm space-y-1">
+          </ContentCard>
+          <ContentCard variant="error" title="Risks of Non-Compliance" icon="❌">
+            <ul className="space-y-1">
               <li>• Financial penalties and fines</li>
               <li>• Criminal prosecution in severe cases</li>
               <li>• Loss of business licenses</li>
               <li>• Damaged reputation</li>
               <li>• Difficulty obtaining credit</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -63,29 +61,23 @@ export function Module12Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              GAAP (Generally Accepted Accounting Principles)
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-2">
+          <ContentCard variant="info" title="GAAP (Generally Accepted Accounting Principles)" className="p-5">
+            <p className="mb-2">
               The standard framework used in the United States for financial accounting.
             </p>
-            <div className="text-blue-600 dark:text-blue-400 text-sm">
+            <p>
               <strong>Set by:</strong> FASB (Financial Accounting Standards Board)
-            </div>
-          </div>
+            </p>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">
-              IFRS (International Financial Reporting Standards)
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-2">
+          <ContentCard variant="info" title="IFRS (International Financial Reporting Standards)" className="p-5">
+            <p className="mb-2">
               The global standard used in 140+ countries, facilitating international comparison.
             </p>
-            <div className="text-purple-600 dark:text-purple-400 text-sm">
+            <p>
               <strong>Set by:</strong> IASB (International Accounting Standards Board)
-            </div>
-          </div>
+            </p>
+          </ContentCard>
         </div>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
@@ -203,14 +195,13 @@ export function Module12Content() {
           rates. But only the income in each bracket is taxed at that rate.
         </p>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">💡 Common Misconception</h4>
-          <p className="text-amber-700 dark:text-amber-300 text-sm">
+        <ContentCard variant="warning" title="Common Misconception" icon="💡" className="my-6">
+          <p>
             "If I earn more and move to a higher tax bracket, I'll take home less money."
             <strong> This is FALSE!</strong> Only the additional income above the bracket
             threshold is taxed at the higher rate. You never lose money by earning more.
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 12.4 */}
@@ -225,14 +216,11 @@ export function Module12Content() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
-              Tax Deductions
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+          <ContentCard variant="info" title="Tax Deductions" className="p-5">
+            <p className="mb-3">
               Reduce your <strong>taxable income</strong>
             </p>
-            <div className="bg-white dark:bg-slate-800 rounded p-3 text-sm">
+            <div className="bg-white dark:bg-slate-800 rounded p-3">
               <p className="text-slate-700 dark:text-slate-300">
                 <strong>Example:</strong> $1,000 deduction at 22% tax rate
               </p>
@@ -240,19 +228,16 @@ export function Module12Content() {
                 Saves: $1,000 × 22% = <strong>$220</strong>
               </p>
             </div>
-            <p className="text-blue-600 dark:text-blue-400 text-sm mt-3">
+            <p className="mt-3">
               <strong>Examples:</strong> Mortgage interest, charitable donations, business expenses
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3">
-              Tax Credits
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="Tax Credits" className="p-5">
+            <p className="mb-3">
               Reduce your <strong>taxes owed</strong> (dollar-for-dollar)
             </p>
-            <div className="bg-white dark:bg-slate-800 rounded p-3 text-sm">
+            <div className="bg-white dark:bg-slate-800 rounded p-3">
               <p className="text-slate-700 dark:text-slate-300">
                 <strong>Example:</strong> $1,000 tax credit
               </p>
@@ -260,10 +245,10 @@ export function Module12Content() {
                 Saves: <strong>$1,000</strong> (regardless of tax rate)
               </p>
             </div>
-            <p className="text-green-600 dark:text-green-400 text-sm mt-3">
+            <p className="mt-3">
               <strong>Examples:</strong> Child tax credit, education credits, EV credits
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>
@@ -350,37 +335,33 @@ export function Module12Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">🏦 Retirement Contributions</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          <ContentCard variant="success" title="Retirement Contributions" icon="🏦">
+            <p>
               Traditional 401(k) and IRA contributions reduce taxable income now. Roth accounts
               don't reduce current taxes but grow tax-free.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">💰 HSA Contributions</h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm">
+          <ContentCard variant="info" title="HSA Contributions" icon="💰">
+            <p>
               Health Savings Accounts are "triple tax advantaged": deductible contributions,
               tax-free growth, and tax-free withdrawals for medical expenses.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">📊 Tax-Loss Harvesting</h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          <ContentCard variant="info" title="Tax-Loss Harvesting" icon="📊">
+            <p>
               Sell investments at a loss to offset capital gains. Can also offset up to $3,000
               of ordinary income per year.
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-            <h4 className="font-medium text-amber-800 dark:text-amber-200 mb-2">🎁 Charitable Giving</h4>
-            <p className="text-amber-700 dark:text-amber-300 text-sm">
+          <ContentCard variant="warning" title="Charitable Giving" icon="🎁">
+            <p>
               Donate appreciated assets (stocks) instead of cash to avoid capital gains tax
               AND get the full deduction.
             </p>
-          </div>
+          </ContentCard>
 
           <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4">
             <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">📅 Income Timing</h4>
@@ -627,15 +608,14 @@ export function Module12Content() {
           </ul>
         </div>
 
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 my-6">
-          <h3 className="font-semibold text-green-800 dark:text-green-200 mb-2">🎉 Congratulations!</h3>
-          <p className="text-green-700 dark:text-green-300">
+        <ContentCard variant="success" title="Congratulations!" icon="🎉" className="my-6">
+          <p>
             You've completed all 12 modules of the Introduction to Accounting course!
             You now have a solid foundation in accounting principles, financial statements,
             practical skills, and compliance. Keep practicing and applying these concepts
             to your personal and professional life.
           </p>
-        </div>
+        </ContentCard>
       </section>
     </div>
   );

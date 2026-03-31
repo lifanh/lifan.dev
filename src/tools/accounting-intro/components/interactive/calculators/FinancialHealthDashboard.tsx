@@ -169,10 +169,10 @@ export function FinancialHealthDashboard() {
     const statusValues = { excellent: 4, good: 3, fair: 2, poor: 1 };
     const averageScore = Object.values(ratios).reduce((sum, r) => sum + statusValues[r.status], 0) / Object.keys(ratios).length;
 
-    if (averageScore >= 3.5) return { status: 'Excellent', color: 'text-green-600', bg: 'bg-green-50' };
-    if (averageScore >= 2.5) return { status: 'Good', color: 'text-blue-600', bg: 'bg-blue-50' };
-    if (averageScore >= 1.5) return { status: 'Fair', color: 'text-amber-600', bg: 'bg-amber-50' };
-    return { status: 'Needs Attention', color: 'text-red-600', bg: 'bg-red-50' };
+    if (averageScore >= 3.5) return { status: 'Excellent', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-900/20' };
+    if (averageScore >= 2.5) return { status: 'Good', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/20' };
+    if (averageScore >= 1.5) return { status: 'Fair', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-900/20' };
+    return { status: 'Needs Attention', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-900/20' };
   };
 
   const overallHealth = getOverallHealth();

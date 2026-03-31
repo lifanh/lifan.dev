@@ -105,97 +105,108 @@ export function CompoundInterestVisualizer() {
   return (
     <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-500 to-indigo-600 px-6 py-4">
+      <div className="bg-slate-800 dark:bg-slate-700 px-6 py-4">
         <div className="flex items-center gap-3">
           <TrendingUp className="w-6 h-6 text-white" />
           <div>
             <h3 className="text-lg font-semibold text-white">Compound Interest Visualizer</h3>
-            <p className="text-purple-100 text-sm">See the power of compounding over time</p>
+            <p className="text-slate-300 text-sm">See the power of compounding over time</p>
           </div>
         </div>
       </div>
 
       <div className="p-6">
         {/* Input Controls */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-          <div>
-            <label htmlFor="ci-principal" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
-              Initial Investment
-            </label>
-            <input
-              id="ci-principal"
-              type="number"
-              value={principal}
-              onChange={(e) => setPrincipal(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              min="0"
-              step="1000"
-            />
-          </div>
+        <fieldset>
+          <legend className="sr-only">Compound interest calculator inputs</legend>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            <div>
+              <label htmlFor="ci-principal" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                Initial Investment
+              </label>
+              <input
+                id="ci-principal"
+                type="number"
+                value={principal}
+                onChange={(e) => setPrincipal(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                min="0"
+                step="1000"
+                required
+                aria-required="true"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="ci-monthly" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
-              Monthly Addition
-            </label>
-            <input
-              id="ci-monthly"
-              type="number"
-              value={monthlyContribution}
-              onChange={(e) => setMonthlyContribution(Math.max(0, parseInt(e.target.value) || 0))}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              min="0"
-              step="50"
-            />
-          </div>
+            <div>
+              <label htmlFor="ci-monthly" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                Monthly Addition
+              </label>
+              <input
+                id="ci-monthly"
+                type="number"
+                value={monthlyContribution}
+                onChange={(e) => setMonthlyContribution(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                min="0"
+                step="50"
+                required
+                aria-required="true"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="ci-rate" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
-              Annual Rate (%)
-            </label>
-            <input
-              id="ci-rate"
-              type="number"
-              value={rate}
-              onChange={(e) => setRate(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              min="0"
-              max="30"
-              step="0.5"
-            />
-          </div>
+            <div>
+              <label htmlFor="ci-rate" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                Annual Rate (%)
+              </label>
+              <input
+                id="ci-rate"
+                type="number"
+                value={rate}
+                onChange={(e) => setRate(Math.max(0, Math.min(30, parseFloat(e.target.value) || 0)))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                min="0"
+                max="30"
+                step="0.5"
+                required
+                aria-required="true"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="ci-years" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
-              Years
-            </label>
-            <input
-              id="ci-years"
-              type="number"
-              value={years}
-              onChange={(e) => setYears(Math.max(1, Math.min(50, parseInt(e.target.value) || 1)))}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              min="1"
-              max="50"
-            />
-          </div>
+            <div>
+              <label htmlFor="ci-years" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                Years
+              </label>
+              <input
+                id="ci-years"
+                type="number"
+                value={years}
+                onChange={(e) => setYears(Math.max(1, Math.min(50, parseInt(e.target.value) || 1)))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                min="1"
+                max="50"
+                required
+                aria-required="true"
+              />
+            </div>
 
-          <div>
-            <label htmlFor="ci-compounding" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
-              Compounding
-            </label>
-            <select
-              value={compoundingFrequency}
-              onChange={(e) => setCompoundingFrequency(parseInt(e.target.value))}
-              className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            >
-              {COMPOUNDING_PERIODS.map((period) => (
-                <option key={period.value} value={period.value}>
-                  {period.label}
-                </option>
-              ))}
-            </select>
+            <div>
+              <label htmlFor="ci-compounding" className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
+                Compounding
+              </label>
+              <select
+                value={compoundingFrequency}
+                onChange={(e) => setCompoundingFrequency(parseInt(e.target.value))}
+                className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                {COMPOUNDING_PERIODS.map((period) => (
+                  <option key={period.value} value={period.value}>
+                    {period.label}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
+        </fieldset>
 
         {/* Results Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">

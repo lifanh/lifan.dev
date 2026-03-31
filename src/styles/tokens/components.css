@@ -27,6 +27,7 @@
 .card:hover {
   box-shadow: var(--shadow-default);
   border-color: var(--color-border-default);
+  will-change: transform, box-shadow;
 }
 
 /* Card variants */
@@ -43,6 +44,7 @@
 .card-elevated:hover {
   box-shadow: var(--shadow-elevated);
   transform: translateY(-2px);
+  will-change: transform, box-shadow;
 }
 
 /* Card with no elevation (flat) */
@@ -121,6 +123,7 @@
 .btn-primary:active {
   background-color: var(--color-accent-dark);
   transform: scale(0.98);
+  will-change: transform;
 }
 
 .btn-primary:disabled {
@@ -146,6 +149,7 @@
 .btn-secondary:active {
   background-color: var(--color-bg-tertiary);
   transform: scale(0.98);
+  will-change: transform;
 }
 
 .btn-secondary:disabled {
@@ -171,6 +175,7 @@
 .btn-ghost:active {
   background-color: var(--color-bg-tertiary);
   transform: scale(0.98);
+  will-change: transform;
 }
 
 .btn-ghost:disabled {

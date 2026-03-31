@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { module08Quiz } from './quizzes';
 
@@ -22,43 +22,39 @@ export function Module8Content() {
           definition="The systematic process of capturing, organizing, and storing financial documents and transactions for future reference, compliance, and analysis."
         />
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
-            <strong>The Real Cost of Disorganization:</strong> Poor record-keeping leads to missed
-            deductions, late fees, audit penalties, and hours spent searching for documents. A
-            few minutes of daily organization prevents hours of future frustration.
+        <ContentCard variant="warning" title="The Real Cost of Disorganization" className="my-6">
+          <p>
+            Poor record-keeping leads to missed deductions, late fees, audit penalties, and
+            hours spent searching for documents. A few minutes of daily organization prevents
+            hours of future frustration.
           </p>
-        </div>
+        </ContentCard>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
           Benefits of Organized Records
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Tax Compliance</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          <ContentCard variant="success" title="✓ Tax Compliance">
+            <p>
               Accurate records ensure you claim all eligible deductions and can support them if audited.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Better Decisions</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="success" title="✓ Better Decisions">
+            <p>
               When you can quickly access financial history, you make more informed decisions.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Fraud Detection</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="success" title="✓ Fraud Detection">
+            <p>
               Regular review of organized records helps catch unauthorized transactions quickly.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Peace of Mind</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="success" title="✓ Peace of Mind">
+            <p>
               Knowing exactly where your finances stand reduces stress and anxiety.
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>
@@ -158,14 +154,11 @@ export function Module8Content() {
         </h3>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              1. Chronological Filing
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+          <ContentCard variant="info" title="1. Chronological Filing" className="p-5">
+            <p className="mb-3">
               Organize documents by date—great for tracking transactions over time.
             </p>
-            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-3 font-mono text-xs text-blue-800 dark:text-blue-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-3 font-mono text-xs">
               📁 2025/<br />
               &nbsp;&nbsp;📁 01-January/<br />
               &nbsp;&nbsp;&nbsp;&nbsp;📄 2025-01-05-electric-bill.pdf<br />
@@ -173,16 +166,13 @@ export function Module8Content() {
               &nbsp;&nbsp;📁 02-February/<br />
               &nbsp;&nbsp;&nbsp;&nbsp;...
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">
-              2. Category-Based Filing
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-3">
+          <ContentCard variant="info" title="2. Category-Based Filing" className="p-5">
+            <p className="mb-3">
               Organize by document type—best for finding all documents of a certain kind.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-3 font-mono text-xs text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-3 font-mono text-xs">
               📁 Finances/<br />
               &nbsp;&nbsp;📁 Income/<br />
               &nbsp;&nbsp;&nbsp;&nbsp;📄 pay-stubs/<br />
@@ -192,16 +182,13 @@ export function Module8Content() {
               &nbsp;&nbsp;&nbsp;&nbsp;📄 subscriptions/<br />
               &nbsp;&nbsp;📁 Tax-Returns/
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              3. Hybrid Approach (Recommended)
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="3. Hybrid Approach (Recommended)" className="p-5">
+            <p className="mb-3">
               Combine both: organize by category first, then by year within each category.
             </p>
-            <div className="bg-green-100 dark:bg-green-800/30 rounded p-3 font-mono text-xs text-green-800 dark:text-green-200">
+            <div className="bg-green-100 dark:bg-green-800/30 rounded p-3 font-mono text-xs">
               📁 Finances/<br />
               &nbsp;&nbsp;📁 Income/<br />
               &nbsp;&nbsp;&nbsp;&nbsp;📁 2025/<br />
@@ -212,7 +199,7 @@ export function Module8Content() {
               &nbsp;&nbsp;📁 Tax-Returns/<br />
               &nbsp;&nbsp;&nbsp;&nbsp;📄 2024-federal.pdf
             </div>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>
@@ -297,12 +284,12 @@ export function Module8Content() {
           </table>
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
-            <strong>Pro Tip:</strong> When in doubt, keep it longer. Digital storage is cheap,
+        <ContentCard variant="warning" title="Pro Tip" className="my-6">
+          <p>
+            When in doubt, keep it longer. Digital storage is cheap,
             and you can always shred later—but you can't recreate a document you've already destroyed.
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 8.5 */}
@@ -326,26 +313,20 @@ export function Module8Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-            <h4 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
-              Items YOU Know, Bank Doesn't (Yet)
-            </h4>
-            <ul className="text-blue-700 dark:text-blue-300 text-sm space-y-2">
+          <ContentCard variant="info" title="Items YOU Know, Bank Doesn't (Yet)">
+            <ul className="space-y-2">
               <li><strong>Outstanding checks:</strong> Checks you wrote that haven't cleared</li>
               <li><strong>Deposits in transit:</strong> Deposits you made near month-end</li>
             </ul>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">
-              Items BANK Knows, You Don't (Yet)
-            </h4>
-            <ul className="text-purple-700 dark:text-purple-300 text-sm space-y-2">
+          </ContentCard>
+          <ContentCard variant="info" title="Items BANK Knows, You Don't (Yet)">
+            <ul className="space-y-2">
               <li><strong>Bank fees:</strong> Service charges, overdraft fees</li>
               <li><strong>Interest earned:</strong> Interest credited to account</li>
               <li><strong>NSF checks:</strong> Returned checks from bad payers</li>
               <li><strong>Automatic payments:</strong> Subscriptions, loan payments</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
@@ -475,25 +456,25 @@ export function Module8Content() {
           The 3-2-1 Backup Rule
         </h3>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5 my-6">
+        <ContentCard variant="info" className="p-5 my-6">
           <div className="grid md:grid-cols-3 gap-4 text-center">
             <div>
               <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">3</span>
-              <p className="text-blue-800 dark:text-blue-200 font-medium mt-1">Copies</p>
-              <p className="text-blue-700 dark:text-blue-300 text-sm">Keep 3 copies of important data</p>
+              <p className="font-medium mt-1">Copies</p>
+              <p>Keep 3 copies of important data</p>
             </div>
             <div>
               <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">2</span>
-              <p className="text-blue-800 dark:text-blue-200 font-medium mt-1">Media Types</p>
-              <p className="text-blue-700 dark:text-blue-300 text-sm">Store on 2 different types of media</p>
+              <p className="font-medium mt-1">Media Types</p>
+              <p>Store on 2 different types of media</p>
             </div>
             <div>
               <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">1</span>
-              <p className="text-blue-800 dark:text-blue-200 font-medium mt-1">Off-Site</p>
-              <p className="text-blue-700 dark:text-blue-300 text-sm">Keep 1 copy in a different location</p>
+              <p className="font-medium mt-1">Off-Site</p>
+              <p>Keep 1 copy in a different location</p>
             </div>
           </div>
-        </div>
+        </ContentCard>
 
         <TryItYourself>
           <p>
@@ -516,48 +497,36 @@ export function Module8Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
-              📅 Daily (2 minutes)
-            </h4>
-            <ul className="text-slate-600 dark:text-slate-400 text-sm list-disc pl-5 space-y-1">
+          <ContentCard variant="neutral" title="📅 Daily (2 minutes)">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Snap photos of receipts immediately</li>
               <li>Add notes for cash transactions</li>
             </ul>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
-              📅 Weekly (15 minutes)
-            </h4>
-            <ul className="text-slate-600 dark:text-slate-400 text-sm list-disc pl-5 space-y-1">
+          </ContentCard>
+          <ContentCard variant="neutral" title="📅 Weekly (15 minutes)">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Review and categorize transactions</li>
               <li>File digital documents</li>
               <li>Check for any missing records</li>
             </ul>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
-              📅 Monthly (30-60 minutes)
-            </h4>
-            <ul className="text-slate-600 dark:text-slate-400 text-sm list-disc pl-5 space-y-1">
+          </ContentCard>
+          <ContentCard variant="neutral" title="📅 Monthly (30-60 minutes)">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Reconcile all bank and credit card accounts</li>
               <li>Review budget vs. actual spending</li>
               <li>Update financial statements</li>
               <li>Verify automatic payments</li>
             </ul>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
-              📅 Annually (2-4 hours)
-            </h4>
-            <ul className="text-slate-600 dark:text-slate-400 text-sm list-disc pl-5 space-y-1">
+          </ContentCard>
+          <ContentCard variant="neutral" title="📅 Annually (2-4 hours)">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Prepare tax documents</li>
               <li>Review and update retention (shred old docs)</li>
               <li>Verify backup systems are working</li>
               <li>Update net worth statement</li>
               <li>Set financial goals for next year</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>

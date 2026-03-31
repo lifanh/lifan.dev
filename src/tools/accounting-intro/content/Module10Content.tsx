@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { module10Quiz } from './quizzes';
 
@@ -18,30 +18,24 @@ export function Module10Content() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3 text-lg">
-              💵 Cash Basis
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="💵 Cash Basis" icon="💵" className="p-5">
+            <p className="mb-3">
               Record transactions <strong>when cash changes hands</strong>.
             </p>
-            <ul className="text-green-600 dark:text-green-400 text-sm space-y-1">
+            <ul className="space-y-1">
               <li>• Revenue when you <em>receive</em> payment</li>
               <li>• Expenses when you <em>pay</em> the bill</li>
             </ul>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3 text-lg">
-              📋 Accrual Basis
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-3">
+          </ContentCard>
+          <ContentCard variant="info" title="📋 Accrual Basis" icon="📋" className="p-5">
+            <p className="mb-3">
               Record transactions <strong>when they're earned or incurred</strong>.
             </p>
-            <ul className="text-purple-600 dark:text-purple-400 text-sm space-y-1">
+            <ul className="space-y-1">
               <li>• Revenue when you <em>perform</em> the service</li>
               <li>• Expenses when you <em>receive</em> the benefit</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
 
         <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-6 my-6">
@@ -125,34 +119,32 @@ export function Module10Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Advantages</h4>
-            <ul className="text-green-700 dark:text-green-300 text-sm space-y-1">
+          <ContentCard variant="success" title="✓ Advantages">
+            <ul className="space-y-1">
               <li>• Simple to understand and implement</li>
               <li>• Easy to track—just look at bank account</li>
               <li>• Clear picture of actual cash available</li>
               <li>• Lower accounting costs</li>
               <li>• Can defer income for tax purposes</li>
             </ul>
-          </div>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">✗ Disadvantages</h4>
-            <ul className="text-red-700 dark:text-red-300 text-sm space-y-1">
+          </ContentCard>
+          <ContentCard variant="error" title="✗ Disadvantages">
+            <ul className="space-y-1">
               <li>• Doesn't match revenues with expenses</li>
               <li>• Can distort true profitability</li>
               <li>• Harder to plan with inconsistent income timing</li>
               <li>• Not GAAP-compliant</li>
               <li>• May not be allowed for larger businesses</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
-            <strong>Best For:</strong> Small businesses, freelancers, and sole proprietors with
+        <ContentCard variant="warning" title="Best For" className="my-6">
+          <p>
+            Small businesses, freelancers, and sole proprietors with
             simple operations, minimal inventory, and annual revenue under $25 million.
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 10.3 */}
@@ -175,81 +167,63 @@ export function Module10Content() {
           expenses should be recorded in the same period as the revenues they help generate.
         </p>
 
-        <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5 my-6">
-          <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3">
-            Why Matching Matters
-          </h4>
-          <p className="text-purple-700 dark:text-purple-300 text-sm mb-4">
+        <ContentCard variant="info" title="Why Matching Matters" className="p-5 my-6">
+          <p className="mb-4">
             A retailer buys $10,000 of inventory in November and sells it for $15,000 in December.
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white dark:bg-slate-800 rounded p-3">
               <p className="font-medium text-slate-800 dark:text-slate-200 mb-2">Cash Basis (Misleading)</p>
-              <p className="text-slate-600 dark:text-slate-400 text-sm">
+              <p className="text-slate-600 dark:text-slate-400">
                 November: -$10,000 (loss!)<br />
                 December: +$15,000 (big profit!)
               </p>
             </div>
             <div className="bg-white dark:bg-slate-800 rounded p-3">
-              <p className="font-medium text-purple-800 dark:text-purple-200 mb-2">Accrual Basis (Accurate)</p>
-              <p className="text-purple-600 dark:text-purple-400 text-sm">
+              <p className="font-medium mb-2">Accrual Basis (Accurate)</p>
+              <p>
                 November: $0 (inventory = asset)<br />
                 December: $15,000 - $10,000 = $5,000 profit
               </p>
             </div>
           </div>
-        </div>
+        </ContentCard>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
           Key Accrual Concepts
         </h3>
 
         <div className="space-y-4 my-6">
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">
-              Accounts Receivable (A/R)
-            </h4>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
+          <ContentCard variant="neutral" title="Accounts Receivable (A/R)">
+            <p>
               Money owed TO you. You've earned the revenue (performed the service) but haven't
               been paid yet. It's an asset on your balance sheet.
             </p>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">
-              Accounts Payable (A/P)
-            </h4>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
+          </ContentCard>
+          <ContentCard variant="neutral" title="Accounts Payable (A/P)">
+            <p>
               Money you owe. You've received goods or services but haven't paid yet.
               It's a liability on your balance sheet.
             </p>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">
-              Accrued Expenses
-            </h4>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
+          </ContentCard>
+          <ContentCard variant="neutral" title="Accrued Expenses">
+            <p>
               Expenses incurred but not yet billed or paid. Example: Employee wages earned
               this week but not paid until next week.
             </p>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">
-              Deferred (Unearned) Revenue
-            </h4>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
+          </ContentCard>
+          <ContentCard variant="neutral" title="Deferred (Unearned) Revenue">
+            <p>
               Cash received for services not yet performed. It's a liability until you
               deliver what was promised. Example: Annual subscription paid upfront.
             </p>
-          </div>
-          <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
-            <h4 className="font-medium text-slate-800 dark:text-slate-200 mb-2">
-              Prepaid Expenses
-            </h4>
-            <p className="text-slate-600 dark:text-slate-400 text-sm">
+          </ContentCard>
+          <ContentCard variant="neutral" title="Prepaid Expenses">
+            <p>
               Expenses paid in advance. It's an asset until the benefit is received.
               Example: 12-month insurance policy paid upfront.
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
@@ -257,26 +231,24 @@ export function Module10Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">✓ Advantages</h4>
-            <ul className="text-green-700 dark:text-green-300 text-sm space-y-1">
+          <ContentCard variant="success" title="✓ Advantages">
+            <ul className="space-y-1">
               <li>• More accurate picture of profitability</li>
               <li>• Matches revenues with related expenses</li>
               <li>• Required by GAAP and IFRS</li>
               <li>• Better for financial planning</li>
               <li>• Shows true economic activity</li>
             </ul>
-          </div>
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">✗ Disadvantages</h4>
-            <ul className="text-red-700 dark:text-red-300 text-sm space-y-1">
+          </ContentCard>
+          <ContentCard variant="error" title="✗ Disadvantages">
+            <ul className="space-y-1">
               <li>• More complex to implement</li>
               <li>• Requires adjusting entries</li>
               <li>• Doesn't show actual cash position</li>
               <li>• Higher accounting costs</li>
               <li>• Can show profit without cash</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -426,26 +398,24 @@ export function Module10Content() {
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">Cash Basis Works For</h4>
-            <ul className="text-green-700 dark:text-green-300 text-sm space-y-1">
+          <ContentCard variant="success" title="Cash Basis Works For">
+            <ul className="space-y-1">
               <li>• Freelancers and consultants</li>
               <li>• Small service businesses</li>
               <li>• Side hustles and gig work</li>
               <li>• Businesses paid at time of service</li>
               <li>• Personal finance tracking</li>
             </ul>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">Accrual Basis Needed For</h4>
-            <ul className="text-purple-700 dark:text-purple-300 text-sm space-y-1">
+          </ContentCard>
+          <ContentCard variant="info" title="Accrual Basis Needed For">
+            <ul className="space-y-1">
               <li>• Larger corporations</li>
               <li>• Businesses with inventory</li>
               <li>• Companies seeking investors</li>
               <li>• Subscription-based businesses</li>
               <li>• Anyone needing GAAP compliance</li>
             </ul>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -464,17 +434,14 @@ export function Module10Content() {
           definition="A hybrid accounting method that uses cash basis for most transactions but applies accrual treatment to specific long-term items like fixed assets, inventory, and long-term liabilities."
         />
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5 my-6">
-          <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
-            Common Modified Cash Treatments
-          </h4>
-          <ul className="text-blue-700 dark:text-blue-300 text-sm space-y-2">
+        <ContentCard variant="info" title="Common Modified Cash Treatments" className="p-5 my-6">
+          <ul className="space-y-2">
             <li><strong>Cash for:</strong> Day-to-day income and expenses</li>
             <li><strong>Accrual for:</strong> Long-term assets (depreciated over time)</li>
             <li><strong>Accrual for:</strong> Inventory (matched to sales)</li>
             <li><strong>Accrual for:</strong> Long-term liabilities (recognized over term)</li>
           </ul>
-        </div>
+        </ContentCard>
 
         <TryItYourself>
           <p>
@@ -500,54 +467,42 @@ export function Module10Content() {
         </h3>
 
         <div className="space-y-4 my-6">
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">
-              1. Accrued Revenues
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          <ContentCard variant="info" title="1. Accrued Revenues">
+            <p>
               Revenue earned but not yet billed or collected.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-2 mt-2 font-mono text-xs text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-2 mt-2 font-mono text-xs">
               Debit: Accounts Receivable<br />
               Credit: Service Revenue
             </div>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">
-              2. Accrued Expenses
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="info" title="2. Accrued Expenses">
+            <p>
               Expenses incurred but not yet billed or paid.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-2 mt-2 font-mono text-xs text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-2 mt-2 font-mono text-xs">
               Debit: Wage Expense<br />
               Credit: Wages Payable
             </div>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">
-              3. Deferred Revenues
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="info" title="3. Deferred Revenues">
+            <p>
               Cash received for services to be performed later.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-2 mt-2 font-mono text-xs text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-2 mt-2 font-mono text-xs">
               Debit: Unearned Revenue<br />
               Credit: Service Revenue
             </div>
-          </div>
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-            <h4 className="font-medium text-purple-800 dark:text-purple-200 mb-2">
-              4. Prepaid Expenses
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="info" title="4. Prepaid Expenses">
+            <p>
               Cash paid for expenses not yet consumed.
             </p>
-            <div className="bg-purple-100 dark:bg-purple-800/30 rounded p-2 mt-2 font-mono text-xs text-purple-800 dark:text-purple-200">
+            <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-2 mt-2 font-mono text-xs">
               Debit: Insurance Expense<br />
               Credit: Prepaid Insurance
             </div>
-          </div>
+          </ContentCard>
         </div>
 
         <KeyTakeaway>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { BookOpen, CheckCircle2, Circle, FolderOpen } from 'lucide-react';
 import { useProgressStore } from '../../store';
 import { MODULES, PARTS } from '../../types/module';
@@ -7,7 +8,7 @@ interface ModuleNavigationProps {
   onModuleSelect: (moduleId: number) => void;
 }
 
-export function ModuleNavigation({ currentModule, onModuleSelect }: ModuleNavigationProps) {
+function ModuleNavigation({ currentModule, onModuleSelect }: ModuleNavigationProps) {
   const { progress } = useProgressStore();
   const { completedModules } = progress;
 
@@ -89,3 +90,5 @@ export function ModuleNavigation({ currentModule, onModuleSelect }: ModuleNaviga
     </nav>
   );
 }
+
+export default React.memo(ModuleNavigation);

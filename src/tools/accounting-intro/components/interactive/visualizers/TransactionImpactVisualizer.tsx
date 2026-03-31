@@ -171,13 +171,13 @@ export function TransactionImpactVisualizer() {
                     <span className="text-slate-700 dark:text-slate-300">{t.description}</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className={`text-xs ${t.effects.assets !== 0 ? (t.effects.assets > 0 ? 'text-green-600' : 'text-red-600') : 'text-slate-400'}`}>
+                    <span className={`text-xs ${t.effects.assets !== 0 ? (t.effects.assets > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400') : 'text-slate-400'}`}>
                       A: {formatCurrency(t.effects.assets)}
                     </span>
-                    <span className={`text-xs ${t.effects.liabilities !== 0 ? (t.effects.liabilities > 0 ? 'text-red-600' : 'text-green-600') : 'text-slate-400'}`}>
+                    <span className={`text-xs ${t.effects.liabilities !== 0 ? (t.effects.liabilities > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400') : 'text-slate-400'}`}>
                       L: {formatCurrency(t.effects.liabilities)}
                     </span>
-                    <span className={`text-xs ${t.effects.equity !== 0 ? (t.effects.equity > 0 ? 'text-blue-600' : 'text-orange-600') : 'text-slate-400'}`}>
+                    <span className={`text-xs ${t.effects.equity !== 0 ? (t.effects.equity > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-orange-600 dark:text-orange-400') : 'text-slate-400'}`}>
                       E: {formatCurrency(t.effects.equity)}
                     </span>
                     <button

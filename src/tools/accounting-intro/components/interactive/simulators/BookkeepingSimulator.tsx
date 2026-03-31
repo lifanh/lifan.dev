@@ -220,6 +220,8 @@ export function BookkeepingSimulator() {
                     onChange={(e) => setDebitAmount(e.target.value)}
                     disabled={showResult}
                     aria-label="Debit amount"
+                    required
+                    aria-required="true"
                     className="w-full sm:w-28 pl-7 pr-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
                   />
                 </div>
@@ -253,6 +255,8 @@ export function BookkeepingSimulator() {
                     onChange={(e) => setCreditAmount(e.target.value)}
                     disabled={showResult}
                     aria-label="Credit amount"
+                    required
+                    aria-required="true"
                     className="w-full sm:w-28 pl-7 pr-3 py-2.5 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-60"
                   />
                 </div>

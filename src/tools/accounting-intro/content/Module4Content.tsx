@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { IncomeStatementBuilder } from '../components/interactive/calculators/IncomeStatementBuilder';
 import { ProfitMarginAnalyzer } from '../components/interactive/calculators/ProfitMarginAnalyzer';
@@ -23,11 +23,11 @@ export function Module4Content() {
           definition="A financial statement that shows revenues, expenses, and resulting profit or loss over a specific time period (month, quarter, or year). It measures financial performance."
         />
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 my-6 text-center">
-          <p className="text-xl font-bold text-blue-700 dark:text-blue-300">
+        <ContentCard variant="info">
+          <p className="text-xl font-bold text-center">
             Revenue − Expenses = Net Income (or Net Loss)
           </p>
-        </div>
+        </ContentCard>
 
         <KeyTakeaway>
           <p>
@@ -60,13 +60,13 @@ export function Module4Content() {
           ]}
         />
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
+        <ContentCard variant="warning">
+          <p>
             <strong>Important:</strong> Revenue is recorded when <em>earned</em> (accrual basis),
             not when cash is received. If you provide a service today but the customer pays in 30 days,
             you record revenue today.
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 4.3 */}
@@ -199,7 +199,7 @@ Net Income                         $126,000
         </p>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-4 py-3 text-left font-semibold">Ratio</th>
