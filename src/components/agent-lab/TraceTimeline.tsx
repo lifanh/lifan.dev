@@ -78,7 +78,7 @@ export function TraceTimeline({ events, selectedEventId, onSelectEvent }: TraceT
             <button
               type="button"
               onClick={() => onSelectEvent(event.id)}
-              className={`min-h-[44px] w-full rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+              className={`min-h-[44px] w-full rounded-lg border p-3 text-left transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                 selected
                   ? 'border-blue-400 bg-blue-50 text-slate-900 dark:border-blue-400 dark:bg-slate-800 dark:text-slate-50'
                   : 'border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:bg-slate-800'

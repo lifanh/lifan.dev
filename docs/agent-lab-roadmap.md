@@ -219,37 +219,29 @@
 
 ---
 
-## Phase 7: Production Hardening
+## Phase 7: Production Hardening — ✅ Core complete
 
 **Purpose:** Make the module reliable enough to use as a public portfolio piece.
 
-**User-facing outcomes:**
+**Done:**
 
-- Error states are clear and recoverable.
-- Long payloads and long text do not break layout.
-- Reduced-motion users do not get unnecessary animation.
-- The module is usable with keyboard and screen readers.
+- ✅ `ErrorBoundary` component wraps the main lab panel; renders a recovery card with reset button when a child throws. Includes its own unit tests.
+- ✅ Tool-execution exceptions inside the runner are caught and surfaced as `error` events + `status: 'error'` rather than propagating.
+- ✅ `StatusBadge` renders distinct visual states for: idle, running, awaiting human approval, auto-approved, blocked, approved-with-review-ticket, rejected-by-human, error. Uses `role="status"` + `aria-live="polite"`.
+- ✅ `motion-reduce:transition-none` applied to every transition in the lab so reduced-motion users get instant state changes.
+- ✅ Long-JSON test asserts the inspector keeps a `max-h-*` + `overflow-auto` constraint.
+- ✅ All interactive controls already meet `min-h-[44px]`; `aria-pressed` set on tab + scenario buttons; `aria-label` improved on the run button while running; `role="status"` on the status badge.
 
-**Implementation areas:**
+**Still open:**
 
-- `src/components/agent-lab/*`
-- `src/lib/agent-lab/*`
-- `src/pages/tools/agent-lab/index.astro`
+- Color-contrast audit against `GUIDELINE.md` is informal; a structured audit with measured ratios would be a nice addition (currently relying on the design system palette, which is the rule).
+- README mention.
 
-**Tasks:**
+**Acceptance criteria (met):**
 
-- Add error boundary behavior for failed runs.
-- Add empty, loading, success, blocked, approval, rejected, and error visual states.
-- Add accessible labels for icon-only or icon-leading controls.
-- Add long-text and long-JSON tests.
-- Audit color contrast against `GUIDELINE.md`.
-- Confirm all interactive controls meet 44px minimum touch targets.
-
-**Acceptance criteria:**
-
-- Keyboard-only path can run a scenario and approve/reject.
-- Long JSON payloads scroll inside the inspector.
-- No hardcoded colors are introduced outside design-system palette usage.
+- ✅ Keyboard-only path can run a scenario and approve/reject (tab order is logical, all focus states visible).
+- ✅ Long JSON payloads scroll inside the inspector (locked in by test).
+- ✅ No hardcoded colors are introduced outside design-system palette usage.
 
 ---
 
@@ -284,11 +276,11 @@
 1. ✅ Phase 1: Strengthen current MVP (loop refactor, lens tabs, expanded final answer, broader tests, simulated-metrics labelling).
 2. ✅ Phase 2: Structured output validation (Zod schemas around every boundary, validation_error / model_retry events, schema-repair demo lens).
 3. ✅ Phase 3: Evaluation lab (8 eval cases, assertion framework, EvalPanel UI, in-browser runner).
-4. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
+4. ✅ Phase 7: Production hardening (ErrorBoundary, StatusBadge, reduced-motion respect, long-JSON containment locked in by test).
+5. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
 
 **Next, in order:**
 
-5. Phase 7: Production hardening (error boundaries, long-payload scrolling, a11y audit, reduced-motion).
 6. Phase 5: RAG mini-lab (local doc, keyword retrieval, citations, comparison view).
 7. Phase 4: **Real model mode** behind a server endpoint. Intentionally last. The portfolio story is "the model is one swappable component"; that is more credible after the evals exist than before.
 

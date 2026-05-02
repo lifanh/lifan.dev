@@ -61,4 +61,35 @@ describe('AgentLabApp', () => {
 
     expect(await screen.findByText(/Eligibility decision returned/i)).toBeInTheDocument();
   });
+
+  it('shows an idle status before the first run and a result-shaped status after', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+
+    expect(screen.getByRole('status')).toHaveTextContent(/Idle/i);
+
+    fireEvent.click(screen.getByRole('button', { name: /Globex standard order/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Run simulation/i }));
+
+    await screen.findByText(/Globex can be auto-approved/i);
+
+    expect(screen.getByRole('status')).toHaveTextContent(/Auto-approved/i);
+  });
+
+  it('contains long JSON payloads inside a scrollable inspector', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Globex standard order/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Run simulation/i }));
+
+    await screen.findByText(/Globex can be auto-approved/i);
+
+    fireEvent.click(screen.getByRole('button', { name: /Trace Viewer/i }));
+
+    // The inspector renders payloads inside a <pre> with a max-height.
+    const inspector = await screen.findByText(/"customerId"/i);
+    const pre = inspector.closest('pre');
+    expect(pre).not.toBeNull();
+    expect(pre?.className).toMatch(/max-h-/);
+    expect(pre?.className).toMatch(/overflow-auto/);
+  });
 });

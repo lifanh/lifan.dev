@@ -16,11 +16,13 @@ import { scenarios } from '../../data/agent-lab/scenarios';
 import { runAgentLabScenario } from '../../lib/agent-lab/agentRunner';
 import type { AgentRunResult, ApprovalDecision, TraceEvent } from '../../lib/agent-lab/types';
 import { ApprovalGate } from './ApprovalGate';
+import { ErrorBoundary } from './ErrorBoundary';
 import { EvalPanel } from './EvalPanel';
 import { LensConversation } from './lenses/LensConversation';
 import { LensLoop } from './lenses/LensLoop';
 import { LensSchema } from './lenses/LensSchema';
 import { LensTools } from './lenses/LensTools';
+import { StatusBadge } from './StatusBadge';
 import { ToolCallPanel } from './ToolCallPanel';
 import { TraceTimeline } from './TraceTimeline';
 
@@ -149,7 +151,7 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
             type="button"
             onClick={() => setActiveTab(tab.id)}
             aria-pressed={activeTab === tab.id}
-            className={`min-h-[44px] shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+            className={`min-h-[44px] shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
               activeTab === tab.id
                 ? 'bg-blue-600 text-white'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50'
@@ -190,7 +192,7 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
                     type="button"
                     onClick={() => selectScenario(scenario.id)}
                     aria-pressed={selected}
-                    className={`min-h-[44px] w-full rounded-lg border p-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                    className={`min-h-[44px] w-full rounded-lg border p-3 text-left transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                       selected
                         ? 'border-blue-400 bg-blue-50 dark:border-blue-400 dark:bg-slate-700'
                         : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-700'
@@ -239,10 +241,11 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
           </section>
         </aside>
 
-        <main className="space-y-6">
+        <ErrorBoundary>
+          <main className="space-y-6">
           <section className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
             <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-              <div>
+              <div className="min-w-0 flex-1">
                 <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">Interactive lab</h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
                   {selectedScenario.lesson}
@@ -250,12 +253,16 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
                 <blockquote className="mt-4 border-l-2 border-slate-300 pl-4 text-sm text-slate-700 dark:border-slate-600 dark:text-slate-300">
                   {selectedScenario.userRequest}
                 </blockquote>
+                <div className="mt-4">
+                  <StatusBadge isRunning={isRunning} result={result} />
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => runScenario()}
                 disabled={isRunning}
-                className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:focus-visible:ring-offset-slate-900"
+                aria-label={isRunning ? 'Run simulation (in progress)' : 'Run simulation'}
+                className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors motion-reduce:transition-none hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500  dark:focus-visible:ring-offset-slate-900"
               >
                 <Play className="h-4 w-4" aria-hidden="true" />
                 {isRunning ? 'Running...' : 'Run simulation'}
@@ -409,7 +416,8 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
 
             {activeTab === 'evals' && <EvalPanel simulationLatencyMs={simulationLatencyMs} />}
           </section>
-        </main>
+          </main>
+        </ErrorBoundary>
       </div>
     </div>
   );

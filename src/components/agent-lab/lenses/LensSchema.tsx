@@ -66,7 +66,7 @@ export function LensSchema({
               the trace records the failed fields, and the model retries with a corrected output.
             </p>
           </div>
-          <label className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 transition-colors hover:bg-slate-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700">
+          <label className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-800 transition-colors motion-reduce:transition-none hover:bg-slate-50 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700">
             <input
               type="checkbox"
               checked={simulateInvalidOutput}
