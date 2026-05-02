@@ -52,12 +52,14 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 | `src/lib/agent-lab/policy.ts` | Tool-permission rules, independent of the model. Reads tool name and args; returns `allow` / `requires_approval` / `deny`. |
 | `src/lib/agent-lab/mockTools.ts` | The ERP/credit "system." Resolves customers, returns credit status, lists invoices, computes eligibility, persists credit-review tickets. |
 | `src/lib/agent-lab/agentRunner.ts` | The actual loop. Asks the model, validates args, checks policy, gates writes, executes tools, validates results, builds the trace, returns a structured result. |
+| `src/lib/agent-lab/evals.ts` | Evaluation harness. `EvalCase`, `EvalAssertion`, `runEvalCase`, `runAllEvals`. Replays each case against the deterministic agent and asserts on tool sequence, decision, approval shape, trace events, and final-answer facts. |
 | `src/data/agent-lab/*` | Mock customers, invoices, scenarios. |
 | `src/components/agent-lab/AgentLabApp.tsx` | UI shell. Tab switcher, scenario picker, run controls, metrics, approval gate, final recommendation, and lenses. |
 | `src/components/agent-lab/lenses/*` | Tab views: Conversation, Structured Output, Tool Calling, Agent Loop. Each is a different lens onto the same run. |
 | `src/components/agent-lab/TraceTimeline.tsx` | Full trace timeline used by the Trace Viewer tab. |
 | `src/components/agent-lab/ToolCallPanel.tsx` | JSON inspector for the selected trace event. |
 | `src/components/agent-lab/ApprovalGate.tsx` | The human-in-the-loop UI for write actions. |
+| `src/components/agent-lab/EvalPanel.tsx` | Evals tab UI: run button, summary tiles, per-case expandable assertion list, per-case metrics. |
 
 ## The loop, end to end
 
@@ -124,7 +126,7 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 ## What's intentionally not here yet
 
 - **Real model execution.** Roadmap Phase 4. Will live behind a server endpoint, never browser-exposed keys.
-- **Eval harness.** Roadmap Phase 3. Replays scenarios with assertions on tool sequence, decision, approval shape, and final answer facts.
 - **Local RAG.** Roadmap Phase 5. Keyword retrieval over a small policy document, with citations.
+- **Persistence.** Roadmap Phase 6. Local progress and eval-result history.
 
 See [`agent-lab-roadmap.md`](./agent-lab-roadmap.md) for the full plan.

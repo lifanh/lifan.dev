@@ -16,6 +16,7 @@ import { scenarios } from '../../data/agent-lab/scenarios';
 import { runAgentLabScenario } from '../../lib/agent-lab/agentRunner';
 import type { AgentRunResult, ApprovalDecision, TraceEvent } from '../../lib/agent-lab/types';
 import { ApprovalGate } from './ApprovalGate';
+import { EvalPanel } from './EvalPanel';
 import { LensConversation } from './lenses/LensConversation';
 import { LensLoop } from './lenses/LensLoop';
 import { LensSchema } from './lenses/LensSchema';
@@ -27,7 +28,7 @@ type AgentLabAppProps = {
   simulationLatencyMs?: number;
 };
 
-type LabTab = 'overview' | 'llm' | 'structured' | 'tools' | 'loop' | 'trace';
+type LabTab = 'overview' | 'llm' | 'structured' | 'tools' | 'loop' | 'trace' | 'evals';
 
 const tabs: Array<{ id: LabTab; label: string; description: string }> = [
   { id: 'overview', label: 'Overview', description: 'Lesson summary and run controls' },
@@ -36,6 +37,7 @@ const tabs: Array<{ id: LabTab; label: string; description: string }> = [
   { id: 'tools', label: 'Tool Calling', description: 'Typed tool registry and runtime calls' },
   { id: 'loop', label: 'Agent Loop', description: 'Iteration-by-iteration view' },
   { id: 'trace', label: 'Trace Viewer', description: 'Full event timeline + JSON inspector' },
+  { id: 'evals', label: 'Evals', description: 'Replay every case and score the agent' },
 ];
 
 const overviewLesson = {
@@ -404,6 +406,8 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
                 <ToolCallPanel event={selectedEvent} />
               </div>
             )}
+
+            {activeTab === 'evals' && <EvalPanel simulationLatencyMs={simulationLatencyMs} />}
           </section>
         </main>
       </div>

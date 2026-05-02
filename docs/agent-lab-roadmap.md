@@ -85,38 +85,32 @@
 
 ---
 
-## Phase 3: Evaluation Lab
+## Phase 3: Evaluation Lab — ✅ Core complete
 
 **Purpose:** Make Agent Lab demonstrate durable AI engineering skill: measuring whether an agent did the right thing.
 
-**User-facing outcomes:**
+**Done:**
 
-- A new Eval tab lists scenario test cases.
-- Each case includes expected tool calls, expected decision, expected approval behavior, and expected final answer facts.
-- Users can run the eval suite and see pass/fail results.
-- Results show latency, tool-call count, and estimated cost per scenario.
+- ✅ `src/lib/agent-lab/evals.ts` — `EvalCase`, `EvalAssertion`, `EvalResult` types; `runEvalCase` and `runAllEvals` runners; ordered tool-sequence matcher; metric capture per case.
+- ✅ Eight canonical cases covering: ACME approval-gate-reached, ACME approved with ticket, ACME rejected without ticket, Globex auto-approve, Initech blocked, unknown customer error, malformed amount validation, and schema-repair-on-Globex.
+- ✅ Assertions for status, decision, requiresHumanApproval, ordered tool sequence, finalAnswer substrings, included / excluded event types, max iterations, max tool calls, and ticket-created flag.
+- ✅ Inline scenario support in `runAgentLabScenario` so eval-only edge cases (unknown customer, malformed amount) don't pollute the public scenario list.
+- ✅ Tool-execution exceptions now produce a clean `error` event + `status: 'error'` rather than propagating, so unknown-customer is a first-class assertable outcome.
+- ✅ `EvalPanel.tsx` — run button, summary tiles, per-case expandable assertion list, per-case metric strip (iterations / tools / latency / cost).
+- ✅ Evals tab wired into `AgentLabApp`.
+- ✅ `evals.test.ts` — 5 test cases including pass-all sanity, broken-expectation reporting, metrics shape, and tool-order mismatch detection.
 
-**Implementation areas:**
+**Still open:**
 
-- Create `src/lib/agent-lab/evals.ts`
-- Create `src/lib/agent-lab/evals.test.ts`
-- Create `src/components/agent-lab/EvalPanel.tsx`
-- Modify `src/components/agent-lab/AgentLabApp.tsx`
+- Latency budgets per case (currently captured in metrics but not asserted).
+- Persisting eval results across reloads (Phase 6).
+- Snapshot-style assertions on the full trace (overkill for now; revisit if eval signal becomes too coarse).
 
-**Tasks:**
+**Acceptance criteria (met):**
 
-- Define eval cases for ACME, Globex, Initech, unknown customer, and malformed order amount.
-- Add assertions for required tool sequence.
-- Add assertions for final decision.
-- Add assertions for approval requirement.
-- Add an eval runner that executes deterministic scenarios and returns pass/fail details.
-- Add UI that renders an eval table with details for failed checks.
-
-**Acceptance criteria:**
-
-- Eval suite runs in-browser without a backend.
-- At least five eval cases are covered.
-- A failed case explains the exact missing or incorrect behavior.
+- ✅ Eval suite runs in-browser without a backend.
+- ✅ Eight eval cases (≥ five required) pass against the deterministic agent.
+- ✅ Failed cases list the exact failing assertion with `got: …` detail.
 
 ---
 
@@ -289,11 +283,11 @@
 
 1. ✅ Phase 1: Strengthen current MVP (loop refactor, lens tabs, expanded final answer, broader tests, simulated-metrics labelling).
 2. ✅ Phase 2: Structured output validation (Zod schemas around every boundary, validation_error / model_retry events, schema-repair demo lens).
-3. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
+3. ✅ Phase 3: Evaluation lab (8 eval cases, assertion framework, EvalPanel UI, in-browser runner).
+4. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
 
 **Next, in order:**
 
-4. Phase 3: **Evaluation lab.** Highest remaining portfolio leverage. Replays each scenario and asserts on tool sequence, decision, approval shape, recommendation facts, and (optionally) latency budgets. Schemas (Phase 2) are now stable enough to assert against, which is why this should come now rather than before Phase 2.
 5. Phase 7: Production hardening (error boundaries, long-payload scrolling, a11y audit, reduced-motion).
 6. Phase 5: RAG mini-lab (local doc, keyword retrieval, citations, comparison view).
 7. Phase 4: **Real model mode** behind a server endpoint. Intentionally last. The portfolio story is "the model is one swappable component"; that is more credible after the evals exist than before.

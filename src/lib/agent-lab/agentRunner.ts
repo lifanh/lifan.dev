@@ -22,6 +22,7 @@ import {
 } from './schemas';
 import type {
   AgentRunResult,
+  AgentScenario,
   ApprovalDecision,
   OrderEligibility,
   PendingApproval,
@@ -31,7 +32,13 @@ import type {
 } from './types';
 
 type RunInput = {
-  scenarioId: string;
+  scenarioId?: string;
+  /**
+   * Optional inline scenario. When provided, takes precedence over
+   * `scenarioId`. Useful for evals that need to construct ad-hoc scenarios
+   * (e.g. malformed inputs) without polluting the public scenario list.
+   */
+  scenario?: AgentScenario;
   approvalDecision?: ApprovalDecision;
   latencyMs?: number;
   /**
@@ -200,7 +207,8 @@ function recordObservation(
 }
 
 export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResult> {
-  const scenario = scenarios.find((entry) => entry.id === input.scenarioId);
+  const scenario =
+    input.scenario ?? scenarios.find((entry) => entry.id === input.scenarioId);
 
   if (!scenario) {
     throw new Error(`Unknown Agent Lab scenario: ${input.scenarioId}`);
@@ -432,7 +440,29 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
       }),
     );
 
-    const result = await executeTool(toolName, decision.args, latencyMs);
+    let result: unknown;
+    try {
+      result = await executeTool(toolName, decision.args, latencyMs);
+    } catch (toolError) {
+      const reason = toolError instanceof Error ? toolError.message : 'Unknown tool error';
+      events.push(
+        event('error', `Tool ${toolName} threw`, {
+          toolName,
+          reason,
+        }),
+      );
+
+      return {
+        scenario,
+        status: 'error',
+        events,
+        recommendation:
+          state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
+        finalAnswer: `Run aborted: ${toolName} threw "${reason}".`,
+        iterations,
+        metrics: estimateMetrics(events, iterations),
+      };
+    }
 
     const resultSchema = TOOL_RESULT_SCHEMAS[toolName];
     const resultParse = resultSchema.safeParse(result);
