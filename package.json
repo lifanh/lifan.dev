@@ -11,7 +11,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.4",
+    "@astrojs/cloudflare": "^13.1.10",
     "@astrojs/mdx": "5.0.1",
     "@astrojs/react": "5.0.0",
     "@hookform/resolvers": "^5.2.2",
