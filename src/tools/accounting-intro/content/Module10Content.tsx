@@ -18,7 +18,7 @@ export function Module10Content() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 my-6">
-          <ContentCard variant="success" title="💵 Cash Basis" icon="💵" className="p-5">
+          <ContentCard variant="success" title="Cash Basis" icon="💵" className="p-5">
             <p className="mb-3">
               Record transactions <strong>when cash changes hands</strong>.
             </p>
@@ -27,7 +27,7 @@ export function Module10Content() {
               <li>• Expenses when you <em>pay</em> the bill</li>
             </ul>
           </ContentCard>
-          <ContentCard variant="info" title="📋 Accrual Basis" icon="📋" className="p-5">
+          <ContentCard variant="info" title="Accrual Basis" icon="📋" className="p-5">
             <p className="mb-3">
               Record transactions <strong>when they're earned or incurred</strong>.
             </p>

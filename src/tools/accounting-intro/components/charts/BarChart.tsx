@@ -36,8 +36,11 @@ export function CustomBarChart({ data, title, dataKey, xAxisKey, height = 300, c
               // Matches --color-neutral-800 (Recharts tooltips require inline styles)
               backgroundColor: '#1e293b',
               border: '1px solid #475569',
-              borderRadius: '0.5rem'
+              borderRadius: '0.5rem',
+              color: '#f1f5f9'
             }}
+            itemStyle={{ color: '#f1f5f9' }}
+            labelStyle={{ color: '#f1f5f9' }}
           />
           <Legend />
           <Bar dataKey={dataKey} fill={fillColor} radius={[4, 4, 0, 0]} />

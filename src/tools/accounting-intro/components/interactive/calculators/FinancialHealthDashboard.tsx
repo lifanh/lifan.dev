@@ -180,7 +180,7 @@ export function FinancialHealthDashboard() {
   return (
     <div className="space-y-6">
       {/* Overall Health Score */}
-      <div className={`${overallHealth.bg} dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6`}>
+      <div className={`${overallHealth.bg} border border-slate-200 dark:border-slate-700 rounded-xl p-6`}>
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Overall Financial Health</h3>
