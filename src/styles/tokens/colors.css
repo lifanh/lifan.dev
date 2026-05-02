@@ -81,6 +81,10 @@
   --color-info: #06b6d4;
   --color-info-light: #22d3ee;
   --color-info-dark: #0891b2;
+
+  /* Extended palette for data visualization */
+  --color-purple: #8b5cf6;
+  --color-pink: #ec4899;
 }
 
 /* ============================================
@@ -131,4 +135,8 @@
   --color-info: #22d3ee;
   --color-info-light: #67e8f9;
   --color-info-dark: #06b6d4;
+
+  /* Extended palette for data visualization (lighter values for dark backgrounds) */
+  --color-purple: #a78bfa;
+  --color-pink: #f472b6;
 }

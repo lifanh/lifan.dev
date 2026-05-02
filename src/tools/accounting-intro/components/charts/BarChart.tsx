@@ -33,14 +33,13 @@ export function CustomBarChart({ data, title, dataKey, xAxisKey, height = 300, c
           <Tooltip
             formatter={(value: number | undefined) => value !== undefined ? ['$' + value.toLocaleString(), 'Amount'] : ['', '']}
             contentStyle={{
-              // Matches --color-neutral-800 (Recharts tooltips require inline styles)
-              backgroundColor: '#1e293b',
-              border: '1px solid #475569',
+              backgroundColor: 'var(--color-neutral-800)',
+              border: '1px solid var(--color-neutral-600)',
               borderRadius: '0.5rem',
-              color: '#f1f5f9'
+              color: 'var(--color-neutral-100)'
             }}
-            itemStyle={{ color: '#f1f5f9' }}
-            labelStyle={{ color: '#f1f5f9' }}
+            itemStyle={{ color: 'var(--color-neutral-100)' }}
+            labelStyle={{ color: 'var(--color-neutral-100)' }}
           />
           <Legend />
           <Bar dataKey={dataKey} fill={fillColor} radius={[4, 4, 0, 0]} />
