@@ -75,6 +75,18 @@ describe('AgentLabApp', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/Auto-approved/i);
   });
 
+  it('reveals the credit policy document and citations when the RAG tab is opened', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /^RAG$/i }));
+
+    expect(await screen.findByText(/Credit policy document/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Without retrieval/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /With retrieval/i })).toBeInTheDocument();
+    // The default ACME query should retrieve at least one section.
+    expect(screen.getByText(/Retrieved sections/i)).toBeInTheDocument();
+  });
+
   it('contains long JSON payloads inside a scrollable inspector', async () => {
     render(<AgentLabApp simulationLatencyMs={0} />);
 

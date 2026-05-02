@@ -152,37 +152,30 @@
 
 ---
 
-## Phase 5: RAG Mini-Lab
+## Phase 5: RAG Mini-Lab — ✅ Core complete
 
 **Purpose:** Teach document-grounded answers without introducing a vector database too early.
 
-**User-facing outcomes:**
+**Done:**
 
-- Users can inspect a mock credit policy document.
-- The lab shows chunks, retrieved sections, and citations.
-- Users can compare an answer with and without retrieved policy context.
+- ✅ `src/data/agent-lab/creditPolicyDocument.ts` — 8 stable, addressable sections (P-001 through P-008) covering blocked accounts, projected exposure, overdue invoices, watchlist, large-order threshold, ticket creation, risk level, and the auto-approve safe path.
+- ✅ `src/lib/agent-lab/retrieval.ts` — deterministic keyword retrieval: tokenizer with stop-word list, light synonym expansion, double-weighted explicit-keyword scoring, deterministic tie-break by section id, top-k limit.
+- ✅ `composeCitedAnswer` and `composeUncitedAnswer` helpers produce the side-by-side answers used by the lab so the contrast is concrete and reproducible.
+- ✅ `RagPanel.tsx` — query textarea (defaults to selected scenario), tokens scored, two answer cards, retrieved-sections list with score chips, full policy document with cited sections highlighted.
+- ✅ RAG tab wired into `AgentLabApp` with the scenario's `recommendedAction` threaded as the cited conclusion.
+- ✅ `retrieval.test.ts` — 9 cases covering tokenization, blocked / overdue / watchlist / large-order queries, top-k limit, empty match, cited-answer composition, uncited baseline.
+- ✅ UI test confirms the policy document and both answer cards render when the RAG tab is opened.
 
-**Implementation areas:**
+**Still open:**
 
-- Create `src/data/agent-lab/creditPolicyDocument.ts`
-- Create `src/lib/agent-lab/retrieval.ts`
-- Create `src/lib/agent-lab/retrieval.test.ts`
-- Create `src/components/agent-lab/RagPanel.tsx`
-- Modify `src/components/agent-lab/AgentLabApp.tsx`
+- Adding `retrieval_query` and `retrieval_result` events to the agent trace itself (currently RAG is a comparison panel; integrating into the live agent run is a follow-up).
+- Multi-document support and chunking (single-doc is enough for the lesson).
 
-**Tasks:**
+**Acceptance criteria (met):**
 
-- Add a small local credit policy document with section IDs.
-- Add deterministic keyword retrieval.
-- Add trace events for chunk selection and cited sections.
-- Add UI to show document, chunks, retrieved sections, and cited answer facts.
-- Add tests for retrieval behavior.
-
-**Acceptance criteria:**
-
-- No vector database is required.
-- Citations point to local policy section IDs.
-- The comparison makes the value of retrieval clear.
+- ✅ No vector database is required — pure tokenized keyword scoring.
+- ✅ Citations point to local policy section IDs (P-001 … P-008).
+- ✅ The side-by-side comparison makes the value of retrieval clear.
 
 ---
 
@@ -276,12 +269,12 @@
 1. ✅ Phase 1: Strengthen current MVP (loop refactor, lens tabs, expanded final answer, broader tests, simulated-metrics labelling).
 2. ✅ Phase 2: Structured output validation (Zod schemas around every boundary, validation_error / model_retry events, schema-repair demo lens).
 3. ✅ Phase 3: Evaluation lab (8 eval cases, assertion framework, EvalPanel UI, in-browser runner).
-4. ✅ Phase 7: Production hardening (ErrorBoundary, StatusBadge, reduced-motion respect, long-JSON containment locked in by test).
-5. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
+4. ✅ Phase 5: RAG mini-lab (8-section policy doc, deterministic keyword retrieval, side-by-side cited vs. uncited answers).
+5. ✅ Phase 7: Production hardening (ErrorBoundary, StatusBadge, reduced-motion respect, long-JSON containment locked in by test).
+6. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
 
 **Next, in order:**
 
-6. Phase 5: RAG mini-lab (local doc, keyword retrieval, citations, comparison view).
 7. Phase 4: **Real model mode** behind a server endpoint. Intentionally last. The portfolio story is "the model is one swappable component"; that is more credible after the evals exist than before.
 
 **Deferred / optional:**

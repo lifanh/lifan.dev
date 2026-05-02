@@ -53,6 +53,8 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 | `src/lib/agent-lab/mockTools.ts` | The ERP/credit "system." Resolves customers, returns credit status, lists invoices, computes eligibility, persists credit-review tickets. |
 | `src/lib/agent-lab/agentRunner.ts` | The actual loop. Asks the model, validates args, checks policy, gates writes, executes tools, validates results, builds the trace, returns a structured result. |
 | `src/lib/agent-lab/evals.ts` | Evaluation harness. `EvalCase`, `EvalAssertion`, `runEvalCase`, `runAllEvals`. Replays each case against the deterministic agent and asserts on tool sequence, decision, approval shape, trace events, and final-answer facts. |
+| `src/lib/agent-lab/retrieval.ts` | Deterministic keyword retrieval over the credit policy document. Tokenizer with stop-word list, light synonym expansion, double-weighted explicit-keyword scoring, top-k selection. Also exports `composeCitedAnswer` and `composeUncitedAnswer` for the RAG comparison. |
+| `src/data/agent-lab/creditPolicyDocument.ts` | Eight stable policy sections (P-001 … P-008) addressed by id so citations point to a paragraph, not a vague "the policy." |
 | `src/data/agent-lab/*` | Mock customers, invoices, scenarios. |
 | `src/components/agent-lab/AgentLabApp.tsx` | UI shell. Tab switcher, scenario picker, run controls, metrics, approval gate, final recommendation, and lenses. |
 | `src/components/agent-lab/lenses/*` | Tab views: Conversation, Structured Output, Tool Calling, Agent Loop. Each is a different lens onto the same run. |
@@ -60,6 +62,9 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 | `src/components/agent-lab/ToolCallPanel.tsx` | JSON inspector for the selected trace event. |
 | `src/components/agent-lab/ApprovalGate.tsx` | The human-in-the-loop UI for write actions. |
 | `src/components/agent-lab/EvalPanel.tsx` | Evals tab UI: run button, summary tiles, per-case expandable assertion list, per-case metrics. |
+| `src/components/agent-lab/RagPanel.tsx` | RAG tab UI: query input, side-by-side uncited vs. cited answers, retrieved-sections list with score chips, full policy document with cited sections highlighted. |
+| `src/components/agent-lab/StatusBadge.tsx` | A single-source-of-truth status indicator (idle / running / awaiting approval / auto-approved / blocked / approved-with-ticket / rejected / error). Uses `role="status"` + `aria-live`. |
+| `src/components/agent-lab/ErrorBoundary.tsx` | Render-time error boundary with a recovery card; safety net for unexpected component errors. |
 
 ## The loop, end to end
 
@@ -126,7 +131,7 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 ## What's intentionally not here yet
 
 - **Real model execution.** Roadmap Phase 4. Will live behind a server endpoint, never browser-exposed keys.
-- **Local RAG.** Roadmap Phase 5. Keyword retrieval over a small policy document, with citations.
 - **Persistence.** Roadmap Phase 6. Local progress and eval-result history.
+- **In-trace retrieval events.** Phase 5 currently exposes RAG as a comparison panel; folding `retrieval_query` and `retrieval_result` events into the live agent run would let evals assert on grounding too.
 
 See [`agent-lab-roadmap.md`](./agent-lab-roadmap.md) for the full plan.

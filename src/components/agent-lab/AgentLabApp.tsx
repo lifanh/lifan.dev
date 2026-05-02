@@ -22,6 +22,7 @@ import { LensConversation } from './lenses/LensConversation';
 import { LensLoop } from './lenses/LensLoop';
 import { LensSchema } from './lenses/LensSchema';
 import { LensTools } from './lenses/LensTools';
+import { RagPanel } from './RagPanel';
 import { StatusBadge } from './StatusBadge';
 import { ToolCallPanel } from './ToolCallPanel';
 import { TraceTimeline } from './TraceTimeline';
@@ -30,7 +31,15 @@ type AgentLabAppProps = {
   simulationLatencyMs?: number;
 };
 
-type LabTab = 'overview' | 'llm' | 'structured' | 'tools' | 'loop' | 'trace' | 'evals';
+type LabTab =
+  | 'overview'
+  | 'llm'
+  | 'structured'
+  | 'tools'
+  | 'loop'
+  | 'trace'
+  | 'evals'
+  | 'rag';
 
 const tabs: Array<{ id: LabTab; label: string; description: string }> = [
   { id: 'overview', label: 'Overview', description: 'Lesson summary and run controls' },
@@ -40,6 +49,7 @@ const tabs: Array<{ id: LabTab; label: string; description: string }> = [
   { id: 'loop', label: 'Agent Loop', description: 'Iteration-by-iteration view' },
   { id: 'trace', label: 'Trace Viewer', description: 'Full event timeline + JSON inspector' },
   { id: 'evals', label: 'Evals', description: 'Replay every case and score the agent' },
+  { id: 'rag', label: 'RAG', description: 'Compare uncited vs. retrieval-grounded answers' },
 ];
 
 const overviewLesson = {
@@ -415,6 +425,16 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
             )}
 
             {activeTab === 'evals' && <EvalPanel simulationLatencyMs={simulationLatencyMs} />}
+
+            {activeTab === 'rag' && (
+              <RagPanel
+                defaultQuery={selectedScenario.userRequest}
+                scenarioConclusion={
+                  result?.recommendation.recommendedAction ??
+                  'Run the simulation to see how policy citations support the recommendation.'
+                }
+              />
+            )}
           </section>
           </main>
         </ErrorBoundary>
