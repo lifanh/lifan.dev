@@ -1,17 +1,19 @@
 import { Suspense } from 'react';
 import { useCalculatorStore } from '../../../store/useCalculatorStore';
 import { BarChart, LineChart, PieChart } from './index';
+import { useChartColors } from './useChartColors';
 
 export function ChartDemo() {
   const { data } = useCalculatorStore();
+  const chartColors = useChartColors();
 
   // Sample data for demonstration
   const expenseData = [
-    { name: 'Housing', value: 1500, color: '#3b82f6' },
-    { name: 'Food', value: 600, color: '#10b981' },
-    { name: 'Transportation', value: 400, color: '#f59e0b' },
-    { name: 'Utilities', value: 200, color: '#ef4444' },
-    { name: 'Entertainment', value: 300, color: '#8b5cf6' },
+    { name: 'Housing', value: 1500, color: chartColors[0] },
+    { name: 'Food', value: 600, color: chartColors[1] },
+    { name: 'Transportation', value: 400, color: chartColors[2] },
+    { name: 'Utilities', value: 200, color: chartColors[3] },
+    { name: 'Entertainment', value: 300, color: chartColors[4] },
   ];
 
   const monthlyData = [
@@ -71,7 +73,7 @@ export function ChartDemo() {
             title="Monthly Income vs Expenses"
             dataKey="income"
             xAxisKey="month"
-            color="#3b82f6"
+            color={chartColors[0]}
           />
         </Suspense>
       </div>
@@ -90,7 +92,7 @@ export function ChartDemo() {
             title="Net Worth Trend"
             dataKey="netWorth"
             xAxisKey="month"
-            color="#10b981"
+            color={chartColors[1]}
           />
         </Suspense>
       </div>

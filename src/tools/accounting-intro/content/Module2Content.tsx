@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { NetWorthCalculator } from '../components/interactive/calculators/NetWorthCalculator';
 import { TransactionImpactVisualizer } from '../components/interactive/visualizers/TransactionImpactVisualizer';
@@ -17,11 +17,11 @@ export function Module2Content() {
           Every accounting system ever created rests on one elegant equation:
         </p>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 my-6 text-center">
-          <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">
+        <ContentCard variant="info">
+          <p className="text-2xl font-bold text-center">
             Assets = Liabilities + Owner's Equity
           </p>
-        </div>
+        </ContentCard>
 
         <p className="text-slate-700 dark:text-slate-300 mb-6">
           This isn't just a formula to memorize—it's a fundamental truth about how value works.
@@ -88,7 +88,7 @@ export function Module2Content() {
         </h3>
 
         <div className="overflow-x-auto mb-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-3 py-2 text-left font-semibold">Transaction</th>

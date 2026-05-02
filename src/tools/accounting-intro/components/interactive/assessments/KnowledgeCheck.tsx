@@ -198,14 +198,14 @@ export function KnowledgeCheck({ moduleId, title, questions, onComplete }: Knowl
             <button
               onClick={handleCheckAnswer}
               disabled={selectedAnswer === null}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Check Answer
             </button>
           ) : (
             <button
               onClick={handleNext}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors"
             >
               {currentIndex < questions.length - 1 ? 'Next Question' : 'See Results'}
               <ChevronRight className="w-4 h-4" />

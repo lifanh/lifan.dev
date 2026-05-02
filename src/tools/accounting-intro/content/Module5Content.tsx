@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { BalanceSheetBuilder, FinancialHealthDashboard } from '../components/interactive/calculators';
 import { module05Quiz } from './quizzes';
@@ -22,14 +22,14 @@ export function Module5Content() {
           definition="A financial statement showing assets, liabilities, and owner's equity at a specific point in time. It's a snapshot of financial position, not a period-based statement like the income statement."
         />
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 my-6 text-center">
-          <p className="text-xl font-bold text-blue-700 dark:text-blue-300">
+        <ContentCard variant="info">
+          <p className="text-xl font-bold text-center">
             Assets = Liabilities + Owner's Equity
           </p>
-          <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
+          <p className="text-sm text-center mt-2">
             This is the accounting equation you learned in Module 2!
           </p>
-        </div>
+        </ContentCard>
 
         <KeyTakeaway>
           <p>
@@ -87,13 +87,13 @@ export function Module5Content() {
           ))}
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
+        <ContentCard variant="warning">
+          <p>
             <strong>Depreciation:</strong> Fixed assets (except land) lose value over time.
             Accumulated depreciation is subtracted from asset values on the balance sheet to
             show their "book value."
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 5.3 */}
@@ -233,7 +233,7 @@ TOTAL LIABILITIES & EQUITY         $435,000
         </p>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-4 py-3 text-left font-semibold">Ratio</th>

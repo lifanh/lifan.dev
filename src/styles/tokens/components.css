@@ -27,6 +27,7 @@
 .card:hover {
   box-shadow: var(--shadow-default);
   border-color: var(--color-border-default);
+  will-change: box-shadow;
 }
 
 /* Card variants */
@@ -43,6 +44,7 @@
 .card-elevated:hover {
   box-shadow: var(--shadow-elevated);
   transform: translateY(-2px);
+  will-change: transform, box-shadow;
 }
 
 /* Card with no elevation (flat) */

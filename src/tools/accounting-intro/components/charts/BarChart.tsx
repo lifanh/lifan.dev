@@ -1,4 +1,5 @@
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { useChartColor } from './useChartColors';
 
 interface BarChartProps {
   data: Array<{ [key: string]: any }>;
@@ -7,11 +8,15 @@ interface BarChartProps {
   xAxisKey: string;
   height?: number;
   color?: string;
+  ariaLabel?: string;
 }
 
-export function CustomBarChart({ data, title, dataKey, xAxisKey, height = 300, color = '#3b82f6' }: BarChartProps) {
+export function CustomBarChart({ data, title, dataKey, xAxisKey, height = 300, color, ariaLabel }: BarChartProps) {
+  const defaultColor = useChartColor(0);
+  const fillColor = color || defaultColor;
+
   return (
-    <div className="w-full">
+    <div className="w-full" role="img" aria-label={ariaLabel || title || 'Bar chart'}>
       {title && <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">{title}</h3>}
       <ResponsiveContainer width="100%" height={height}>
         <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
@@ -28,13 +33,16 @@ export function CustomBarChart({ data, title, dataKey, xAxisKey, height = 300, c
           <Tooltip
             formatter={(value: number | undefined) => value !== undefined ? ['$' + value.toLocaleString(), 'Amount'] : ['', '']}
             contentStyle={{
-              backgroundColor: 'rgb(var(--color-slate-800))',
-              border: '1px solid rgb(var(--color-slate-600))',
-              borderRadius: '0.5rem'
+              backgroundColor: 'var(--color-neutral-800)',
+              border: '1px solid var(--color-neutral-600)',
+              borderRadius: '0.5rem',
+              color: 'var(--color-neutral-100)'
             }}
+            itemStyle={{ color: 'var(--color-neutral-100)' }}
+            labelStyle={{ color: 'var(--color-neutral-100)' }}
           />
           <Legend />
-          <Bar dataKey={dataKey} fill={color} radius={[4, 4, 0, 0]} />
+          <Bar dataKey={dataKey} fill={fillColor} radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

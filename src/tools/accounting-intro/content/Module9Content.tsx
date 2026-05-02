@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { module09Quiz } from './quizzes';
 
@@ -23,20 +23,18 @@ export function Module9Content() {
         />
 
         <div className="grid md:grid-cols-2 gap-4 my-6">
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <h4 className="font-medium text-red-800 dark:text-red-200 mb-2">💸 When You Borrow</h4>
-            <p className="text-red-700 dark:text-red-300 text-sm">
+          <ContentCard variant="error" title="When You Borrow" icon="💸">
+            <p>
               Interest is the fee you pay for using the lender's money. The higher the rate,
               the more expensive the loan.
             </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">💰 When You Save</h4>
-            <p className="text-green-700 dark:text-green-300 text-sm">
+          </ContentCard>
+          <ContentCard variant="success" title="When You Save" icon="💰">
+            <p>
               Interest is your reward for leaving money with a bank or lender. Your money
               grows over time without effort.
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
@@ -102,28 +100,25 @@ export function Module9Content() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-3">
-              Simple Interest
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-4">
+          <ContentCard variant="info" title="Simple Interest">
+            <p className="mb-4">
               Interest calculated <strong>only on the original principal</strong>. The interest
               amount stays the same each period.
             </p>
             <div className="bg-blue-100 dark:bg-blue-800/30 rounded p-3 font-mono text-sm text-blue-800 dark:text-blue-200 mb-3">
               I = P × r × t
             </div>
-            <p className="text-blue-700 dark:text-blue-300 text-xs">
+            <p className="text-xs">
               Where: I = Interest, P = Principal, r = Rate, t = Time
             </p>
             <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-800/30 rounded text-sm">
               <p className="font-medium text-blue-800 dark:text-blue-200">Example:</p>
-              <p className="text-blue-700 dark:text-blue-300">
+              <p>
                 $1,000 at 5% for 3 years<br />
                 I = $1,000 × 0.05 × 3 = <strong>$150</strong>
               </p>
             </div>
-          </div>
+          </ContentCard>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
             <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3">
@@ -198,12 +193,12 @@ export function Module9Content() {
           </div>
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
-            <strong>Einstein's Quote:</strong> "Compound interest is the eighth wonder of the
-            world. He who understands it, earns it; he who doesn't, pays it."
+        <ContentCard variant="warning" title="Einstein's Quote" className="my-6">
+          <p>
+            "Compound interest is the eighth wonder of the world. He who understands it,
+            earns it; he who doesn't, pays it."
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 9.3 */}
@@ -278,7 +273,7 @@ export function Module9Content() {
           definition="A shortcut formula to estimate doubling time: Years to Double ≈ 72 ÷ Interest Rate (%)"
         />
 
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 my-6">
+        <ContentCard variant="success" className="my-6">
           <h4 className="font-semibold text-green-800 dark:text-green-200 mb-4 text-center text-xl">
             72 ÷ Rate = Years to Double
           </h4>
@@ -300,7 +295,7 @@ export function Module9Content() {
               <p className="text-sm text-green-600 dark:text-green-400">6 years</p>
             </div>
           </div>
-        </div>
+        </ContentCard>
 
         <TryItYourself>
           <p>
@@ -325,18 +320,15 @@ export function Module9Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              Amortized Loans
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+          <ContentCard variant="info" title="Amortized Loans">
+            <p className="mb-3">
               Equal payments over time that include both principal and interest. Early payments
               are mostly interest; later payments are mostly principal.
             </p>
             <p className="text-blue-600 dark:text-blue-400 text-xs">
               Examples: Mortgages, auto loans, personal loans
             </p>
-          </div>
+          </ContentCard>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
             <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">
@@ -351,31 +343,25 @@ export function Module9Content() {
             </p>
           </div>
 
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              Balloon Loans
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="Balloon Loans">
+            <p className="mb-3">
               Small regular payments with a large "balloon" payment due at the end.
               Risky if you can't pay or refinance at the end.
             </p>
             <p className="text-green-600 dark:text-green-400 text-xs">
               Examples: Some commercial real estate loans, bridge loans
             </p>
-          </div>
+          </ContentCard>
 
-          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-5">
-            <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">
-              Revolving Credit
-            </h4>
-            <p className="text-amber-700 dark:text-amber-300 text-sm mb-3">
+          <ContentCard variant="warning" title="Revolving Credit">
+            <p className="mb-3">
               Borrow up to a limit, pay back, and borrow again. Flexible but can lead to
               perpetual debt if not managed carefully.
             </p>
             <p className="text-amber-600 dark:text-amber-400 text-xs">
               Examples: Credit cards, HELOCs
             </p>
-          </div>
+          </ContentCard>
         </div>
 
         <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200 mb-3">
@@ -458,13 +444,12 @@ export function Module9Content() {
           </div>
         </div>
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
-            <strong>Eye-Opening Fact:</strong> In the first payment, 83% goes to interest
-            and only 17% to principal! This is why extra principal payments early in the
-            loan have the biggest impact.
+        <ContentCard variant="warning" title="Eye-Opening Fact" className="my-6">
+          <p>
+            In the first payment, 83% goes to interest and only 17% to principal! This
+            is why extra principal payments early in the loan have the biggest impact.
           </p>
-        </div>
+        </ContentCard>
 
         <KeyTakeaway>
           <p>

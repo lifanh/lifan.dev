@@ -198,12 +198,12 @@ export function LoanComparisonCalculator() {
   return (
     <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
+      <div className="bg-slate-800 dark:bg-slate-700 px-6 py-4">
         <div className="flex items-center gap-3">
           <Calculator className="w-6 h-6 text-white" />
           <div>
             <h3 className="text-lg font-semibold text-white">Loan Comparison Calculator</h3>
-            <p className="text-green-100 text-sm">Compare different loan options to find the best deal</p>
+            <p className="text-slate-300 text-sm">Compare different loan options to find the best deal</p>
           </div>
         </div>
       </div>

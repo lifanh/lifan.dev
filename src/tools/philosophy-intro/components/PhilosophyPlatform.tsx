@@ -1,5 +1,5 @@
 import { Loader2, Menu, X } from 'lucide-react';
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
 import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
@@ -29,6 +29,8 @@ function ModuleLoadingFallback() {
 export function PhilosophyPlatform() {
   const { progress, setCurrentModule } = useProgressStore();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
   const currentModule = MODULES.find((m) => m.id === progress.currentModule);
 
@@ -37,7 +39,16 @@ export function PhilosophyPlatform() {
     setSidebarOpen(false);
   };
 
-  const renderModuleContent = () => {
+  useEffect(() => {
+    if (sidebarOpen) {
+      const firstFocusable = sidebarRef.current?.querySelector<HTMLElement>(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      firstFocusable?.focus();
+    }
+  }, [sidebarOpen]);
+
+  const moduleContent = useMemo(() => {
     switch (progress.currentModule) {
       case 0:
         return (
@@ -93,13 +104,14 @@ export function PhilosophyPlatform() {
           </div>
         );
     }
-  };
+  }, [progress.currentModule]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       <div className="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 py-3">
         <div className="max-w-7xl mx-auto flex items-center gap-4">
           <button
+            ref={toggleButtonRef}
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
             aria-label="Toggle navigation"
@@ -115,8 +127,15 @@ export function PhilosophyPlatform() {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
           <aside
+            ref={sidebarRef}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setSidebarOpen(false);
+                toggleButtonRef.current?.focus();
+              }
+            }}
             className={`
-              fixed inset-y-0 left-0 z-30 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700
+              fixed inset-y-0 left-0 z-30 w-72 max-w-[75vw] bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700
               transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 lg:w-auto lg:border-0 lg:bg-transparent
               ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
               pt-20 lg:pt-0 px-4 lg:px-0 overflow-y-auto
@@ -133,6 +152,7 @@ export function PhilosophyPlatform() {
           {sidebarOpen && (
             <button
               type="button"
+              tabIndex={-1}
               className="fixed inset-0 z-20 bg-black/50 lg:hidden cursor-default"
               onClick={() => setSidebarOpen(false)}
               onKeyDown={(e) => e.key === 'Escape' && setSidebarOpen(false)}
@@ -145,7 +165,7 @@ export function PhilosophyPlatform() {
 
             <div key={progress.currentModule} className="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
               <Suspense fallback={<ModuleLoadingFallback />}>
-                {renderModuleContent()}
+                {moduleContent}
               </Suspense>
             </div>
 

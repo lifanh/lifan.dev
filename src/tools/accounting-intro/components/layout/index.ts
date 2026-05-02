@@ -1,4 +1,4 @@
 export { ModuleHeader } from './ModuleHeader';
-export { ModuleNavigation } from './ModuleNavigation';
+export { default as ModuleNavigation } from './ModuleNavigation';
 export { ProgressBar } from './ProgressBar';
 

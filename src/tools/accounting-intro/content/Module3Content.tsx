@@ -1,4 +1,4 @@
-import { DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { BookkeepingSimulator } from '../components/interactive/simulators/BookkeepingSimulator';
 import { TransactionDecoder } from '../components/interactive/simulators/TransactionDecoder';
@@ -43,7 +43,7 @@ export function Module3Content() {
         </p>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-4 py-3 text-left font-semibold">Account Type</th>
@@ -87,13 +87,12 @@ export function Module3Content() {
           </table>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-5 my-6">
-          <p className="text-blue-800 dark:text-blue-200 font-medium mb-2">Memory Device: DEALER</p>
-          <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300 space-y-1">
+        <ContentCard variant="info" title="Memory Device: DEALER">
+          <ul className="list-disc pl-5 space-y-1">
             <li><strong>D</strong>ividends, <strong>E</strong>xpenses, <strong>A</strong>ssets = Debit to increase</li>
             <li><strong>L</strong>iabilities, <strong>E</strong>quity, <strong>R</strong>evenue = Credit to increase</li>
           </ul>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Section 3.2 */}
@@ -270,7 +269,7 @@ Cash                        $5,000
         </p>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-3 py-2 text-left font-semibold">Day</th>

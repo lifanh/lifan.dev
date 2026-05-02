@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
+import { ComparisonTable, ContentCard, DefinitionCard, KeyTakeaway, TryItYourself } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
 import { CashFlowForecaster } from '../components/interactive/calculators/CashFlowForecaster';
 import { module06Quiz } from './quizzes';
@@ -22,12 +22,12 @@ export function Module6Content() {
           definition="A financial statement showing cash inflows and outflows over a period, organized into three categories: operating, investing, and financing activities."
         />
 
-        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-6">
-          <p className="text-amber-800 dark:text-amber-200">
+        <ContentCard variant="warning">
+          <p>
             <strong>Why it matters:</strong> A company can be profitable on the income statement
             but still run out of cash! The cash flow statement reveals the true cash position.
           </p>
-        </div>
+        </ContentCard>
 
         <KeyTakeaway>
           <p>
@@ -49,86 +49,77 @@ export function Module6Content() {
         </p>
 
         <div className="space-y-4 my-6">
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-5">
-            <h4 className="font-semibold text-green-800 dark:text-green-200 mb-2">
-              1. Operating Activities (CFO)
-            </h4>
-            <p className="text-green-700 dark:text-green-300 text-sm mb-3">
+          <ContentCard variant="success" title="1. Operating Activities (CFO)">
+            <p className="mb-3">
               Cash from core business operations—the day-to-day activities that generate revenue.
             </p>
             <div className="grid md:grid-cols-2 gap-2 text-sm">
               <div>
-                <p className="font-medium text-green-800 dark:text-green-200">Cash Inflows:</p>
-                <ul className="list-disc pl-5 text-green-700 dark:text-green-300">
+                <p className="font-medium">Cash Inflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Cash received from customers</li>
                   <li>Interest received</li>
                   <li>Dividends received</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-green-800 dark:text-green-200">Cash Outflows:</p>
-                <ul className="list-disc pl-5 text-green-700 dark:text-green-300">
+                <p className="font-medium">Cash Outflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Payments to suppliers</li>
                   <li>Salaries and wages</li>
                   <li>Rent, utilities, taxes</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-5">
-            <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              2. Investing Activities (CFI)
-            </h4>
-            <p className="text-blue-700 dark:text-blue-300 text-sm mb-3">
+          <ContentCard variant="info" title="2. Investing Activities (CFI)">
+            <p className="mb-3">
               Cash spent on or received from long-term assets and investments.
             </p>
             <div className="grid md:grid-cols-2 gap-2 text-sm">
               <div>
-                <p className="font-medium text-blue-800 dark:text-blue-200">Cash Inflows:</p>
-                <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300">
+                <p className="font-medium">Cash Inflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Sale of equipment/property</li>
                   <li>Sale of investments</li>
                   <li>Collection of loans made</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-blue-800 dark:text-blue-200">Cash Outflows:</p>
-                <ul className="list-disc pl-5 text-blue-700 dark:text-blue-300">
+                <p className="font-medium">Cash Outflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Purchase of equipment</li>
                   <li>Purchase of investments</li>
                   <li>Loans made to others</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
 
-          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-5">
-            <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-2">
-              3. Financing Activities (CFF)
-            </h4>
-            <p className="text-purple-700 dark:text-purple-300 text-sm mb-3">
+          <ContentCard variant="info" title="3. Financing Activities (CFF)">
+            <p className="mb-3">
               Cash from or to owners and creditors—how the business is funded.
             </p>
             <div className="grid md:grid-cols-2 gap-2 text-sm">
               <div>
-                <p className="font-medium text-purple-800 dark:text-purple-200">Cash Inflows:</p>
-                <ul className="list-disc pl-5 text-purple-700 dark:text-purple-300">
+                <p className="font-medium">Cash Inflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Issuing stock</li>
                   <li>Borrowing (loans, bonds)</li>
                   <li>Owner investments</li>
                 </ul>
               </div>
               <div>
-                <p className="font-medium text-purple-800 dark:text-purple-200">Cash Outflows:</p>
-                <ul className="list-disc pl-5 text-purple-700 dark:text-purple-300">
+                <p className="font-medium">Cash Outflows:</p>
+                <ul className="list-disc pl-5">
                   <li>Dividends paid</li>
                   <li>Loan repayments</li>
                   <li>Stock buybacks</li>
                 </ul>
               </div>
             </div>
-          </div>
+          </ContentCard>
         </div>
       </section>
 
@@ -212,7 +203,7 @@ Ending Cash Balance                  $134,000
         </h3>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-4 py-3 text-left font-semibold">Item</th>
@@ -262,11 +253,11 @@ Ending Cash Balance                  $134,000
           definition="Cash available after maintaining or expanding the asset base. It's what's left for debt repayment, dividends, or growth investments."
         />
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6 my-6 text-center">
-          <p className="text-lg font-bold text-blue-700 dark:text-blue-300">
+        <ContentCard variant="info">
+          <p className="text-lg font-bold text-center">
             Free Cash Flow = Operating Cash Flow − Capital Expenditures
           </p>
-        </div>
+        </ContentCard>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
           Using our example: FCF = $144,000 − $50,000 = $94,000
@@ -292,7 +283,7 @@ Ending Cash Balance                  $134,000
         </p>
 
         <div className="overflow-x-auto my-6">
-          <table className="w-full border-collapse text-sm">
+          <table className="min-w-full w-full border-collapse text-sm">
             <thead>
               <tr className="bg-slate-100 dark:bg-slate-800">
                 <th className="border border-slate-200 dark:border-slate-700 px-3 py-2 text-center font-semibold">Operating</th>
@@ -368,16 +359,13 @@ Ending Cash Balance                  $134,000
           </ul>
         </div>
 
-        <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 mt-6">
-          <p className="font-medium text-green-800 dark:text-green-200 mb-2">
-            🎉 Congratulations!
-          </p>
-          <p className="text-green-700 dark:text-green-300">
+        <ContentCard variant="success" title="Congratulations!" icon="🎉">
+          <p>
             You've completed Part I: Foundations and Part II: Financial Statements! You now understand
             the three core financial statements and how they connect. This knowledge forms the
             foundation for all financial analysis and decision-making.
           </p>
-        </div>
+        </ContentCard>
       </section>
 
       {/* Knowledge Check */}
