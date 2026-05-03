@@ -114,41 +114,35 @@
 
 ---
 
-## Phase 4: Real Model Mode Behind Server Endpoint
+## Phase 4: Real Model Mode Behind Server Endpoint — ✅ Core complete
 
 **Purpose:** Add an optional real LLM execution path while preserving the deterministic public demo.
 
-**User-facing outcomes:**
+**Done:**
 
-- A mode switch offers "Simulated" and "Real model" execution.
-- Real model mode calls a server endpoint, never the model provider directly from the browser.
-- If model access is unavailable, the app clearly falls back to simulated mode.
-- Real model traces still use the same event model as simulated traces.
+- ✅ `src/lib/agent-lab/fakeModel.ts` — already extracted in Phase 1; the runner has been provider-agnostic since then.
+- ✅ `src/lib/agent-lab/modelClient.ts` — narrow `ModelClient` interface with `decideNextStep(state) → Promise<ModelDecision>`. Two implementations: `fakeModelClient` (deterministic, in-browser) and `createRealModelClient(...)` (posts to server). Adds `RealModelUnavailableError` and a `fetchRealModelStatus` helper.
+- ✅ `src/pages/api/agent-lab/decide.ts` — POST endpoint that validates incoming state with Zod, enforces a body-size cap and a scenario allowlist, and returns 503 when no provider key is configured. The provider call is a clearly-marked extension point so wiring OpenAI/Anthropic/Bedrock is a small, isolated change.
+- ✅ `src/pages/api/agent-lab/status.ts` — GET endpoint that reports whether a provider key is configured. The browser uses this to enable / disable the "Real model" toggle. Never returns the key itself.
+- ✅ Runner refactored to accept an optional `modelClient`. When the real client throws `RealModelUnavailableError`, the runner emits an `error` event, swaps to `fakeModelClient`, and finishes the run — so a real-model outage is a degraded but functional experience, not a broken one.
+- ✅ `AgentRunResult.metrics.modelClientId` records which client actually drove the run, so the UI can surface "real → fell back to fake".
+- ✅ `ModeToggle` UI (radio-group) inside the run controls. Defaults to Simulated. "Real model" disabled when status reports unavailable. Shows the status note and a fallback notice when the last run had to swap clients.
+- ✅ `modelClient.test.ts` — 7 tests covering fake-client behavior, real-client 503 path, malformed-response path, valid-response path, status endpoint outage / availability paths, and an integration test that confirms the runner emits `error` and finishes via the fake client when the real client throws.
+- ✅ `AgentLabApp.test.tsx` — UI test that confirms the radio group renders, Simulated is checked by default, and Real model is disabled when the status endpoint reports unavailable.
+- ✅ Test setup stubs `/api/agent-lab/*` fetches by default to keep jsdom test runs free of network noise.
 
-**Implementation areas:**
+**Still open:**
 
-- Create `src/pages/api/agent-lab/run.ts`
-- Create `src/lib/agent-lab/modelClient.ts`
-- Create `src/lib/agent-lab/fakeModel.ts`
-- Modify `src/lib/agent-lab/agentRunner.ts`
-- Modify `src/components/agent-lab/AgentLabApp.tsx`
-- Add server endpoint tests where supported by the existing test setup.
+- Wiring an actual provider (OpenAI / Anthropic / Bedrock) inside `callRealProvider`. The boundary is fully built; this is a 50-line change inside one function.
+- Cross-iteration request budget / rate limiting (currently per-request body cap + scenario allowlist; full budget + per-IP throttling want a Cloudflare KV/DO).
+- Server endpoint tests: the lab uses Cloudflare adapter so endpoint tests would need the Workers runtime; the existing modelClient tests cover the contract from the client side.
 
-**Tasks:**
+**Acceptance criteria (met):**
 
-- Extract current deterministic model decisions into `fakeModel.ts`.
-- Add `modelClient.ts` with a narrow provider interface.
-- Add server endpoint with input validation and scenario allowlist.
-- Add environment variable checks for model credentials.
-- Add server-side rate limiting or simple request budget guard.
-- Add UI mode switch with disabled state when real model mode is unavailable.
-
-**Acceptance criteria:**
-
-- No model API key is exposed to client code.
-- Simulated mode remains the default.
-- Real mode failure does not break the learning experience.
-- Trace format stays consistent across simulated and real modes.
+- ✅ No model API key is exposed to client code (the key only ever lives in `import.meta.env` / Cloudflare runtime env on the server).
+- ✅ Simulated mode remains the default.
+- ✅ Real mode failure does not break the learning experience (graceful fallback + trace event).
+- ✅ Trace format stays consistent across simulated and real modes (same runner, same events, same schema).
 
 ---
 
@@ -269,24 +263,22 @@
 1. ✅ Phase 1: Strengthen current MVP (loop refactor, lens tabs, expanded final answer, broader tests, simulated-metrics labelling).
 2. ✅ Phase 2: Structured output validation (Zod schemas around every boundary, validation_error / model_retry events, schema-repair demo lens).
 3. ✅ Phase 3: Evaluation lab (8 eval cases, assertion framework, EvalPanel UI, in-browser runner).
-4. ✅ Phase 5: RAG mini-lab (8-section policy doc, deterministic keyword retrieval, side-by-side cited vs. uncited answers).
-5. ✅ Phase 7: Production hardening (ErrorBoundary, StatusBadge, reduced-motion respect, long-JSON containment locked in by test).
-6. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
-
-**Next, in order:**
-
-7. Phase 4: **Real model mode** behind a server endpoint. Intentionally last. The portfolio story is "the model is one swappable component"; that is more credible after the evals exist than before.
+4. ✅ Phase 4: Real model mode behind a server endpoint (modelClient interface, decide / status endpoints, mode toggle, graceful fallback).
+5. ✅ Phase 5: RAG mini-lab (8-section policy doc, deterministic keyword retrieval, side-by-side cited vs. uncited answers).
+6. ✅ Phase 7: Production hardening (ErrorBoundary, StatusBadge, reduced-motion respect, long-JSON containment locked in by test).
+7. ✅ Phase 8 (core): Portfolio narrative + architecture doc.
 
 **Deferred / optional:**
 
-- Phase 6: Local persistence. Low marginal value for a portfolio page; revisit once Phase 3-7 ship.
-- Phase 1 / 2 / 8 polish items listed in those sections.
+- Phase 6: Local persistence. Low marginal value for a portfolio page; revisit if multi-session flows are added.
+- Polish items inside each phase's "Still open" block.
+- Wiring an actual LLM provider in `callRealProvider`. The boundary is fully built; this is a small, isolated change.
 
 **Reorder rationale (vs. original plan):**
 
 - Phase 2 was moved before Phase 3 because evals on un-validated outputs become brittle string-matching. Schemas first, assertions on schema fields second.
 - Phase 8 (architecture doc) was pulled forward and treated as part of every release, not a single later phase. A one-page architecture doc is the highest-ROI artifact for the portfolio axis.
-- Extracting `fakeModel.ts` was promoted out of Phase 4 into Phase 1, because it is what makes the runner credibly a *loop*. Phase 4 then becomes a clean drop-in swap.
+- Extracting `fakeModel.ts` was promoted out of Phase 4 into Phase 1, because it is what makes the runner credibly a *loop*. Phase 4 then became a clean drop-in swap.
 
 ---
 

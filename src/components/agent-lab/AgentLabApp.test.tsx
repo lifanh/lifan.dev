@@ -75,6 +75,20 @@ describe('AgentLabApp', () => {
     expect(screen.getByRole('status')).toHaveTextContent(/Auto-approved/i);
   });
 
+  it('renders a model-mode toggle that defaults to simulated and disables real mode by default', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+
+    const radioGroup = screen.getByRole('radiogroup', { name: /Model client/i });
+    const simulated = screen.getByRole('radio', { name: /^Simulated$/i });
+    const real = screen.getByRole('radio', { name: /^Real model$/i });
+
+    expect(radioGroup).toBeInTheDocument();
+    expect(simulated).toHaveAttribute('aria-checked', 'true');
+    // Default test stub reports realModelAvailable: false.
+    await screen.findByText(/test stub/i);
+    expect(real).toBeDisabled();
+  });
+
   it('reveals the credit policy document and citations when the RAG tab is opened', async () => {
     render(<AgentLabApp simulationLatencyMs={0} />);
 

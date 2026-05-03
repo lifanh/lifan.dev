@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { scenarios } from '../../data/agent-lab/scenarios';
-import { decideNextStep, type ModelDecision, type ModelState } from './fakeModel';
+import { type ModelDecision, type ModelState } from './fakeModel';
+import { fakeModelClient, RealModelUnavailableError, type ModelClient } from './modelClient';
 import {
   checkOrderEligibility,
   createCreditReviewTicket,
@@ -46,6 +47,13 @@ type RunInput = {
    * before the corrected one, demonstrating schema validation + repair.
    */
   simulateInvalidRecommendation?: boolean;
+  /**
+   * Which model client to use. Defaults to the deterministic fake. Pass a
+   * real-model client (which posts to a server endpoint) to drive the
+   * agent with a real LLM. The runner, policy, schemas, and trace stay
+   * identical regardless of which client is provided.
+   */
+  modelClient?: ModelClient;
 };
 
 const MAX_ITERATIONS = 12;
@@ -105,7 +113,11 @@ function createEventFactory() {
   };
 }
 
-function estimateMetrics(events: TraceEvent[], iterations: number) {
+function estimateMetrics(
+  events: TraceEvent[],
+  iterations: number,
+  modelClientId: 'fake' | 'real',
+) {
   const toolCalls = events.filter((event) => event.type === 'tool_call').length;
   const modelResponses = events.filter((event) => event.type === 'model_response').length;
   const estimatedInputTokens = 620 + toolCalls * 110 + iterations * 40;
@@ -121,6 +133,7 @@ function estimateMetrics(events: TraceEvent[], iterations: number) {
     toolCalls,
     iterations,
     simulated: true as const,
+    modelClientId,
   };
 }
 
@@ -217,6 +230,8 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
   const latencyMs = input.latencyMs ?? 320;
   const event = createEventFactory();
   const events: TraceEvent[] = [];
+  let modelClient: ModelClient = input.modelClient ?? fakeModelClient;
+  let modelClientId = modelClient.id;
 
   const state: ModelState = {
     scenarioId: scenario.id,
@@ -238,7 +253,26 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
 
   while (iterations < MAX_ITERATIONS) {
     iterations += 1;
-    const decision: ModelDecision = decideNextStep(state);
+    let decision: ModelDecision;
+    try {
+      decision = await modelClient.decideNextStep(state);
+    } catch (error) {
+      if (error instanceof RealModelUnavailableError) {
+        // Real model is offline / unconfigured. Fall back to the deterministic
+        // fake client so the lesson keeps working, and surface the fallback in
+        // the trace so the user can see it happened.
+        events.push(
+          event('error', 'Real model unavailable; falling back to simulated', {
+            reason: error.message,
+          }),
+        );
+        modelClient = fakeModelClient;
+        modelClientId = 'fake';
+        decision = await modelClient.decideNextStep(state);
+      } else {
+        throw error;
+      }
+    }
 
     if (decision.type === 'invalid_recommendation') {
       events.push(
@@ -300,7 +334,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
           recommendation: decision.recommendation,
           finalAnswer: 'Run aborted: the final recommendation did not match the schema.',
           iterations,
-          metrics: estimateMetrics(events, iterations),
+          metrics: estimateMetrics(events, iterations, modelClientId),
         };
       }
 
@@ -319,7 +353,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
         finalAnswer,
         ticket: state.observations.ticket,
         iterations,
-        metrics: estimateMetrics(events, iterations),
+        metrics: estimateMetrics(events, iterations, modelClientId),
       };
     }
 
@@ -358,7 +392,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
         recommendation: state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
         finalAnswer: `Run aborted: invalid arguments for ${toolName}.`,
         iterations,
-        metrics: estimateMetrics(events, iterations),
+        metrics: estimateMetrics(events, iterations, modelClientId),
       };
     }
 
@@ -381,7 +415,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
         recommendation: state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
         finalAnswer: `Run aborted: policy denied ${toolName}. ${permission.reason}`,
         iterations,
-        metrics: estimateMetrics(events, iterations),
+        metrics: estimateMetrics(events, iterations, modelClientId),
       };
     }
 
@@ -413,7 +447,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
           ),
           pendingApproval,
           iterations,
-          metrics: estimateMetrics(events, iterations),
+          metrics: estimateMetrics(events, iterations, modelClientId),
         };
       }
 
@@ -460,7 +494,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
           state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
         finalAnswer: `Run aborted: ${toolName} threw "${reason}".`,
         iterations,
-        metrics: estimateMetrics(events, iterations),
+        metrics: estimateMetrics(events, iterations, modelClientId),
       };
     }
 
@@ -486,7 +520,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
         recommendation: state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
         finalAnswer: `Run aborted: ${toolName} returned data that did not match the schema.`,
         iterations,
-        metrics: estimateMetrics(events, iterations),
+        metrics: estimateMetrics(events, iterations, modelClientId),
       };
     }
 
@@ -508,7 +542,7 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
       state.observations.eligibility ?? emptyRecommendation(scenario.customerNameOrId, scenario.orderAmount),
     finalAnswer: `Run aborted: agent exceeded ${MAX_ITERATIONS} iterations without producing an answer.`,
     iterations,
-    metrics: estimateMetrics(events, iterations),
+    metrics: estimateMetrics(events, iterations, modelClientId),
   };
 }
 

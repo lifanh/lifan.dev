@@ -9,11 +9,17 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { customers } from '../../data/agent-lab/customers';
 import { invoices } from '../../data/agent-lab/invoices';
 import { scenarios } from '../../data/agent-lab/scenarios';
 import { runAgentLabScenario } from '../../lib/agent-lab/agentRunner';
+import {
+  createRealModelClient,
+  fakeModelClient,
+  fetchRealModelStatus,
+  type RealModelStatus,
+} from '../../lib/agent-lab/modelClient';
 import type { AgentRunResult, ApprovalDecision, TraceEvent } from '../../lib/agent-lab/types';
 import { ApprovalGate } from './ApprovalGate';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -92,6 +98,8 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
   const [selectedEventId, setSelectedEventId] = useState<string | undefined>();
   const [isRunning, setIsRunning] = useState(false);
   const [simulateInvalidOutput, setSimulateInvalidOutput] = useState(false);
+  const [mode, setMode] = useState<'simulated' | 'real'>('simulated');
+  const [realStatus, setRealStatus] = useState<RealModelStatus | null>(null);
 
   const selectedScenario = scenarios.find((scenario) => scenario.id === selectedScenarioId) ?? scenarios[0];
   const selectedEvent = useMemo(
@@ -99,13 +107,27 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
     [result, selectedEventId],
   );
 
+  useEffect(() => {
+    let cancelled = false;
+    fetchRealModelStatus().then((status) => {
+      if (!cancelled) {
+        setRealStatus(status);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   async function runScenario(approvalDecision?: ApprovalDecision) {
     setIsRunning(true);
+    const modelClient = mode === 'real' ? createRealModelClient() : fakeModelClient;
     const nextResult = await runAgentLabScenario({
       scenarioId: selectedScenarioId,
       approvalDecision,
       latencyMs: simulationLatencyMs,
       simulateInvalidRecommendation: simulateInvalidOutput,
+      modelClient,
     });
     setResult(nextResult);
     setSelectedEventId(findInspectableEvent(nextResult.events)?.id);
@@ -266,6 +288,12 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
                 <div className="mt-4">
                   <StatusBadge isRunning={isRunning} result={result} />
                 </div>
+                <ModeToggle
+                  mode={mode}
+                  onChange={setMode}
+                  status={realStatus}
+                  modelClientUsed={result?.metrics.modelClientId}
+                />
               </div>
               <button
                 type="button"
@@ -460,6 +488,84 @@ function OverviewLensBody({ hasResult, eventCount }: { hasResult: boolean; event
       <strong> Tool Calling</strong> to see typed boundaries, then <strong>Agent Loop</strong> to
       see how iterations chain together.
     </p>
+  );
+}
+
+function ModeToggle({
+  mode,
+  onChange,
+  status,
+  modelClientUsed,
+}: {
+  mode: 'simulated' | 'real';
+  onChange: (next: 'simulated' | 'real') => void;
+  status: RealModelStatus | null;
+  modelClientUsed?: 'fake' | 'real';
+}) {
+  const realDisabled = status ? !status.realModelAvailable : true;
+  const fellBack = mode === 'real' && modelClientUsed === 'fake';
+
+  return (
+    <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900/40">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          Model
+        </span>
+        <div role="radiogroup" aria-label="Model client" className="flex gap-1 rounded-lg bg-white p-1 dark:bg-slate-800">
+          <ModeButton
+            active={mode === 'simulated'}
+            onClick={() => onChange('simulated')}
+            label="Simulated"
+          />
+          <ModeButton
+            active={mode === 'real'}
+            onClick={() => onChange('real')}
+            disabled={realDisabled}
+            label="Real model"
+          />
+        </div>
+        {status && (
+          <span className="text-xs text-slate-500 dark:text-slate-400">{status.note}</span>
+        )}
+      </div>
+      {fellBack && (
+        <p className="mt-2 text-xs text-amber-800 dark:text-amber-300">
+          Real model unavailable on the last run; the lab fell back to simulated. The fallback is
+          recorded in the trace.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function ModeButton({
+  active,
+  onClick,
+  label,
+  disabled,
+}: {
+  active: boolean;
+  onClick: () => void;
+  label: string;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      role="radio"
+      aria-checked={active}
+      className={`min-h-[36px] rounded px-3 py-1.5 text-xs font-medium transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+        active
+          ? 'bg-blue-600 text-white'
+          : disabled
+            ? 'cursor-not-allowed text-slate-400 dark:text-slate-500'
+            : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700'
+      }`}
+    >
+      {label}
+    </button>
   );
 }
 

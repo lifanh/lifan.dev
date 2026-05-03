@@ -128,6 +128,8 @@ export type AgentRunResult = {
     iterations: number;
     /** All numbers in metrics are simulated; no real LLM was called. */
     simulated: true;
+    /** Which model client actually drove the run ("fake" vs. "real"). */
+    modelClientId: 'fake' | 'real';
   };
 };
 

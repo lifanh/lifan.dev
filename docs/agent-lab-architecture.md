@@ -48,7 +48,10 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 |------|------|
 | `src/lib/agent-lab/types.ts` | Domain types (Customer, Invoice, OrderEligibility), trace event shape, run result. |
 | `src/lib/agent-lab/schemas.ts` | Zod schemas for tool arguments, tool results, and final recommendation. The runtime contract for every boundary. |
-| `src/lib/agent-lab/fakeModel.ts` | Deterministic stand-in for an LLM. Pure function: `decideNextStep(state) → ToolCall \| FinalAnswer \| InvalidRecommendation`. Will be swapped for a real provider in Phase 4. |
+| `src/lib/agent-lab/fakeModel.ts` | Deterministic stand-in for an LLM. Pure function: `decideNextStep(state) → ToolCall \| FinalAnswer \| InvalidRecommendation`. |
+| `src/lib/agent-lab/modelClient.ts` | Provider-agnostic model interface. `fakeModelClient` (in-browser deterministic) and `createRealModelClient(...)` (posts to a server endpoint). Adds `RealModelUnavailableError` for graceful fallback and `fetchRealModelStatus` for the UI toggle. |
+| `src/pages/api/agent-lab/decide.ts` | Server-side decision endpoint. Validates state with Zod, enforces a body-size cap and scenario allowlist, returns 503 when no provider key is configured. The provider call is a marked extension point. |
+| `src/pages/api/agent-lab/status.ts` | Reports whether a provider key is configured, without ever returning the key. |
 | `src/lib/agent-lab/policy.ts` | Tool-permission rules, independent of the model. Reads tool name and args; returns `allow` / `requires_approval` / `deny`. |
 | `src/lib/agent-lab/mockTools.ts` | The ERP/credit "system." Resolves customers, returns credit status, lists invoices, computes eligibility, persists credit-review tickets. |
 | `src/lib/agent-lab/agentRunner.ts` | The actual loop. Asks the model, validates args, checks policy, gates writes, executes tools, validates results, builds the trace, returns a structured result. |
@@ -130,7 +133,7 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 
 ## What's intentionally not here yet
 
-- **Real model execution.** Roadmap Phase 4. Will live behind a server endpoint, never browser-exposed keys.
+- **A wired-up LLM provider.** The Real Model boundary is built end-to-end (server endpoint, mode toggle, graceful fallback), but `callRealProvider` inside `decide.ts` is intentionally a placeholder so the lab works without anyone paying for tokens. Plugging in OpenAI / Anthropic / Bedrock is a small, isolated change inside that one function.
 - **Persistence.** Roadmap Phase 6. Local progress and eval-result history.
 - **In-trace retrieval events.** Phase 5 currently exposes RAG as a comparison panel; folding `retrieval_query` and `retrieval_result` events into the live agent run would let evals assert on grounding too.
 
