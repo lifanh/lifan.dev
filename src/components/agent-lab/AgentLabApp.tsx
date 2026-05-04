@@ -422,7 +422,7 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
                 </p>
               </div>
               <a
-                href="https://github.com/divinerapierh/lifan.dev/blob/main/docs/agent-lab-architecture.md"
+                href="https://github.com/lifanh/lifan.dev/blob/main/docs/agent-lab-architecture.md"
                 target="_blank"
                 rel="noreferrer"
                 className="text-xs text-blue-700 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300"

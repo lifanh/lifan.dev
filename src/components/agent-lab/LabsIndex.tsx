@@ -115,7 +115,7 @@ const LABS: LabEntry[] = [
     number: 12,
     title: 'Observability and deployment',
     goal: 'Understand what production operation looks like.',
-    href: 'https://github.com/divinerapierh/lifan.dev/blob/main/docs/agent-lab-operations.md',
+    href: 'https://github.com/lifanh/lifan.dev/blob/main/docs/agent-lab-operations.md',
     hrefKind: 'doc',
     status: 'docs-only',
     highlight: 'Operations doc: trace replay, cost / latency budgets, Cloudflare deployment notes.',
