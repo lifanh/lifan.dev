@@ -190,7 +190,7 @@ export function hybridSearch(query: string, limit = 5): SearchResult {
       const current = scoreById.get(entry.sectionId) ?? {
         title: entry.title,
         score: 0,
-        detail: { keywordRank: 0, vectorRank: 0 },
+        detail: {} as Record<string, number>,
       };
       current.score += contribution;
       current.detail[`${method}Rank`] = rank;
