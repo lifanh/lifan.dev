@@ -28,22 +28,25 @@ export default function WorkflowApp() {
 
   async function runBoth(approvalDecision?: ApprovalDecision) {
     setIsRunning(true);
-    const [workflow, agent] = await Promise.all([
-      runWorkflow({
-        customerNameOrId: selectedScenario.customerNameOrId,
-        orderAmount: selectedScenario.orderAmount,
-        userRequest: selectedScenario.userRequest,
-        approvalDecision,
-      }),
-      runAgentLabScenario({
-        scenarioId: selectedScenario.id,
-        approvalDecision,
-        latencyMs: 0,
-      }),
-    ]);
-    setWorkflowResult(workflow);
-    setAgentResult(agent);
-    setIsRunning(false);
+    try {
+      const [workflow, agent] = await Promise.all([
+        runWorkflow({
+          customerNameOrId: selectedScenario.customerNameOrId,
+          orderAmount: selectedScenario.orderAmount,
+          userRequest: selectedScenario.userRequest,
+          approvalDecision,
+        }),
+        runAgentLabScenario({
+          scenarioId: selectedScenario.id,
+          approvalDecision,
+          latencyMs: 0,
+        }),
+      ]);
+      setWorkflowResult(workflow);
+      setAgentResult(agent);
+    } finally {
+      setIsRunning(false);
+    }
   }
 
   return (

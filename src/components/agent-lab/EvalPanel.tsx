@@ -19,9 +19,12 @@ export function EvalPanel({ simulationLatencyMs = 0 }: EvalPanelProps) {
 
   async function run() {
     setIsRunning(true);
-    const next = await runAllEvals(evalCases, simulationLatencyMs);
-    setResults(next);
-    setIsRunning(false);
+    try {
+      const next = await runAllEvals(evalCases, simulationLatencyMs);
+      setResults(next);
+    } finally {
+      setIsRunning(false);
+    }
   }
 
   function toggle(id: string) {

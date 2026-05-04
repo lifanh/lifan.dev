@@ -121,17 +121,20 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
 
   async function runScenario(approvalDecision?: ApprovalDecision) {
     setIsRunning(true);
-    const modelClient = mode === 'real' ? createRealModelClient() : fakeModelClient;
-    const nextResult = await runAgentLabScenario({
-      scenarioId: selectedScenarioId,
-      approvalDecision,
-      latencyMs: simulationLatencyMs,
-      simulateInvalidRecommendation: simulateInvalidOutput,
-      modelClient,
-    });
-    setResult(nextResult);
-    setSelectedEventId(findInspectableEvent(nextResult.events)?.id);
-    setIsRunning(false);
+    try {
+      const modelClient = mode === 'real' ? createRealModelClient() : fakeModelClient;
+      const nextResult = await runAgentLabScenario({
+        scenarioId: selectedScenarioId,
+        approvalDecision,
+        latencyMs: simulationLatencyMs,
+        simulateInvalidRecommendation: simulateInvalidOutput,
+        modelClient,
+      });
+      setResult(nextResult);
+      setSelectedEventId(findInspectableEvent(nextResult.events)?.id);
+    } finally {
+      setIsRunning(false);
+    }
   }
 
   function selectScenario(scenarioId: string) {

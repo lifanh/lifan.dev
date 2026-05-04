@@ -128,10 +128,27 @@ function isModelDecision(value: unknown): value is ModelDecision {
   if (!value || typeof value !== 'object') {
     return false;
   }
-  const decision = value as { type?: unknown };
-  return (
-    decision.type === 'tool_call' ||
-    decision.type === 'final_answer' ||
-    decision.type === 'invalid_recommendation'
-  );
+  const decision = value as Record<string, unknown>;
+
+  if (decision.type === 'tool_call') {
+    return (
+      typeof decision.toolName === 'string' &&
+      typeof decision.args === 'object' &&
+      decision.args !== null &&
+      !Array.isArray(decision.args)
+    );
+  }
+
+  if (decision.type === 'final_answer') {
+    return (
+      typeof decision.recommendation === 'object' &&
+      decision.recommendation !== null
+    );
+  }
+
+  if (decision.type === 'invalid_recommendation') {
+    return 'payload' in decision;
+  }
+
+  return false;
 }
