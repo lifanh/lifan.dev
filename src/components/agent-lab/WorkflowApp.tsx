@@ -111,14 +111,16 @@ export default function WorkflowApp() {
                 <button
                   type="button"
                   onClick={() => runBoth('approved')}
-                  className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-900 hover:bg-emerald-100 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-100"
+                  disabled={isRunning}
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-900 transition-colors motion-reduce:transition-none hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-100"
                 >
                   Approve and re-run
                 </button>
                 <button
                   type="button"
                   onClick={() => runBoth('rejected')}
-                  className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-900 hover:bg-rose-100 dark:border-rose-700 dark:bg-rose-900/30 dark:text-rose-100"
+                  disabled={isRunning}
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-900 transition-colors motion-reduce:transition-none hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-rose-700 dark:bg-rose-900/30 dark:text-rose-100"
                 >
                   Reject and re-run
                 </button>

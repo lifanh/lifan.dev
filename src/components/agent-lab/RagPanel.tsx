@@ -1,5 +1,5 @@
 import { BookOpen, Quote, Search, Sparkles } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { creditPolicyDocument } from '../../data/agent-lab/creditPolicyDocument';
 import {
   composeCitedAnswer,
@@ -25,6 +25,10 @@ type RagPanelProps = {
  */
 export function RagPanel({ defaultQuery, scenarioConclusion }: RagPanelProps) {
   const [query, setQuery] = useState(defaultQuery);
+
+  useEffect(() => {
+    setQuery(defaultQuery);
+  }, [defaultQuery]);
 
   const result: RetrievalResult = useMemo(() => retrievePolicySections(query), [query]);
   const cited = useMemo(() => composeCitedAnswer(result, scenarioConclusion), [result, scenarioConclusion]);

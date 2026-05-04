@@ -420,17 +420,25 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
     }
 
     if (permission.decision === 'requires_approval') {
-      const pendingApproval: PendingApproval = {
-        toolName: 'createCreditReviewTicket',
-        args: {
-          customerId: String(decision.args.customerId ?? ''),
-          reason: String(decision.args.reason ?? ''),
-        },
-        reason:
-          toolName === 'createCreditReviewTicket'
-            ? 'This action creates a persistent business record, so policy requires a human decision.'
-            : permission.reason,
-      };
+      const pendingApproval: PendingApproval =
+        toolName === 'createCreditReviewTicket'
+          ? {
+              toolName,
+              args: {
+                customerId: String(decision.args.customerId ?? ''),
+                reason: String(decision.args.reason ?? ''),
+              },
+              reason:
+                'This action creates a persistent business record, so policy requires a human decision.',
+            }
+          : {
+              toolName: 'checkOrderEligibility',
+              args: {
+                customerId: String(decision.args.customerId ?? ''),
+                orderAmount: Number(decision.args.orderAmount ?? 0),
+              },
+              reason: permission.reason,
+            };
 
       events.push(event('approval_required', 'Approval gate reached', pendingApproval));
 

@@ -101,14 +101,23 @@ export type CreditReviewTicket = {
   createdAt: string;
 };
 
-export type PendingApproval = {
-  toolName: 'createCreditReviewTicket';
-  args: {
-    customerId: string;
-    reason: string;
-  };
-  reason: string;
-};
+export type PendingApproval =
+  | {
+      toolName: 'createCreditReviewTicket';
+      args: {
+        customerId: string;
+        reason: string;
+      };
+      reason: string;
+    }
+  | {
+      toolName: 'checkOrderEligibility';
+      args: {
+        customerId: string;
+        orderAmount: number;
+      };
+      reason: string;
+    };
 
 export type AgentRunResult = {
   scenario: AgentScenario;
