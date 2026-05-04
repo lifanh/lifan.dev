@@ -282,6 +282,61 @@
 
 ---
 
+## Twelve-Lab Expansion — ✅ Core complete
+
+**Purpose:** Reframe the Agent Lab as a 12-module learning platform without
+duplicating the work the canonical playground already does.
+
+**Approach (option C from the structure decision):** Keep `/tools/agent-lab` as
+the canonical playground (it already covers Labs 2 / 3 / 4 / 5 / 9 / 10 / 11 as
+lenses). Add four dedicated sibling routes for the net-new material. Cover
+Lab 12 in a documentation page rather than a route, because operational
+concerns are infrastructure topics, not visual demos.
+
+**Done:**
+
+- ✅ Lab 1 — `/tools/agent-lab/llm-fundamentals` with `llmSimulator.ts`
+  (deterministic completion API: messages, temperature, max-tokens, simulated
+  latency / token usage / cost) and a side-by-side prompt-comparison UI.
+- ✅ Lab 6 — `/tools/agent-lab/hybrid-search` with `hybridSearch.ts` (BM25,
+  pseudo-vector via char-trigrams + hashed buckets + cosine, RRF hybrid, toy
+  reranker) and a four-column comparison UI over the existing 8-section policy
+  document.
+- ✅ Lab 7 — `/tools/agent-lab/mcp-tools` with `mcpManifest.ts` (derives the
+  manifest from the existing schemas + policy, includes a tiny zod →
+  JSON-schema converter and a scripted MCP handshake) and a registry / detail
+  / handshake UI.
+- ✅ Lab 8 — `/tools/agent-lab/workflow-vs-agent` with `workflow.ts` (six-step
+  deterministic pipeline) and a side-by-side UI that runs the same scenario
+  through the workflow and the free-form agent runner.
+- ✅ Lab 12 — [`agent-lab-operations.md`](./agent-lab-operations.md): telemetry
+  plan, cost / latency budgets, replay strategy, deployment notes for
+  Cloudflare Pages + Workers, and what "done" means operationally. No new
+  route; the lab is documentation by design.
+- ✅ `/tools/agent-lab/labs` — `LabsIndex.tsx` card grid mapping every lab
+  number to its route or lens, with a kind badge (canonical lab / dedicated
+  route / docs). Linked from the canonical lab header as "All 12 labs →".
+
+**Still open:**
+
+- A real LLM provider in `callRealProvider` would let Labs 1 and 6 show real
+  generation / embedding behaviour. The boundaries are fully built; this is a
+  small, isolated change as called out in Phase 4.
+- Lab 12 as a live observability dashboard (rather than a doc) needs an
+  OpenTelemetry exporter wired to a sink and a small replay UI. The doc maps
+  the work; none of it is on the critical path for the learning experience.
+
+**Acceptance criteria (met):**
+
+- A visitor lands on `/tools/agent-lab/labs` and can navigate to all 12
+  modules.
+- Each new lab works without API keys, deterministically, in under a second.
+- The architecture doc explains how the 12 labs share underlying modules so
+  the engineering surface stays small.
+- `npm test` and `npm run build` both green after every lab commit.
+
+---
+
 ## Definition Of Fully Functional
 
 Agent Lab is fully functional when it supports:

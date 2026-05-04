@@ -7,6 +7,32 @@ A short tour of how the lab is wired together and why each module exists.
 The model is a single, replaceable component inside a larger system. The system — not the
 model — owns the loop, the tools, the policy, the validation, and the approval gate.
 
+## Twelve labs, one engineering story
+
+The Lab is structured as 12 focused modules. Eight share the canonical credit-order-eligibility
+playground at `/tools/agent-lab` (rendered as different lenses); four live as dedicated sibling
+routes for material the canonical playground does not exercise; one is documentation only because
+the topic is operational, not visual. The full index is at `/tools/agent-lab/labs`.
+
+| # | Title | Where |
+|---|-------|-------|
+| 1 | LLM API fundamentals | `/tools/agent-lab/llm-fundamentals` |
+| 2 | Structured outputs | `/tools/agent-lab` (Structured Output lens) |
+| 3 | Tool calling | `/tools/agent-lab` (Tool Calling lens) |
+| 4 | Agent loop | `/tools/agent-lab` (Agent Loop lens) |
+| 5 | RAG | `/tools/agent-lab` (RAG lens) |
+| 6 | Hybrid search and reranking | `/tools/agent-lab/hybrid-search` |
+| 7 | MCP-style tool protocol | `/tools/agent-lab/mcp-tools` |
+| 8 | Workflow vs free-form agent | `/tools/agent-lab/workflow-vs-agent` |
+| 9 | Evaluation harness | `/tools/agent-lab` (Evals lens) |
+| 10 | Human-in-the-loop | `/tools/agent-lab` (built into every run) |
+| 11 | Permissions and audit trails | `/tools/agent-lab` (policy module + Trace Viewer) |
+| 12 | Observability and deployment | [`agent-lab-operations.md`](./agent-lab-operations.md) |
+
+The dedicated routes (Labs 1, 6, 7, 8) reuse the same data, schemas, and policy modules as the
+canonical playground; they only swap the lens or the runner. That keeps the engineering surface
+small even as the learning surface grows.
+
 ## Module map
 
 ```diagram
@@ -57,6 +83,10 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 | `src/lib/agent-lab/agentRunner.ts` | The actual loop. Asks the model, validates args, checks policy, gates writes, executes tools, validates results, builds the trace, returns a structured result. |
 | `src/lib/agent-lab/evals.ts` | Evaluation harness. `EvalCase`, `EvalAssertion`, `runEvalCase`, `runAllEvals`. Replays each case against the deterministic agent and asserts on tool sequence, decision, approval shape, trace events, and final-answer facts. |
 | `src/lib/agent-lab/retrieval.ts` | Deterministic keyword retrieval over the credit policy document. Tokenizer with stop-word list, light synonym expansion, double-weighted explicit-keyword scoring, top-k selection. Also exports `composeCitedAnswer` and `composeUncitedAnswer` for the RAG comparison. |
+| `src/lib/agent-lab/hybridSearch.ts` | Lab 6. Four ranked-retrieval methods over the same policy document: BM25 (k1=1.2, b=0.75), a deterministic pseudo-vector built from char-trigrams + hashed buckets + cosine, RRF hybrid (k=60), and a toy reranker that boosts title-overlap candidates. |
+| `src/lib/agent-lab/mcpManifest.ts` | Lab 7. Derives an MCP-shaped tool manifest from the existing `toolArgsSchemas` + `policy` modules. Includes a tiny zod → JSON-schema converter and a scripted `simulateMcpHandshake` (initialize → tools/list → tools/call) so the lab can show the wire envelopes without standing up a real MCP server. |
+| `src/lib/agent-lab/workflow.ts` | Lab 8. A six-step deterministic pipeline (classifyRequest → retrievePolicy → checkCustomerAccount → generateRecommendation → requestApproval → executeFinalAction) over the same mock ERP. Used by the workflow-vs-agent comparison. |
+| `src/lib/agent-lab/llmSimulator.ts` | Lab 1. Deterministic stand-in for an LLM completion API: messages by role, temperature, max-tokens, simulated latency, ~4-chars-per-token usage estimate, mock per-million-token pricing. Marks every response `simulated: true`. |
 | `src/data/agent-lab/creditPolicyDocument.ts` | Eight stable policy sections (P-001 … P-008) addressed by id so citations point to a paragraph, not a vague "the policy." |
 | `src/data/agent-lab/*` | Mock customers, invoices, scenarios. |
 | `src/components/agent-lab/AgentLabApp.tsx` | UI shell. Tab switcher, scenario picker, run controls, metrics, approval gate, final recommendation, and lenses. |
@@ -68,6 +98,11 @@ model — owns the loop, the tools, the policy, the validation, and the approval
 | `src/components/agent-lab/RagPanel.tsx` | RAG tab UI: query input, side-by-side uncited vs. cited answers, retrieved-sections list with score chips, full policy document with cited sections highlighted. |
 | `src/components/agent-lab/StatusBadge.tsx` | A single-source-of-truth status indicator (idle / running / awaiting approval / auto-approved / blocked / approved-with-ticket / rejected / error). Uses `role="status"` + `aria-live`. |
 | `src/components/agent-lab/ErrorBoundary.tsx` | Render-time error boundary with a recovery card; safety net for unexpected component errors. |
+| `src/components/agent-lab/HybridSearchApp.tsx` | Lab 6 UI. Query input, four method columns (BM25 / pseudo-vector / RRF hybrid / rerank), full source-policy panel. |
+| `src/components/agent-lab/McpToolsApp.tsx` | Lab 7 UI. Tool registry sidebar with permission badges, JSON-schema viewer, simulated five-step MCP handshake. |
+| `src/components/agent-lab/WorkflowApp.tsx` | Lab 8 UI. Side-by-side six-step deterministic workflow next to the free-form agent runner trace. |
+| `src/components/agent-lab/LlmFundamentalsApp.tsx` | Lab 1 UI. Two prompt configurations (system / user / temperature / max-tokens), wire-payload preview, response columns with token / latency / cost stats. |
+| `src/components/agent-lab/LabsIndex.tsx` | The 12-card index at `/tools/agent-lab/labs`. Maps every lab number to its route or lens, with a kind badge (canonical lab / dedicated route / docs). |
 
 ## The loop, end to end
 

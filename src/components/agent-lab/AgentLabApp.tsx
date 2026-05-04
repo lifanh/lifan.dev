@@ -156,6 +156,12 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
             A deterministic learning environment for tool boundaries, runtime schema validation,
             policy gates, and human approval — the parts of an AI agent the chatbot demos hide.
           </p>
+          <a
+            href="/tools/agent-lab/labs"
+            className="mt-4 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-blue-700 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300"
+          >
+            All 12 labs →
+          </a>
         </div>
         <div className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
           <div className="flex items-start gap-3">
