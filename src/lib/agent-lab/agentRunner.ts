@@ -302,6 +302,28 @@ export async function runAgentLabScenario(input: RunInput): Promise<AgentRunResu
         state.invalidRecommendationAttempted = true;
         continue;
       }
+
+      // Payload tagged `invalid_recommendation` but actually conforms to the
+      // schema. Treat it as a valid final answer rather than falling through
+      // to the tool_call handler (which would crash on the missing toolName).
+      const recommendation = parsed.data;
+      const finalAnswer = buildFinalAnswer(
+        state.observations.customer?.name ?? scenario.customerNameOrId,
+        recommendation,
+        state.approvalDecision,
+      );
+      events.push(event('final_answer', 'Final answer', finalAnswer));
+
+      return {
+        scenario,
+        status: 'completed',
+        events,
+        recommendation,
+        finalAnswer,
+        ticket: state.observations.ticket,
+        iterations,
+        metrics: estimateMetrics(events, iterations, modelClientId),
+      };
     }
 
     if (decision.type === 'final_answer') {

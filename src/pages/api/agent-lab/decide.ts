@@ -40,15 +40,28 @@ const SCENARIO_ALLOWLIST = new Set([
 ]);
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // Body-size guard.
+  // Body-size guard. The Content-Length header is a fast pre-check, but it
+  // can be missing or spoofed (e.g. chunked encoding), so we also enforce
+  // the limit on the actual byte length after reading the body.
   const contentLength = Number(request.headers.get('content-length') ?? '0');
   if (contentLength > MAX_BODY_BYTES) {
     return json({ error: 'Request body too large.' }, 413);
   }
 
+  let bodyText: string;
+  try {
+    bodyText = await request.text();
+  } catch {
+    return json({ error: 'Could not read request body.' }, 400);
+  }
+
+  if (new TextEncoder().encode(bodyText).byteLength > MAX_BODY_BYTES) {
+    return json({ error: 'Request body too large.' }, 413);
+  }
+
   let body: unknown;
   try {
-    body = await request.json();
+    body = JSON.parse(bodyText);
   } catch {
     return json({ error: 'Body must be valid JSON.' }, 400);
   }
