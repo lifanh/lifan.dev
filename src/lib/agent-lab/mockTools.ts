@@ -102,6 +102,10 @@ export async function checkOrderEligibility(
     reasons.push('Customer risk level is high.');
   }
 
+  if (customer.accountStatus === 'watchlist') {
+    reasons.push('Account is on the watchlist and requires review on every new order.');
+  }
+
   if (customer.accountStatus === 'blocked') {
     return {
       customerId,
