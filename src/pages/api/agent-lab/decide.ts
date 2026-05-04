@@ -23,7 +23,7 @@ export const prerender = false;
 const stateSchema = z.object({
   scenarioId: z.string().min(1).max(64),
   customerNameOrId: z.string().min(1).max(64),
-  orderAmount: z.number().int().min(0).max(10_000_000),
+  orderAmount: z.number().int().positive().max(10_000_000),
   observations: z.record(z.string(), z.unknown()).default({}),
   approvalDecision: z.enum(['approved', 'rejected']).optional(),
   simulateInvalidRecommendation: z.boolean().optional(),
