@@ -8,6 +8,7 @@ import {
   type ScoredSection,
 } from '../../lib/agent-lab/hybridSearch';
 import { ErrorBoundary } from './ErrorBoundary';
+import { LabChrome } from './LabChrome';
 
 type HybridSearchAppProps = {
   initialQuery?: string;
@@ -56,8 +57,10 @@ export default function HybridSearchApp({
 
   return (
     <ErrorBoundary>
+      <div className="space-y-6">
+      <LabChrome current={6} />
       <div className="mx-auto max-w-7xl space-y-8">
-        <header className="space-y-3 py-6">
+        <header className="space-y-3 py-2">
           <p className="text-sm font-medium uppercase tracking-normal text-slate-500 dark:text-slate-400">
             Lab 6 · Retrieval signals, side by side
           </p>
@@ -148,6 +151,7 @@ export default function HybridSearchApp({
             ))}
           </ul>
         </section>
+      </div>
       </div>
     </ErrorBoundary>
   );

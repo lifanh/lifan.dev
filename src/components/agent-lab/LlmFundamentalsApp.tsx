@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { callSimulatedLlm, type LlmRequest, type LlmResponse } from '../../lib/agent-lab/llmSimulator';
 import { ErrorBoundary } from './ErrorBoundary';
+import { LabChrome } from './LabChrome';
 
 const DEFAULT_SYSTEM = 'You are a careful credit-risk analyst. Respond with concrete next actions.';
 const DEFAULT_USER = 'Summarise how blocked accounts and overdue invoices interact for order eligibility.';
@@ -39,8 +40,10 @@ export default function LlmFundamentalsApp() {
 
   return (
     <ErrorBoundary>
+      <div className="space-y-6">
+      <LabChrome current={1} />
       <div className="mx-auto max-w-7xl space-y-8">
-        <header className="space-y-3 py-6">
+        <header className="space-y-3 py-2">
           <p className="text-sm font-medium uppercase tracking-normal text-slate-500 dark:text-slate-400">
             Lab 1 · LLM API fundamentals
           </p>
@@ -96,6 +99,7 @@ export default function LlmFundamentalsApp() {
           contract, not afterthoughts; latency, cost, and output variance are visible from day one,
           not surfaced only when something breaks in production.
         </section>
+      </div>
       </div>
     </ErrorBoundary>
   );

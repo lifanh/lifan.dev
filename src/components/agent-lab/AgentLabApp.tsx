@@ -23,6 +23,7 @@ import {
 import type { AgentRunResult, ApprovalDecision, TraceEvent } from '../../lib/agent-lab/types';
 import { ApprovalGate } from './ApprovalGate';
 import { ErrorBoundary } from './ErrorBoundary';
+import { LabChrome } from './LabChrome';
 import { EvalPanel } from './EvalPanel';
 import { LensConversation } from './lenses/LensConversation';
 import { LensLoop } from './lenses/LensLoop';
@@ -47,16 +48,46 @@ type LabTab =
   | 'evals'
   | 'rag';
 
-const tabs: Array<{ id: LabTab; label: string; description: string }> = [
-  { id: 'overview', label: 'Overview', description: 'Lesson summary and run controls' },
-  { id: 'llm', label: 'Conversation', description: 'User and model messages, no machinery' },
-  { id: 'structured', label: 'Structured Output', description: 'Schemas, validation, repair' },
-  { id: 'tools', label: 'Tool Calling', description: 'Typed tool registry and runtime calls' },
-  { id: 'loop', label: 'Agent Loop', description: 'Iteration-by-iteration view' },
-  { id: 'trace', label: 'Trace Viewer', description: 'Full event timeline + JSON inspector' },
-  { id: 'evals', label: 'Evals', description: 'Replay every case and score the agent' },
-  { id: 'rag', label: 'RAG', description: 'Compare uncited vs. retrieval-grounded answers' },
+type TabGroup = 'run' | 'lens' | 'mini';
+
+const tabs: Array<{ id: LabTab; label: string; description: string; group: TabGroup; lab: number }> = [
+  { id: 'overview', label: 'Overview', description: 'Lesson summary and run controls', group: 'run', lab: 10 },
+  { id: 'llm', label: 'Conversation', description: 'User and model messages, no machinery', group: 'lens', lab: 2 },
+  { id: 'structured', label: 'Structured Output', description: 'Schemas, validation, repair', group: 'lens', lab: 2 },
+  { id: 'tools', label: 'Tool Calling', description: 'Typed tool registry and runtime calls', group: 'lens', lab: 3 },
+  { id: 'loop', label: 'Agent Loop', description: 'Iteration-by-iteration view', group: 'lens', lab: 4 },
+  { id: 'trace', label: 'Trace Viewer', description: 'Full event timeline + JSON inspector', group: 'lens', lab: 11 },
+  { id: 'evals', label: 'Evals', description: 'Replay every case and score the agent', group: 'mini', lab: 9 },
+  { id: 'rag', label: 'RAG', description: 'Compare uncited vs. retrieval-grounded answers', group: 'mini', lab: 5 },
 ];
+
+const TAB_GROUPS: Array<{ id: TabGroup; label: string }> = [
+  { id: 'run', label: 'Run' },
+  { id: 'lens', label: 'Lenses' },
+  { id: 'mini', label: 'Mini-labs' },
+];
+
+const LENS_TAB_IDS: ReadonlyArray<LabTab> = [
+  'overview',
+  'llm',
+  'structured',
+  'tools',
+  'loop',
+  'trace',
+  'evals',
+  'rag',
+];
+
+function isLabTab(value: string | null): value is LabTab {
+  return value !== null && (LENS_TAB_IDS as ReadonlyArray<string>).includes(value);
+}
+
+function readLensFromUrl(): LabTab | null {
+  if (typeof window === 'undefined') return null;
+  const params = new URLSearchParams(window.location.search);
+  const lens = params.get('lens');
+  return isLabTab(lens) ? lens : null;
+}
 
 const overviewLesson = {
   title: 'Make the hidden loop visible',
@@ -119,6 +150,32 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
     };
   }, []);
 
+  // Honor ?lens=<tab> on first paint so deep-links from the labs index land
+  // on the requested lens. Subsequent tab clicks update the URL via
+  // history.replaceState so the link is shareable but no extra entry is
+  // pushed to history.
+  useEffect(() => {
+    const initial = readLensFromUrl();
+    if (initial) {
+      setActiveTab(initial);
+    }
+  }, []);
+
+  function changeTab(next: LabTab) {
+    setActiveTab(next);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (next === 'overview') {
+        url.searchParams.delete('lens');
+      } else {
+        url.searchParams.set('lens', next);
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
+  }
+
+  const currentLab = tabs.find((tab) => tab.id === activeTab)?.lab ?? 2;
+
   async function runScenario(approvalDecision?: ApprovalDecision) {
     setIsRunning(true);
     try {
@@ -146,8 +203,10 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
   const events = result?.events ?? [];
 
   return (
-    <div className="mx-auto max-w-7xl space-y-8">
-      <section className="grid gap-8 py-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
+    <div className="space-y-6">
+      <LabChrome current={currentLab} />
+      <div className="mx-auto max-w-7xl space-y-8">
+      <section className="grid gap-8 py-2 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
         <div>
           <p className="text-sm font-medium uppercase tracking-normal text-slate-500 dark:text-slate-400">
             Production agents, inspected
@@ -159,12 +218,6 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
             A deterministic learning environment for tool boundaries, runtime schema validation,
             policy gates, and human approval — the parts of an AI agent the chatbot demos hide.
           </p>
-          <a
-            href="/tools/agent-lab/labs"
-            className="mt-4 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-blue-700 underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300"
-          >
-            All 12 labs →
-          </a>
         </div>
         <div className="rounded-lg border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-slate-800">
           <div className="flex items-start gap-3">
@@ -184,23 +237,40 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
 
       <nav
         aria-label="Agent Lab sections"
-        className="flex gap-2 overflow-x-auto border-b border-slate-200 pb-2 dark:border-slate-700"
+        className="flex flex-wrap gap-x-6 gap-y-3 border-b border-slate-200 pb-2 dark:border-slate-700"
       >
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setActiveTab(tab.id)}
-            aria-pressed={activeTab === tab.id}
-            className={`min-h-[44px] shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
-              activeTab === tab.id
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+        {TAB_GROUPS.map((group) => {
+          const groupTabs = tabs.filter((tab) => tab.group === group.id);
+          if (groupTabs.length === 0) return null;
+          return (
+            <div key={group.id} className="flex items-center gap-2">
+              <span
+                className="text-[10px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500"
+                aria-hidden="true"
+              >
+                {group.label}
+              </span>
+              <div className="flex gap-1.5 overflow-x-auto">
+                {groupTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => changeTab(tab.id)}
+                    aria-pressed={activeTab === tab.id}
+                    title={tab.description}
+                    className={`min-h-[44px] shrink-0 rounded-lg px-3 py-2 text-sm font-medium transition-colors motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                      activeTab === tab.id
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-50'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </nav>
 
       <div className="grid gap-6 lg:grid-cols-[360px_minmax(0,1fr)]">
@@ -475,6 +545,7 @@ export default function AgentLabApp({ simulationLatencyMs = 320 }: AgentLabAppPr
           </section>
           </main>
         </ErrorBoundary>
+      </div>
       </div>
     </div>
   );
