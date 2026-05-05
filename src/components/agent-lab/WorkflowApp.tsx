@@ -10,6 +10,7 @@ import {
 } from '../../lib/agent-lab/workflow';
 import type { AgentRunResult, ApprovalDecision } from '../../lib/agent-lab/types';
 import { ErrorBoundary } from './ErrorBoundary';
+import { LabChrome } from './LabChrome';
 
 const STATUS_ICON: Record<WorkflowStepStatus, { Icon: typeof CheckCircle2; tone: string; label: string }> = {
   ok: { Icon: CheckCircle2, tone: 'text-emerald-600 dark:text-emerald-400', label: 'completed' },
@@ -51,8 +52,10 @@ export default function WorkflowApp() {
 
   return (
     <ErrorBoundary>
+      <div className="space-y-6">
+      <LabChrome current={8} />
       <div className="mx-auto max-w-7xl space-y-8">
-        <header className="space-y-3 py-6">
+        <header className="space-y-3 py-2">
           <p className="text-sm font-medium uppercase tracking-normal text-slate-500 dark:text-slate-400">
             Lab 8 · Workflow vs free-form agent
           </p>
@@ -145,6 +148,7 @@ export default function WorkflowApp() {
           unknown, costly when the task shape is known up front. Most production "agents" are a hybrid:
           deterministic outer loop, model-shaped inner steps.
         </section>
+      </div>
       </div>
     </ErrorBoundary>
   );

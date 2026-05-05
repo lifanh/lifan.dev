@@ -1,6 +1,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import AgentLabApp from './AgentLabApp';
+
+afterEach(() => {
+  // Tests below mutate location.search; reset so subsequent tests start clean.
+  window.history.replaceState({}, '', '/');
+});
 
 describe('AgentLabApp', () => {
   it('runs the ACME scenario and completes the approval workflow', async () => {
@@ -117,5 +122,47 @@ describe('AgentLabApp', () => {
     expect(pre).not.toBeNull();
     expect(pre?.className).toMatch(/max-h-/);
     expect(pre?.className).toMatch(/overflow-auto/);
+  });
+
+  it('honors ?lens= on first paint to deep-link a specific tab', async () => {
+    window.history.replaceState({}, '', '/tools/agent-lab?lens=trace');
+    render(<AgentLabApp simulationLatencyMs={0} />);
+    const trace = await screen.findByRole('button', { name: /Trace Viewer/i });
+    await waitFor(() => {
+      expect(trace).toHaveAttribute('aria-pressed', 'true');
+    });
+  });
+
+  it('updates the URL ?lens= query when the user changes tabs', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+    fireEvent.click(screen.getByRole('button', { name: /^RAG$/i }));
+    await waitFor(() => {
+      expect(new URLSearchParams(window.location.search).get('lens')).toBe('rag');
+    });
+    fireEvent.click(screen.getByRole('button', { name: /^Overview$/i }));
+    await waitFor(() => {
+      // Overview is the default and should clear the query param.
+      expect(new URLSearchParams(window.location.search).get('lens')).toBeNull();
+    });
+  });
+
+  it('groups the tab nav into Run, Lenses, and Mini-labs', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+    // Wait for the realModelStatus useEffect to settle before asserting.
+    await screen.findByText(/test stub/i);
+    const nav = screen.getByRole('navigation', { name: /Agent Lab sections/i });
+    expect(nav.textContent).toMatch(/Run/);
+    expect(nav.textContent).toMatch(/Lenses/);
+    expect(nav.textContent).toMatch(/Mini-labs/);
+  });
+
+  it('renders the shared lab chrome with prev/next pagination', async () => {
+    render(<AgentLabApp simulationLatencyMs={0} />);
+    await screen.findByText(/test stub/i);
+    const chrome = screen.getByRole('navigation', { name: /Agent Lab navigation/i });
+    expect(chrome).toBeInTheDocument();
+    // The chrome includes a back-link to the labs index.
+    const backLink = screen.getByRole('link', { name: /All 12 labs/i });
+    expect(backLink).toHaveAttribute('href', '/tools/agent-lab/labs');
   });
 });

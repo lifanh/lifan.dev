@@ -7,6 +7,7 @@ import {
 } from '../../lib/agent-lab/mcpManifest';
 import type { ToolName } from '../../lib/agent-lab/schemas';
 import { ErrorBoundary } from './ErrorBoundary';
+import { LabChrome } from './LabChrome';
 
 const PERMISSION_BADGE: Record<McpToolDescriptor['permission']['level'], { label: string; tone: string }> = {
   read_only: {
@@ -46,8 +47,10 @@ export default function McpToolsApp() {
 
   return (
     <ErrorBoundary>
+      <div className="space-y-6">
+      <LabChrome current={7} />
       <div className="mx-auto max-w-7xl space-y-8">
-        <header className="space-y-3 py-6">
+        <header className="space-y-3 py-2">
           <p className="text-sm font-medium uppercase tracking-normal text-slate-500 dark:text-slate-400">
             Lab 7 · MCP-style tool protocol
           </p>
@@ -113,6 +116,7 @@ export default function McpToolsApp() {
             <HandshakePanel handshake={handshake} />
           </div>
         </section>
+      </div>
       </div>
     </ErrorBoundary>
   );
