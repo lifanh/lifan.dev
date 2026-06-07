@@ -208,65 +208,7 @@ function derivePermission(
 // pedagogically transparent.
 
 export function zodObjectToJsonSchema(schema: z.ZodObject<z.ZodRawShape>): McpJsonSchema {
-  const properties: Record<string, McpJsonSchemaProperty> = {};
-  const required: string[] = [];
-
-  const shape = schema.shape;
-  for (const [key, value] of Object.entries(shape)) {
-    const fieldSchema = value as z.ZodTypeAny;
-    properties[key] = leafToJsonSchema(fieldSchema);
-    if (!fieldSchema.isOptional()) {
-      required.push(key);
-    }
-  }
-
-  return {
-    type: 'object',
-    properties,
-    required,
-    additionalProperties: false,
-  };
-}
-
-function leafToJsonSchema(schema: z.ZodTypeAny): McpJsonSchemaProperty {
-  const def: { typeName?: string; checks?: Array<Record<string, unknown>> } =
-    (schema as unknown as { _def: { typeName?: string; checks?: Array<Record<string, unknown>> } })._def;
-  const typeName = def.typeName;
-  const checks = def.checks ?? [];
-
-  if (typeName === 'ZodString') {
-    const out: McpJsonSchemaProperty = { type: 'string' };
-    for (const check of checks) {
-      if (check.kind === 'min') out.minLength = check.value as number;
-      if (check.kind === 'max') out.maxLength = check.value as number;
-    }
-    return out;
-  }
-
-  if (typeName === 'ZodNumber') {
-    let isInteger = false;
-    let minimum: number | undefined;
-    let maximum: number | undefined;
-    let exclusiveMinimum: number | undefined;
-    for (const check of checks) {
-      if (check.kind === 'int') isInteger = true;
-      if (check.kind === 'min') {
-        if (check.inclusive === false) {
-          exclusiveMinimum = check.value as number;
-        } else {
-          minimum = check.value as number;
-        }
-      }
-      if (check.kind === 'max') maximum = check.value as number;
-    }
-    const out: McpJsonSchemaProperty = { type: isInteger ? 'integer' : 'number' };
-    if (minimum !== undefined) out.minimum = minimum;
-    if (maximum !== undefined) out.maximum = maximum;
-    if (exclusiveMinimum !== undefined) out.exclusiveMinimum = exclusiveMinimum;
-    return out;
-  }
-
-  // Fallback for any unknown leaf — should not happen for the lab's
-  // current schemas but keeps the converter total.
-  return { type: 'string' };
+  const json = schema.toJSONSchema() as McpJsonSchema & { $schema?: string };
+  delete (json as Record<string, unknown>).$schema;
+  return json;
 }
