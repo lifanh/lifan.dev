@@ -3,7 +3,8 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
 import { TemplateDownloads } from './export';
-import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
+import { useSectionTracker } from './hooks/useSectionTracker';
+import { ModuleHeader, ModuleNavigation, ProgressBar, SectionRail } from './layout';
 
 // Lazy load all module content for better code splitting
 const Module1Content = lazy(() => import('../content/Module1Content').then(m => ({ default: m.Module1Content })));
@@ -33,12 +34,21 @@ export function AccountingPlatform() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
 
   const currentModule = MODULES.find((m) => m.id === progress.currentModule);
+
+  const { sections, activeId, activeIndex, viewedIds, scrollToSection } = useSectionTracker(
+    progress.currentModule,
+    mainRef,
+  );
 
   const handleModuleSelect = (moduleId: number) => {
     setCurrentModule(moduleId);
     setSidebarOpen(false);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
   };
 
   useEffect(() => {
@@ -116,6 +126,14 @@ export function AccountingPlatform() {
           <div className="flex-1">
             <ProgressBar />
           </div>
+          {sections.length > 1 && (
+            <span
+              className="hidden sm:inline text-sm font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap tabular-nums"
+              aria-live="polite"
+            >
+              Section {Math.max(activeIndex, 0) + 1} / {sections.length}
+            </span>
+          )}
         </div>
       </div>
 
@@ -158,7 +176,7 @@ export function AccountingPlatform() {
           )}
 
           {/* Main Content */}
-          <main className="min-w-0">
+          <main ref={mainRef} className="min-w-0">
             {currentModule && <ModuleHeader module={currentModule} />}
 
             <div key={progress.currentModule} className="prose prose-slate dark:prose-invert max-w-none animate-fade-in">
@@ -166,6 +184,12 @@ export function AccountingPlatform() {
                 {moduleContent}
               </Suspense>
             </div>
+
+            {sections.length > 1 && (
+              <p className="mt-8 hidden text-xs text-slate-400 dark:text-slate-500 lg:block">
+                Tip: press <kbd className="rounded border border-slate-300 px-1 font-sans dark:border-slate-600">J</kbd> / <kbd className="rounded border border-slate-300 px-1 font-sans dark:border-slate-600">K</kbd> to move between sections.
+              </p>
+            )}
 
             {/* Navigation Buttons */}
             <div className="flex justify-between items-center mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
@@ -187,6 +211,13 @@ export function AccountingPlatform() {
           </main>
         </div>
       </div>
+
+      <SectionRail
+        sections={sections}
+        activeId={activeId}
+        viewedIds={viewedIds}
+        onSelect={scrollToSection}
+      />
     </div>
   );
 }

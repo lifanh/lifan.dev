@@ -1,5 +1,6 @@
 import { ComparisonTable, DefinitionCard, KeyTakeaway, PhilosopherCard } from '../components/content';
-import { KnowledgeCheck } from '../components/interactive/assessments';
+import { InlineCheck, KnowledgeCheck } from '../components/interactive/assessments';
+import { ChangeVsPermanenceDemo } from '../components/interactive/demos';
 import { module01Quiz } from './quizzes';
 
 export function Module1Content() {
@@ -148,6 +149,8 @@ export function Module1Content() {
           cannot come from nothing or become nothing. Therefore, reality must be eternal,
           unchanging, and one.
         </p>
+
+        <ChangeVsPermanenceDemo />
 
         <KeyTakeaway>
           <p>

@@ -2,7 +2,8 @@ import { Loader2, Menu, X } from 'lucide-react';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useProgressStore } from '../store';
 import { MODULES } from '../types/module';
-import { ModuleHeader, ModuleNavigation, ProgressBar } from './layout';
+import { useSectionTracker } from './hooks/useSectionTracker';
+import { ModuleHeader, ModuleNavigation, ProgressBar, SectionRail } from './layout';
 
 const Module1Content = lazy(() => import('../content/Module1Content').then(m => ({ default: m.Module1Content })));
 const Module2Content = lazy(() => import('../content/Module2Content').then(m => ({ default: m.Module2Content })));

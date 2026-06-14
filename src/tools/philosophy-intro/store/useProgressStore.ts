@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { UserProgress, ModuleProgress } from '../types';
+import type { ModuleProgress, UserProgress } from '../types';
 import { DEFAULT_PROGRESS } from '../types/user';
 
 interface ProgressState {
@@ -60,6 +60,7 @@ export const useProgressStore = create<ProgressState>()(
           return {
             progress: {
               ...state.progress,
+              lastVisited: new Date().toISOString(),
               moduleProgress: {
                 ...state.progress.moduleProgress,
                 [moduleId]: {

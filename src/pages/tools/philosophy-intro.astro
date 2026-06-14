@@ -3,7 +3,11 @@ import Layout from '../../layouts/Layout.astro';
 import { PhilosophyPlatform } from '../../tools/philosophy-intro/components/PhilosophyPlatform';
 ---
 
-<Layout title="Introduction to Philosophy History | Lifan Dev">
+<Layout
+  title="Introduction to Philosophy History | Lifan Dev"
+  description="Interactive lessons through the history of philosophy, from the Pre-Socratics onward."
+  ogImage="/og/philosophy-intro.svg"
+>
   <div class="max-w-7xl mx-auto">
     <PhilosophyPlatform client:idle />
   </div>

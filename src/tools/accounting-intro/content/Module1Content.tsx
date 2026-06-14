@@ -1,5 +1,5 @@
 import { ComparisonTable, DefinitionCard, KeyTakeaway } from '../components/content';
-import { KnowledgeCheck } from '../components/interactive/assessments/KnowledgeCheck';
+import { InlineCheck, KnowledgeCheck } from '../components/interactive/assessments';
 import { module01Quiz } from './quizzes';
 
 export function Module1Content() {
@@ -57,6 +57,13 @@ export function Module1Content() {
             same thing across all companies.
           </p>
         </KeyTakeaway>
+
+        <InlineCheck
+          question="Which branch of accounting focuses on standardized statements for external parties like investors and regulators?"
+          options={['Managerial accounting', 'Financial accounting', 'Tax accounting']}
+          correctAnswer={1}
+          explanation="Financial accounting produces standardized statements (under GAAP/IFRS) for external users. Managerial accounting is internal; tax accounting is for compliance."
+        />
       </section>
 
       {/* Section 1.2 */}
@@ -81,6 +88,13 @@ export function Module1Content() {
           understand how a simple transaction like buying coffee becomes part of a company's
           financial statements.
         </p>
+
+        <InlineCheck
+          question="In the accounting cycle, what comes immediately after a transaction is recorded as a journal entry?"
+          options={['Trial balance', 'The ledger', 'Financial statements', 'Closing']}
+          correctAnswer={1}
+          explanation="Journal entries are posted to the ledger, which is later summarized into a trial balance before adjustments and financial statements."
+        />
       </section>
 
       {/* Real-World Scenario */}
