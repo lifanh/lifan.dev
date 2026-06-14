@@ -1,4 +1,4 @@
-import { ComparisonTable, DefinitionCard, KeyTakeaway, PhilosopherCard, QuoteBlock } from '../components/content';
+import { ComparisonTable, DefinitionCard, KeyTakeaway, PhilosopherCard } from '../components/content';
 import { KnowledgeCheck } from '../components/interactive/assessments';
 import { module01Quiz } from './quizzes';
 
@@ -11,7 +11,7 @@ export function Module1Content() {
         </h2>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Philosophy is one of humanity's oldest intellectual pursuits. The word itself comes from 
+          Philosophy is one of humanity's oldest intellectual pursuits. The word itself comes from
           the Greek words <em>philos</em> (love) and <em>sophia</em> (wisdom), meaning "love of wisdom."
         </p>
 
@@ -34,8 +34,8 @@ export function Module1Content() {
 
         <KeyTakeaway>
           <p>
-            Philosophy doesn't give us facts like science does. Instead, it teaches us how to 
-            think critically, examine assumptions, and construct sound arguments. These skills 
+            Philosophy doesn't give us facts like science does. Instead, it teaches us how to
+            think critically, examine assumptions, and construct sound arguments. These skills
             are valuable in every area of life.
           </p>
         </KeyTakeaway>
@@ -47,18 +47,18 @@ export function Module1Content() {
         </h2>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Around 600 BCE, something remarkable happened in the Greek world. Thinkers began 
+          Around 600 BCE, something remarkable happened in the Greek world. Thinkers began
           asking questions about nature and seeking <em>natural</em> rather than <em>supernatural</em> explanations.
         </p>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Before philosophy, people explained the world through myths. Why does the sun move 
-          across the sky? Because the god Helios drives his chariot. Why do seasons change? 
+          Before philosophy, people explained the world through myths. Why does the sun move
+          across the sky? Because the god Helios drives his chariot. Why do seasons change?
           Because Persephone goes to the underworld.
         </p>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          The first philosophers asked: What if we could explain these things without invoking 
+          The first philosophers asked: What if we could explain these things without invoking
           the gods? What if nature follows consistent, discoverable principles?
         </p>
 
@@ -81,6 +81,18 @@ export function Module1Content() {
           <li><strong>Leisure class:</strong> Some had time to think beyond daily survival</li>
           <li><strong>Writing:</strong> Ideas could be recorded and examined</li>
         </ul>
+
+        <InlineCheck
+          question="What was the key shift that marked the birth of philosophy in ancient Greece?"
+          options={[
+            'Seeking natural explanations instead of mythological ones',
+            'Worshipping a new set of gods',
+            'Inventing written language',
+            'Building the first city-states',
+          ]}
+          correctAnswer={0}
+          explanation="The decisive move was looking for natural, discoverable principles rather than attributing events to the gods."
+        />
       </section>
 
       <section id="section-1-3" className="pt-8 border-t border-slate-200 dark:border-slate-700">
@@ -89,7 +101,7 @@ export function Module1Content() {
         </h2>
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          The philosophers before Socrates are called "Pre-Socratics." They asked a fundamental 
+          The philosophers before Socrates are called "Pre-Socratics." They asked a fundamental
           question: What is the basic substance or principle underlying all of reality?
         </p>
 
@@ -103,8 +115,8 @@ export function Module1Content() {
         />
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Thales proposed that water is the fundamental substance of everything. This seems 
-          naive today, but what matters is that he sought a <em>natural</em> explanation, not a 
+          Thales proposed that water is the fundamental substance of everything. This seems
+          naive today, but what matters is that he sought a <em>natural</em> explanation, not a
           mythological one.
         </p>
 
@@ -118,7 +130,7 @@ export function Module1Content() {
         />
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Heraclitus focused on change. Reality is constantly in flux, like a river. The 
+          Heraclitus focused on change. Reality is constantly in flux, like a river. The
           apparent stability we see is an illusion.
         </p>
 
@@ -132,18 +144,25 @@ export function Module1Content() {
         />
 
         <p className="text-slate-700 dark:text-slate-300 mb-4">
-          Parmenides took the opposite view: change is impossible. If something exists, it 
-          cannot come from nothing or become nothing. Therefore, reality must be eternal, 
+          Parmenides took the opposite view: change is impossible. If something exists, it
+          cannot come from nothing or become nothing. Therefore, reality must be eternal,
           unchanging, and one.
         </p>
 
         <KeyTakeaway>
           <p>
-            The debate between Heraclitus (everything changes) and Parmenides (nothing changes) 
-            set up one of philosophy's most enduring questions: How do we reconcile the appearance 
+            The debate between Heraclitus (everything changes) and Parmenides (nothing changes)
+            set up one of philosophy's most enduring questions: How do we reconcile the appearance
             of change with the possibility of stable, knowable reality?
           </p>
         </KeyTakeaway>
+
+        <InlineCheck
+          question="Which philosopher argued that reality is unchanging and that change is an illusion?"
+          options={['Thales', 'Heraclitus', 'Parmenides', 'Socrates']}
+          correctAnswer={2}
+          explanation="Parmenides claimed 'what is, is' — reality is eternal and unchanging, so the change we perceive must be an illusion. Heraclitus argued the opposite."
+        />
       </section>
 
       <section id="section-1-4" className="pt-8 border-t border-slate-200 dark:border-slate-700">
@@ -165,7 +184,7 @@ export function Module1Content() {
         </div>
 
         <p className="text-slate-700 dark:text-slate-300 mt-6">
-          <strong>Next up:</strong> In Module 2, you'll meet Socrates, the philosopher who 
+          <strong>Next up:</strong> In Module 2, you'll meet Socrates, the philosopher who
           changed everything by asking questions instead of giving answers.
         </p>
       </section>
