@@ -19,20 +19,29 @@ export function SectionRail({ sections, activeId, viewedIds, onSelect }: Section
       {sections.map((section) => {
         const isActive = section.id === activeId;
         const isViewed = viewedIds.includes(section.id);
+        const isLocked = section.isLocked;
 
-        const dotClass = isActive
-          ? 'h-3 w-3 rounded-full bg-blue-500 ring-2 ring-blue-200 dark:ring-blue-900 transition-all duration-200'
-          : 'h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-600 transition-all duration-200';
+        let dotClass = 'h-2.5 w-2.5 rounded-full bg-slate-300 dark:bg-slate-600 transition-all duration-200';
+        if (isActive) {
+          dotClass = 'h-3 w-3 rounded-full bg-blue-500 ring-2 ring-blue-200 dark:ring-blue-900 transition-all duration-200';
+        } else if (isLocked) {
+          dotClass = 'h-2 w-2 rounded-full bg-slate-200 dark:bg-slate-800/60 opacity-40 transition-all duration-200';
+        }
 
         return (
           <button
             key={section.id}
             type="button"
             onClick={() => onSelect(section.id)}
-            title={section.title}
-            aria-label={`Go to section: ${section.title}`}
+            disabled={isLocked}
+            title={isLocked ? `Locked: ${section.title}` : section.title}
+            aria-label={isLocked ? `Locked section: ${section.title}` : `Go to section: ${section.title}`}
             aria-current={isActive ? 'true' : undefined}
-            className="group flex items-center justify-end gap-2 rounded-md p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className={`group flex items-center justify-end gap-2 rounded-md p-1 focus:outline-none ${
+              isLocked
+                ? 'cursor-not-allowed'
+                : 'focus-visible:ring-2 focus-visible:ring-blue-500'
+            }`}
           >
             <span
               className={`pointer-events-none max-w-[220px] truncate rounded-md border border-slate-200 bg-white px-2 py-1 text-xs font-medium text-slate-700 opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 ${
@@ -41,7 +50,7 @@ export function SectionRail({ sections, activeId, viewedIds, onSelect }: Section
             >
               {section.title}
             </span>
-            {isViewed && !isActive ? (
+            {isViewed && !isActive && !isLocked ? (
               <span className="flex h-3 w-3 items-center justify-center rounded-full bg-blue-400/80 text-white">
                 <Check className="h-2 w-2" strokeWidth={3} />
               </span>

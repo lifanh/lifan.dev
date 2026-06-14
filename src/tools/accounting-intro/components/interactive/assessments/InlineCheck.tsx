@@ -1,5 +1,5 @@
 import { CheckCircle2, HelpCircle, RotateCcw, XCircle } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface InlineCheckProps {
   question: string;
@@ -7,6 +7,12 @@ interface InlineCheckProps {
   correctAnswer: number;
   explanation: string;
   prompt?: string;
+}
+
+function isTypingTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
 }
 
 /**
@@ -23,6 +29,8 @@ export function InlineCheck({
 }: InlineCheckProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const isCorrect = selected === correctAnswer;
 
@@ -37,11 +45,53 @@ export function InlineCheck({
     setRevealed(false);
   };
 
+  // Monitor visibility of the check to bind keyboard shortcuts
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting && entry.intersectionRatio > 0.15);
+      },
+      { threshold: [0, 0.15, 0.5, 1], rootMargin: '-10% 0px -10% 0px' }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Listen to numeric keypresses (1, 2, 3...) when check is active and on screen
+  useEffect(() => {
+    if (!isIntersecting || revealed) return;
+
+    const handleKeys = (e: KeyboardEvent) => {
+      if (isTypingTarget(e.target) || e.metaKey || e.ctrlKey || e.altKey) return;
+      const num = parseInt(e.key, 10);
+      if (!isNaN(num) && num >= 1 && num <= options.length) {
+        e.preventDefault();
+        handleSelect(num - 1);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeys);
+    return () => window.removeEventListener('keydown', handleKeys);
+  }, [isIntersecting, revealed, options.length]);
+
   return (
-    <div className="my-6 rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/50">
+    <div
+      ref={containerRef}
+      data-inline-check
+      data-completed={revealed && isCorrect}
+      className="my-6 rounded-xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-700 dark:bg-slate-800/50 transition-all duration-300"
+    >
       <div className="mb-3 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
         <HelpCircle className="h-4 w-4" />
         {prompt}
+        {isIntersecting && !revealed && (
+          <span className="hidden sm:inline-flex text-xs font-normal text-slate-400 dark:text-slate-500 normal-case ml-auto">
+            Press numeric key [1-{options.length}] to answer
+          </span>
+        )}
       </div>
 
       <p className="mb-4 text-base font-medium text-slate-900 dark:text-white">{question}</p>
@@ -70,6 +120,11 @@ export function InlineCheck({
               aria-pressed={isChoice}
               className={`flex w-full items-center gap-3 rounded-lg border-2 p-3 text-left text-sm text-slate-700 transition-colors disabled:cursor-default dark:text-slate-300 ${optionClass}`}
             >
+              {!revealed && (
+                <kbd className="hidden sm:inline-flex h-5 w-5 shrink-0 items-center justify-center rounded border border-slate-200 bg-white text-[10px] font-medium text-slate-400 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-500">
+                  {index + 1}
+                </kbd>
+              )}
               <span className="flex-1">{option}</span>
               {revealed && isAnswer && <CheckCircle2 className="h-5 w-5 shrink-0 text-green-500" />}
               {revealed && isChoice && !isAnswer && (

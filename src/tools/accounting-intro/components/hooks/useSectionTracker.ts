@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { playStepSound, playUnlockSound } from '../../lib/audio';
 import { useProgressStore } from '../../store';
 
 export interface TrackedSection {
   id: string;
   title: string;
+  isCompleted?: boolean;
+  isLocked?: boolean;
+  hasCheck?: boolean;
+  checkCompleted?: boolean;
 }
 
 export interface UseSectionTrackerResult {
@@ -20,7 +25,16 @@ const EMPTY: string[] = [];
 function sameSections(a: TrackedSection[], b: TrackedSection[]): boolean {
   if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i += 1) {
-    if (a[i].id !== b[i].id || a[i].title !== b[i].title) return false;
+    if (
+      a[i].id !== b[i].id ||
+      a[i].title !== b[i].title ||
+      a[i].isCompleted !== b[i].isCompleted ||
+      a[i].isLocked !== b[i].isLocked ||
+      a[i].hasCheck !== b[i].hasCheck ||
+      a[i].checkCompleted !== b[i].checkCompleted
+    ) {
+      return false;
+    }
   }
   return true;
 }
@@ -70,11 +84,22 @@ export function useSectionTracker(
   const setActive = useCallback(
     (id: string) => {
       if (activeIdRef.current === id) return;
+
+      const currentList = sectionsRef.current;
+      const targetSect = currentList.find((s) => s.id === id);
+      if (targetSect && targetSect.isLocked) {
+        // Prevent scroll spy from locking on a future section if it is locked
+        return;
+      }
+
       activeIdRef.current = id;
       setActiveId(id);
+
       const current =
         useProgressStore.getState().progress.moduleProgress[moduleId]?.sectionsCompleted ?? [];
-      if (!current.includes(id)) {
+      const hasIncompleteCheck = targetSect?.hasCheck && !targetSect?.checkCompleted;
+
+      if (!current.includes(id) && !hasIncompleteCheck) {
         updateModuleProgress(moduleId, id);
       }
     },
@@ -85,12 +110,57 @@ export function useSectionTracker(
     const container = containerRef.current;
     if (!container) return;
     const els = Array.from(container.querySelectorAll<HTMLElement>('section[id]'));
-    const next = els.map((el) => ({
-      id: el.id,
-      title: el.querySelector('h1, h2, h3')?.textContent?.trim() || el.id,
-    }));
-    setSections((prev) => (sameSections(prev, next) ? prev : next));
-  }, [containerRef]);
+
+    const completedList =
+      useProgressStore.getState().progress.moduleProgress[moduleId]?.sectionsCompleted ?? [];
+
+    const rawSections = els.map((el) => {
+      const checkEl = el.querySelector('[data-inline-check]');
+      const hasCheck = !!checkEl;
+      const checkCompleted = hasCheck && checkEl.getAttribute('data-completed') === 'true';
+
+      return {
+        id: el.id,
+        title: el.querySelector('h1, h2, h3')?.textContent?.trim() || el.id,
+        hasCheck,
+        checkCompleted,
+      };
+    });
+
+    const processedSections: TrackedSection[] = rawSections.map((sect, index) => {
+      const selfCompleted = sect.hasCheck
+        ? sect.checkCompleted || completedList.includes(sect.id)
+        : completedList.includes(sect.id);
+
+      let isLocked = false;
+      for (let j = 0; j < index; j += 1) {
+        const prevSect = rawSections[j];
+        const prevSelfCompleted = prevSect.hasCheck
+          ? prevSect.checkCompleted || completedList.includes(prevSect.id)
+          : completedList.includes(prevSect.id);
+        if (!prevSelfCompleted) {
+          isLocked = true;
+          break;
+        }
+      }
+
+      return {
+        ...sect,
+        isCompleted: selfCompleted,
+        isLocked,
+      };
+    });
+
+    setSections((prev) => {
+      // Find if any section became unlocked and play unlock sound
+      const hasUnlock = prev.some((s, i) =>
+        s.isLocked && processedSections[i]?.isLocked === false
+      );
+      if (hasUnlock) playUnlockSound();
+
+      return sameSections(prev, processedSections) ? prev : processedSections;
+    });
+  }, [containerRef, moduleId]);
 
   const scrollToSection = useCallback(
     (id: string) => {
@@ -98,6 +168,10 @@ export function useSectionTracker(
       if (!container || typeof CSS === 'undefined' || !CSS.escape) return;
       const el = container.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
       if (!el) return;
+
+      const targetSect = sectionsRef.current.find((s) => s.id === id);
+      if (targetSect && targetSect.isLocked) return;
+
       el.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
       setActive(id);
     },
@@ -110,7 +184,10 @@ export function useSectionTracker(
       const idx = list.findIndex((s) => s.id === activeIdRef.current);
       const nextIdx = nextSectionIndex(idx, dir, list.length);
       const target = list[nextIdx];
-      if (target) scrollToSection(target.id);
+      if (target && (!target.isLocked || dir === -1)) {
+        scrollToSection(target.id);
+        playStepSound();
+      }
     },
     [scrollToSection],
   );
@@ -134,7 +211,7 @@ export function useSectionTracker(
         scan();
       }
     });
-    mo.observe(container, { childList: true, subtree: true });
+    mo.observe(container, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-completed'] });
     return () => {
       mo.disconnect();
       if (typeof cancelAnimationFrame === 'function') cancelAnimationFrame(raf);
@@ -172,17 +249,28 @@ export function useSectionTracker(
     return () => observer.disconnect();
   }, [sections, containerRef, setActive]);
 
-  // Keyboard navigation between beats (vim-style J / K).
+  // Keyboard navigation between beats (vim-style J / K + Space / Enter).
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
       if (isTypingTarget(event.target)) return;
+
+      const list = sectionsRef.current;
+      const idx = list.findIndex((s) => s.id === activeIdRef.current);
+      const activeSection = list[idx];
+
       if (event.key === 'j' || event.key === 'J') {
         event.preventDefault();
         goToAdjacent(1);
       } else if (event.key === 'k' || event.key === 'K') {
         event.preventDefault();
         goToAdjacent(-1);
+      } else if (event.key === ' ' || event.key === 'Enter') {
+        // Space or Enter progresses ONLY if current section has no incomplete check
+        if (activeSection && !activeSection.isLocked && activeSection.isCompleted) {
+          event.preventDefault();
+          goToAdjacent(1);
+        }
       }
     };
     window.addEventListener('keydown', onKeyDown);
