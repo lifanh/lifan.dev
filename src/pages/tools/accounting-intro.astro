@@ -3,7 +3,11 @@ import Layout from '../../layouts/Layout.astro';
 import { AccountingPlatform } from '../../tools/accounting-intro/components/AccountingPlatform';
 ---
 
-<Layout title="Accounting Fundamentals | Lifan Dev">
+<Layout
+  title="Accounting Fundamentals | Lifan Dev"
+  description="Learn accounting from scratch with interactive lessons, calculators, and real-world scenarios."
+  ogImage="/og/accounting-intro.svg"
+>
   <div class="max-w-7xl mx-auto">
     <AccountingPlatform client:idle />
   </div>

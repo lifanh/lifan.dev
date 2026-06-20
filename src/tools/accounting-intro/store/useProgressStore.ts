@@ -60,6 +60,7 @@ export const useProgressStore = create<ProgressState>()(
           return {
             progress: {
               ...state.progress,
+              lastVisited: new Date().toISOString(),
               moduleProgress: {
                 ...state.progress.moduleProgress,
                 [moduleId]: {
