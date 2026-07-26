@@ -38,6 +38,22 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
+## Hub authentication
+
+The hub is a confidential OIDC relying party for `https://auth.lifan.dev`. It uses the
+registered client ID `lifan-dev-hub`, mandatory S256 PKCE, and the exact callback
+`https://lifan.dev/api/auth/oauth2/callback/external-oidc`.
+
+Two runtime secrets are required to enable sign-in:
+
+- `HUB_OIDC_CLIENT_SECRET` — must match the `lifan-dev-hub` registration in `my-auth`.
+- `HUB_SESSION_SECRET` — a distinct value of at least 32 characters used only to encrypt
+  the hub's local session and OIDC transaction cookies.
+
+Neither secret belongs in `wrangler.toml` or source control. When either is absent, sign-in
+fails closed. The hub cookie is host-only (`__Host-lifan_hub_session`); hub sign-out clears
+only that local session and does not change the central `auth.lifan.dev` session.
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
