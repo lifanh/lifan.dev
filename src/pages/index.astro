@@ -1,40 +1,107 @@
 ---
 import ContinueLearning from '../components/ContinueLearning';
+import ToolCatalog from '../components/ToolCatalog.astro';
+import { hubCatalogSections } from '../data/hubCatalog';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Lifan Dev - Personal Tools">
-	<div class="max-w-4xl mx-auto text-center py-12">
-		<h1 class="text-5xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white">
-			Welcome to <span class="text-slate-900 dark:text-white">LIFAN DEV</span>
-		</h1>
-		<p class="text-xl text-slate-600 dark:text-slate-300 mb-10">
-			My personal playground for technology experiments, developer tools, and management functions.
-		</p>
+<Layout
+  title="Lifan Dev — Tools for curious minds"
+  description="A personal workshop for interactive learning, engineering experiments, and useful standalone apps."
+>
+  <div class="hub-home">
+    <section class="hub-hero" aria-labelledby="hub-title">
+      <p class="hub-hero__eyebrow">A personal workshop on the web</p>
+      <h1 id="hub-title">Learn what matters.<br />Build what helps.</h1>
+      <div class="hub-hero__introduction">
+        <p>
+          Lifan Dev brings together guided courses, engineering labs, and focused apps—made to
+          turn curiosity into something you can use.
+        </p>
+        <div class="hub-hero__actions">
+          <a class="btn btn-primary hub-hero__action" href="/tools">Explore all tools</a>
+          <a class="btn btn-secondary hub-hero__action" href="/changelog">See what changed</a>
+        </div>
+      </div>
+    </section>
 
-		<ContinueLearning client:only="react" />
+    <ContinueLearning client:only="react" />
 
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-			<a href="/tools/economic-sim" class="block p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors transition-shadow hover:shadow-lg group">
-				<h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">Economic Concept Visualizer &rarr;</h2>
-				<p class="text-slate-600 dark:text-slate-400">Interactive simulation of basic economic principles using React Islands.</p>
-			</a>
-
-			<a href="/tools/accounting-intro" class="block p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors transition-shadow hover:shadow-lg group">
-				<h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">Accounting Fundamentals &rarr;</h2>
-				<p class="text-slate-600 dark:text-slate-400">Learn accounting from scratch with interactive lessons, calculators, and real-world scenarios.</p>
-			</a>
-
-			<a href="/tools/philosophy-intro" class="block p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors transition-shadow hover:shadow-lg group">
-				<h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">Introduction to Philosophy &rarr;</h2>
-				<p class="text-slate-600 dark:text-slate-400">Interactive lessons through the history of philosophy, from the Pre-Socratics onward.</p>
-			</a>
-
-			<a href="/tools/agent-lab/labs" class="block p-6 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors transition-shadow hover:shadow-lg group">
-				<h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">Agent Engineering Lab &rarr;</h2>
-				<p class="text-slate-600 dark:text-slate-400">Twelve focused labs on production AI agent engineering: messages, schemas, tools, the loop, retrieval, MCP, evals, approvals, and operations.</p>
-				<span class="mt-3 inline-block text-sm font-medium text-blue-700 dark:text-blue-300">Browse all 12 labs &rarr;</span>
-			</a>
-		</div>
-	</div>
+    <ToolCatalog sections={hubCatalogSections} compact />
+  </div>
 </Layout>
+
+<style>
+  .hub-home {
+    max-width: var(--max-width-lg);
+    margin-inline: auto;
+    padding-block: var(--spacing-8) var(--spacing-16);
+  }
+
+  .hub-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: var(--spacing-12);
+    padding-block: var(--spacing-12) var(--spacing-16);
+  }
+
+  .hub-hero__eyebrow {
+    grid-column: 1 / -1;
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-wide);
+    line-height: var(--line-height-normal);
+    text-transform: uppercase;
+  }
+
+  .hub-hero h1 {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-heading);
+    line-height: var(--line-height-heading);
+  }
+
+  .hub-hero__introduction {
+    align-self: end;
+  }
+
+  .hub-hero__introduction > p {
+    max-width: var(--max-width-prose);
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .hub-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-6);
+  }
+
+  .hub-hero__action {
+    min-height: var(--spacing-12);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .hub-home {
+      padding-block: var(--spacing-4) var(--spacing-12);
+    }
+
+    .hub-hero {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+      padding-block: var(--spacing-8) var(--spacing-12);
+    }
+
+    .hub-hero__eyebrow {
+      grid-column: auto;
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+node_version="22.18.0"
+node_prefix="$HOME/.local/share/lifan-dev-node"
+node_binary="$node_prefix/node_modules/node/bin/node"
+
+if [[ ! -x "$node_binary" ]] || [[ "$($node_binary --version 2>/dev/null || true)" != "v$node_version" ]]; then
+  echo "Installing Node.js $node_version for lifan.dev..."
+  npm install --no-audit --no-fund --prefix "$node_prefix" "node@$node_version"
+fi
+
+mkdir -p "$HOME/.local/bin"
+ln -sfn "$node_binary" "$HOME/.local/bin/node"
+hash -r
+
+echo "Using $(node --version)"
+echo "Installing locked npm dependencies..."
+npm ci

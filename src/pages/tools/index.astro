@@ -1,0 +1,80 @@
+---
+import ToolCatalog from '../../components/ToolCatalog.astro';
+import { hubCatalogSections } from '../../data/hubCatalog';
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Tools and apps | Lifan Dev"
+  description="Explore Lifan Dev learning tools, engineering labs, simulations, and standalone apps."
+>
+  <div class="tools-index">
+    <header class="tools-index__header">
+      <p class="tools-index__eyebrow">Tool index</p>
+      <div>
+        <h1>Choose a thread to follow.</h1>
+        <p>
+          Learn a new domain, inspect a system, or settle into something worth listening to.
+          Each experience has a focused purpose and a stable place to return to.
+        </p>
+      </div>
+    </header>
+
+    <ToolCatalog sections={hubCatalogSections} />
+  </div>
+</Layout>
+
+<style>
+  .tools-index {
+    max-width: var(--max-width-lg);
+    margin-inline: auto;
+    padding-block: var(--spacing-8) var(--spacing-16);
+  }
+
+  .tools-index__header {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 5fr);
+    gap: var(--spacing-12);
+    padding-block: var(--spacing-12) var(--spacing-16);
+  }
+
+  .tools-index__eyebrow {
+    margin: var(--spacing-2) 0 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--letter-spacing-wide);
+    line-height: var(--line-height-normal);
+    text-transform: uppercase;
+  }
+
+  .tools-index__header h1 {
+    max-width: var(--max-width-md);
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-heading);
+    line-height: var(--line-height-heading);
+  }
+
+  .tools-index__header div > p {
+    max-width: var(--max-width-prose);
+    margin: var(--spacing-4) 0 0;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  @media (max-width: 768px) {
+    .tools-index {
+      padding-block: var(--spacing-4) var(--spacing-12);
+    }
+
+    .tools-index__header {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-4);
+      padding-block: var(--spacing-8) var(--spacing-12);
+    }
+  }
+</style>
