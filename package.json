@@ -41,6 +41,6 @@
     "fast-check": "^4.8.0",
     "happy-dom": "^20.10.2",
     "vitest": "^4.1.8",
-    "wrangler": "^4.98.0"
+    "wrangler": "^4.114.0"
   }
 }
